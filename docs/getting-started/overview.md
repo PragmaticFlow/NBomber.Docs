@@ -4,6 +4,14 @@ title: Overview
 sidebar_position: 0
 ---
 
+import NBomberLogoImage from './img/nbomber_logo.png'; 
+
+<center><img src={NBomberLogoImage} width="70%" height="70%" /></center>
+
+[![build](https://github.com/PragmaticFlow/NBomber/actions/workflows/build.yml/badge.svg)](https://github.com/PragmaticFlow/NBomber/actions/workflows/build.yml)
+[![NuGet](https://img.shields.io/nuget/v/nbomber.svg)](https://www.nuget.org/packages/nbomber/)
+[![Gitter](https://badges.gitter.im/nbomber/community.svg)](https://gitter.im/nbomber/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 ### What is NBomber?
 
 NBomber is an open-source load testing tool that makes performance testing easy and productive for engineering teams. NBomber is free, developer-centric, and extensible.
