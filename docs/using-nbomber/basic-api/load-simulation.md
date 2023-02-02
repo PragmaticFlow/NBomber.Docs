@@ -19,7 +19,7 @@ Here is a table of load simulations available in NBomber:
 | Load Simulation | Type | Usage |
 | - | - | - |
 | [RampingConstant](load-simulation#ramping-constant) | Closed systems | Use it for a smooth ramp up and ramp down. Usually, this simulation type is used to test databases, message brokers, or any other system that works with a static client's pool of connections and reuses them. |
-| [KeepConstant](load-simulation#keep-constant) | Closed systems | Use it when you need to run and hold a constant amount of Scenario copies(instances) for a specific period. Usually, this simulation type is used to test databases, message brokers, or any other system that works with a static client's pool of connections and reuses them. |
+| [KeepConstant](load-simulation#keep-constant) | Closed systems | Use it when you need to run and keep a constant amount of Scenario copies(instances) for a specific period. Usually, this simulation type is used to test databases, message brokers, or any other system that works with a static client's pool of connections and reuses them. |
 | [RampingInject](load-simulation#ramping-inject) | Open systems | With this simulation, you control the Scenario injection rate and injection interval. Use it for a smooth ramp up and ramp down. Usually, this simulation type is used to test HTTP API. |
 | [Inject](load-simulation#inject) | Open systems | With this simulation, you control the Scenario injection rate and injection interval. Use it when you want to maintain a constant rate of requests without being affected by the performance of the system you load test. Usually, this simulation type is used to test HTTP API. |
 | [InjectRandom](load-simulation#inject-random) | Open systems | With this simulation, you control the Scenario injection rate and injection interval. Use it when you want to maintain a random rate of requests without being affected by the performance of the system you load test. Usually, this simulation type is used to test HTTP API. |
@@ -31,12 +31,17 @@ Load Simulations can be configured via JSON configuration file.
 
 ### Ramping Constant
 
-Adds or removes a given number of Scenario copies(instances) with a linear ramp over a given duration. **Each Scenario copy behaves like a long-running thread that runs some logic in a loop.** In other words, every Scenario copy(instance) will continue to iterate(be reused) during the specified duration. Use it for a smooth ramp up and ramp down. Usually, this simulation type is used to test databases, message brokers, or any other system that works with a static client's pool of connections and reuses them.
+Adds or removes a given number of Scenario copies(instances) with a linear ramp over a given duration. **Each Scenario copy behaves like a long-running thread that runs continually(by specified duration) and will be destroyed when the current load simulation stops.** Use it for a smooth ramp up and ramp down. Usually, this simulation type is used to test databases, message brokers, or any other system that works with a static client's pool of connections and reuses them.
 
 **Example**: In this example, we combined two simulations: ramp up from 0 to 50 and ramp down from 50 to 20. The NBomber scheduler will be activated periodically to add a new `Scenario` copy instance into the running `Scenarios pool`. This simulation will continue ramping up copies from 0 to 50 until the end duration. After this, the following simulation will start smoothly ramping down Scenario copies from 50 to 20. 
 
 ```csharp
-scenario.WithLoadSimulations(
+Scenario.Create("scenario", async context =>
+{
+    await Task.Delay(1_000);
+    return Response.Ok();
+})
+.WithLoadSimulations(
     // ramp up from 0 to 50 copies    
     // duration: 30 seconds (it executes from [00:00:00] to [00:00:30])
     Simulation.RampingConstant(copies: 50, during: TimeSpan.FromSeconds(30)),
@@ -51,12 +56,17 @@ scenario.WithLoadSimulations(
 
 ### Keep Constant
 
-Keeps activated(constantly running) a fixed number of Scenario copies(instances) which executes as many iterations as possible for a specified duration. **Each Scenario copy behaves like a long-running thread that runs some logic in a loop.** In other words, every Scenario copy(instance) will continue to iterate(be reused) during the specified duration. Use it when you need to run and hold a constant amount of Scenario copies(instances) for a specific period. Usually, this simulation type is used to test databases, message brokers, or any other system that works with a static client's pool of connections and reuses them.
+Keeps activated(constantly running) a fixed number of Scenario copies(instances) which executes as many iterations as possible for a specified duration. **Each Scenario copy behaves like a long-running thread that runs continually(by specified duration) and will be destroyed when the current load simulation stops.** Use it when you need to run and hold a constant amount of Scenario copies(instances) for a specific period. Usually, this simulation type is used to test databases, message brokers, or any other system that works with a static client's pool of connections and reuses them.
 
 **Example 1**: This simulation will create and start 20 Scenario copies and keep them running until the end duration. Each Scenario copy act like a long-running thread that executes some logic in a loop. 
 
 ```csharp
-scenario.WithLoadSimulations(
+Scenario.Create("scenario", async context =>
+{
+    await Task.Delay(1_000);
+    return Response.Ok();
+})
+.WithLoadSimulations(
     // it creates 20 copies and keeps them running
     // duration: 30 seconds (it executes from [00:00:00] to [00:00:30])
     Simulation.KeepConstant(copies: 20, during: TimeSpan.FromSeconds(30))
@@ -66,7 +76,12 @@ scenario.WithLoadSimulations(
 **Example 2**: In this example, we combined three simulations: ramp up from 0 to 50, keeps 50 copies running for 1 minute, and then ramp down from 50 to 0. On the first simulation(`RampingConstant`), the NBomber scheduler will be activated periodically to add a new Scenario copy instance into the running Scenarios pool. This simulation will continue ramping up copies from 0 to 50 until the end duration. After this, the following simulation(`KeepConstant`) will keep the running 50 copies for 1 minute, and then the last simulation(`RampingConstant`) starts smoothly ramping down Scenario copies from 50 to 0. 
 
 ```csharp
-scenario.WithLoadSimulations(
+Scenario.Create("scenario", async context =>
+{
+    await Task.Delay(1_000);
+    return Response.Ok();
+})
+.WithLoadSimulations(
     // ramp up from 0 to 50 copies    
     // duration: 30 seconds (it executes from [00:00:00] to [00:00:30])
     Simulation.RampingConstant(copies: 50, during: TimeSpan.FromSeconds(30)),
@@ -90,7 +105,12 @@ Injects a given number of Scenario copies(instances) with a linear ramp over a g
 **Example**: In this example, we combined two simulations: ramp up from 0 to 50 and then ramp down from 50 to 20. The NBomber scheduler will be activated every second(by injection interval) to inject a new Scenario copy, then run it once, destroy it afterward, and then repeat such flow for the next(after 1 second) injection phase. This simulation will continue ramping up the injection rate from 0 to 50 until the end duration. After this, the following simulation will start smoothly ramping down the injection rate from 50 to 20.
 
 ```csharp
-scenario.WithLoadSimulations(    
+Scenario.Create("scenario", async context =>
+{
+    await Task.Delay(1_000);
+    return Response.Ok();
+})
+.WithLoadSimulations(    
     
     // ramp up the injection rate from 0 to 50
     // injection interval: 1 second
@@ -117,7 +137,12 @@ Injects a given number of Scenario copies(instances) during a given duration. **
 **Example 1**: This simulation will start injecting Scenario copies at a rate of 50 copies per 1 second for 30 seconds. Each Scenario copy will be executed only once and then destroyed.
 
 ```csharp
-scenario.WithLoadSimulations(    
+Scenario.Create("scenario", async context =>
+{
+    await Task.Delay(1_000);
+    return Response.Ok();
+})
+.WithLoadSimulations(    
     
     // injects 50 copies per 1 second
     // injection interval: 1 second
@@ -131,7 +156,12 @@ scenario.WithLoadSimulations(
 **Example 2**: In this example, we combined three simulations: ramp up from 0 to 50, keep the injection rate at 50 for 1 minute, and then ramp down from 50 to 0. On the first simulation(`RampingInject`), the NBomber scheduler will be activated every second(by injection interval) to inject a new Scenario copy. This simulation will continue ramping up the injection rate from 0 to 50 until the end duration. After this, the following simulation(`Inject`) will keep injecting with the injection rate of 50 copies per 1 sec for 1 minute, and then the last simulation(`RampingInject`) starts smoothly ramping down the injection rate from 50 to 0 copies. 
 
 ```csharp
-scenario.WithLoadSimulations(
+Scenario.Create("scenario", async context =>
+{
+    await Task.Delay(1_000);
+    return Response.Ok();
+})
+.WithLoadSimulations(
     
     // ramp up the injection rate from 0 to 50 copies
     // injection interval: 1 second
@@ -165,7 +195,12 @@ Injects a given random number of Scenario copies(instances) during a given durat
 **Example**: This simulation will start injecting Scenario copies with a random rate of 50 to 70 copies per 1 second for 30 seconds. Each Scenario copy will be executed only once and then destroyed.
 
 ```csharp
-scenario.WithLoadSimulations(    
+Scenario.Create("scenario", async context =>
+{
+    await Task.Delay(1_000);
+    return Response.Ok();
+})
+.WithLoadSimulations(    
     
     // injects 50-70 copies per 1 second
     // injection interval: 1 second
@@ -186,7 +221,12 @@ Introduces Scenario pause for a given duration. It's useful for cases when some 
 **Example**: In this example, we will delay the startup of the Scenario by 10 sec.
 
 ```csharp
-scenario.WithLoadSimulations(    
+Scenario.Create("scenario", async context =>
+{
+    await Task.Delay(1_000);
+    return Response.Ok();
+})
+.WithLoadSimulations(    
     
     // delays the startup
     // duration: 10 seconds (it executes from [00:00:00] to [00:00:10])

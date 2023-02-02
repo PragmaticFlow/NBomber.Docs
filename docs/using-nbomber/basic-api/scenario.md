@@ -9,7 +9,7 @@ import ScenarioStatsImage from './img/scenario_stats.jpg';
 
 <center><img src={ScenarioImage} width="70%" height="70%" /></center>
 
-Scenario play the most crucial role in building load tests with NBomber. Scenario represents typical user behavior. It’s a workflow that virtual users will follow.
+Scenario play the most crucial role in building load tests with NBomber. Scenario represents typical user behavior. In other words - it’s a workflow that virtual users will follow. Technically speaking, each Scenario instance works as a dedicated .NET Task.
 
 ### Scenario Create
 
@@ -49,7 +49,7 @@ At the end of execution, NBomber will printout the scenario's statistics result:
 
 ### Scenario Init
 
-This method should be used to initialize Scenario and all its dependencies. You can use it to for example to prepare your target system, database or to parse and apply configuration.
+This method should be used to initialize Scenario and all its dependencies. You can use it to prepare your target system, populate the database, or read and apply the JSON configuration for your scenario. If this function throws an exception, the NBomber load test will stop the execution.
 
 ```csharp
 public ScenarioProps WithInit(Func<IScenarioInitContext, Task> initFunc)
@@ -110,7 +110,7 @@ var scenario = Scenario.Create("scenario_with_init", async context =>
 
 ### Scenario Clean
 
-This method should be used to clean the Scenario's resources after the test finishes. 
+This method should be used to clean the scenario's resources after the test finishes. If this method throws an exception, the NBomber logs it and continues execution.
 
 ```csharp
 public ScenarioProps WithClean(Func<IScenarioInitContext, Task> cleanFunc)
@@ -215,6 +215,33 @@ var scenario = Scenario.Create("scenario", async context =>
 .WithoutWarmUp();
 ```
 
+### Scenario LoadSimulations
+
+This method allows configuring the load simulations for the current Scenario. Load simulation allows configuring parallelism and workload profiles. *To get more info please follow this [link](load-simulation).* 
+
+Default value is: `Simulation.KeepConstant(copies: 1, during: TimeSpan.FromMinutes(1))`
+
+```csharp
+public ScenarioProps WithLoadSimulations(params LoadSimulation[] loadSimulations)
+```
+
+Example:
+
+```csharp
+var scenario = Scenario.Create("hello_world_scenario", async context =>
+{
+    await Task.Delay(1_000);
+
+    return Response.Ok();
+})
+.WithoutWarmUp()
+.WithLoadSimulations(
+    Simulation.RampingInject(rate: 50, interval: TimeSpan.FromSeconds(1), during: TimeSpan.FromMinutes(1)),
+    Simulation.Inject(rate: 50, interval: TimeSpan.FromSeconds(1), during: TimeSpan.FromMinutes(1))    
+);
+```
+
+
 ### Scenario RestartIterationOnFail
 
 This method allows enabling or disabling the reset of Scenario iteration in case of [Step](step) failure. The default value is true.
@@ -258,10 +285,10 @@ var scenario = Scenario.Create("scenario", async context =>
 
 ### Scenario MaxFailCount
 
-This method overrides the default value of MaxFailCount for `Scenario`. By default the MaxFailCount = 5_000
+This method overrides the default value of MaxFailCount for `Scenario`. By default the MaxFailCount = 5_000. MaxFailCount is incremented on every failure or failed Response. When a scenario reaches MaxFailCount, NBomber will stop the whole load test.
 
 ```csharp
-public ScenarioProps WithMaxFailCount(int failCount)
+public ScenarioProps WithMaxFailCount(int maxFailCount)
 ```
 
 Usually, when a scenario gets too many errors, it does make sense to stop it earlier since continuing running produces more problems and often does not make much sense. Especially for this case, NBomber counts all scenario's failures, and if the counter reaches the `MaxFailCount`, NBomber will stop the test early.
