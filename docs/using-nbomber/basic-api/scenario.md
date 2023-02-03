@@ -241,7 +241,6 @@ var scenario = Scenario.Create("hello_world_scenario", async context =>
 );
 ```
 
-
 ### Scenario RestartIterationOnFail
 
 This method allows enabling or disabling the reset of Scenario iteration in case of [Step](step) failure. The default value is true.
@@ -286,6 +285,10 @@ var scenario = Scenario.Create("scenario", async context =>
 ### Scenario MaxFailCount
 
 This method overrides the default value of MaxFailCount for `Scenario`. By default the MaxFailCount = 5_000. MaxFailCount is incremented on every failure or failed Response. When a scenario reaches MaxFailCount, NBomber will stop the whole load test.
+
+:::info
+In the case of cluster mode, MaxFailCount is tracked per each NBomber instance exclusively. It doesn't aggregate across the cluster. So if on any NBomber node MaxFailCount is reached, NBomber will stop the whole load test.
+:::
 
 ```csharp
 public ScenarioProps WithMaxFailCount(int maxFailCount)
