@@ -144,7 +144,7 @@ Now, let's add more requests. NBomber uses the **Load Simulation** concept to co
 ### Create production-ready HTTP load test
 
 Now, you got a basic understanding of NBomber and ready to move on. This time we will use:
-- [NBomber.Http](plugins-http) - plugin to simplify defining and handling of HTTP
+- [NBomber.Http](https://github.com/PragmaticFlow/NBomber.Http) - plugin to simplify defining and handling of HTTP
 
 To proceed we only need to install NBomber.Http package.
 
@@ -200,6 +200,6 @@ namespace NBomberTest
 
 Finally, you reach this point! Here you can find additional information which helps you in building real world NBomber tests:
 
-- [Learn general concepts](general-concepts)
-- [Loadtesting basics](loadtesting-basics)
-- [Examples](https://github.com/PragmaticFlow/NBomber/tree/dev/examples)
+<!-- - [Learn general concepts](general-concepts)
+- [Loadtesting basics](loadtesting-basics) -->
+- [Examples](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/CSharpProd)
