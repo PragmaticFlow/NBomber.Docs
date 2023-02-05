@@ -22,7 +22,7 @@ NBomber will help you to build resilient and performant applications that scale.
 
 ### Links
 - [Main web page](https://nbomber.com/)
-- [Documentation](https://nbomber.com/docs/getting-started/overview/)
+- [Roadmap](roadmap)
 - [Chat](https://gitter.im/nbomber/community)
 - [Patreon](https://www.patreon.com/nbomber) - We appreciate every little donation. If everyone we've ever helped gave back just small donation a month, we'd be able to bring you NBomber for years and years to come.
   If you or your company are using NBomber and willing to help keep the project sustainable, please donate via [Patreon](https://www.patreon.com/nbomber).

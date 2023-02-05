@@ -71,8 +71,13 @@ const config = {
         items: [
           {
             to: 'docs/getting-started/overview',
-            activeBasePath: 'docs',
+            // activeBasePath: 'docs',
             label: 'Docs',
+            position: 'left',
+          },
+          {
+            to: 'docs/getting-started/roadmap',            
+            label: 'Roadmap',
             position: 'left',
           },
           {to: '/blog', label: 'Blog', position: 'left'},
