@@ -11,7 +11,7 @@ import ScenarioStatsImage from './img/scenario_stats.jpg';
 
 Scenario play the most crucial role in building load tests with NBomber. Scenario represents typical user behavior. In other words - it’s a workflow that virtual users will follow. Technically speaking, each Scenario instance works as a dedicated .NET Task.
 
-### Scenario Create
+## Scenario Create
 
 This method should be used to create Scenario. 
 
@@ -47,9 +47,13 @@ At the end of execution, NBomber will printout the scenario's statistics result:
 
 <center><img src={ScenarioStatsImage} width="80%" height="80%" /></center>
 
-### Scenario Init
+## Scenario Init
 
-This method should be used to initialize Scenario and all its dependencies. You can use it to prepare your target system, populate the database, or read and apply the JSON configuration for your scenario. If this function throws an exception, the NBomber load test will stop the execution.
+This method should be used to initialize Scenario and all its dependencies. You can use it to prepare your target system, populate the database, or read and apply the JSON configuration for your scenario. 
+
+:::info
+Scenario `init` will be invoked before `warm-up` and `bombing` phases. If Scenario `init` throws an exception, the NBomber load test will stop the execution.
+:::
 
 ```csharp
 public ScenarioProps WithInit(Func<IScenarioInitContext, Task> initFunc)
@@ -108,9 +112,13 @@ var scenario = Scenario.Create("scenario_with_init", async context =>
 });
 ```
 
-### Scenario Clean
+## Scenario Clean
 
-This method should be used to clean the scenario's resources after the test finishes. If this method throws an exception, the NBomber logs it and continues execution.
+This method should be used to clean the scenario's resources after the test finishes. 
+
+:::info
+Scenario `clean` will be invoked after `warm-up` and `bombing` phases. If Scenario `clean` throws an exception, the NBomber logs it and continues execution.
+:::
 
 ```csharp
 public ScenarioProps WithClean(Func<IScenarioInitContext, Task> cleanFunc)
@@ -133,7 +141,7 @@ var scenario = Scenario.Create("scenario_with_clean", async context =>
 ```
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/CSharpProd/HelloWorld/ScenarioWithInit.cs).*
 
-### Scenario Context
+## Scenario Context
 
 ScenarioContext represents the execution context of the currently running Scenario. It provides functionality to log particular events, get information about the test, thread id, scenario copy/instance number, etc. Also, it provides the option to stop all or particular scenarios manually. 
 
@@ -179,7 +187,7 @@ var scenario = Scenario.Create("hello_world_scenario", async context =>
 
 Another popular usage of ScenarioContext is related to share data between steps that you can find by this link.
 
-### Scenario WarmUp
+## Scenario WarmUp
 
 This method sets duration of warm-up phase. By default warm-up duration is 30 seconds.
 
@@ -215,7 +223,7 @@ var scenario = Scenario.Create("scenario", async context =>
 .WithoutWarmUp();
 ```
 
-### Scenario LoadSimulations
+## Scenario LoadSimulations
 
 This method allows configuring the load simulations for the current Scenario. Load simulation allows configuring parallelism and workload profiles. *To get more info please follow this [link](load-simulation).* 
 
@@ -241,7 +249,7 @@ var scenario = Scenario.Create("hello_world_scenario", async context =>
 );
 ```
 
-### Scenario RestartIterationOnFail
+## Scenario RestartIterationOnFail
 
 This method allows enabling or disabling the reset of Scenario iteration in case of [Step](step) failure. The default value is true.
 
@@ -282,7 +290,7 @@ var scenario = Scenario.Create("scenario", async context =>
 .WithRestartIterationOnFail(shouldRestart: false); // by default it's true
 ```
 
-### Scenario MaxFailCount
+## Scenario MaxFailCount
 
 This method overrides the default value of MaxFailCount for `Scenario`. By default the MaxFailCount = 5_000. MaxFailCount is incremented on every failure or failed Response. When a scenario reaches MaxFailCount, NBomber will stop the whole load test.
 
@@ -307,7 +315,7 @@ var scenario = Scenario.Create("scenario", async context =>
 .WithMaxFailCount(10);
 ```
 
-### Empty scenario
+## Empty scenario
 
 This method creates empty `Scenario`.
 

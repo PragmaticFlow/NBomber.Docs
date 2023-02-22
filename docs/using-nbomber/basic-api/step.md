@@ -11,7 +11,7 @@ import StepsStatsImage from './img/steps_stats.jpg';
 
 Step represents a single user action like login, logout, etc. Step helps you granulate your [Scenario](scenario) execution on parts and measure them separately. In case you don't need to split your Scenario on parts you can use just Scenario without any Step.
 
-### Step Run
+## Step Run
 
 This method should be used to run Step.
 
@@ -59,7 +59,7 @@ At the end of execution, NBomber will printout the scenario's statistics result:
 
 <center><img src={StepsStatsImage} width="70%" height="70%" /></center>
 
-### Using ScenarioContext inside Step
+## Using ScenarioContext inside Step
 
 [ScenarioContext](scenario#scenario-context) is very useful abstarction that can be used inside `Step`.
 
@@ -90,11 +90,11 @@ var scenario = Scenario.Create("scenario", async context =>
 });
 ```
 
-### Sharing data between steps
+## Sharing data between steps
 
 To share data between steps NBomber provides 3 options:
 
-#### 1. Sharing data via Response type
+### 1. Sharing data via Response type
 
 ```csharp
 var scenario = Scenario.Create("scenario", async context =>
@@ -120,7 +120,7 @@ var scenario = Scenario.Create("scenario", async context =>
 });
 ```
 
-#### 2. Sharing data via ScenarioContext.Data
+### 2. Sharing data via ScenarioContext.Data
 
 ```csharp
 var scenario = Scenario.Create("scenario", async context =>
@@ -144,7 +144,7 @@ var scenario = Scenario.Create("scenario", async context =>
 });
 ```
 
-#### 3. Sharing data via variables (closure)
+### 3. Sharing data via variables (closure)
 
 ```csharp
 var scenario = Scenario.Create("scenario", async context =>
@@ -171,7 +171,7 @@ var scenario = Scenario.Create("scenario", async context =>
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/CSharpProd/HelloWorld/StepsShareData.cs).*
 
-### Step and retry logic
+## Step and retry logic
 
 In the cloud, transient faults aren't uncommon and an application should be designed to handle them elegantly and transparently. It's a common practice to use retry logic to handle failed requests. NBomber provides a simple option to implement retry logic for Step, the [RestartIterationOnFail](scenario#scenario-restartiterationonfail) should be used.
 

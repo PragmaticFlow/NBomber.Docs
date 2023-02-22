@@ -20,16 +20,16 @@ Here is a table of load simulations available in NBomber:
 | - | - | - |
 | [RampingConstant](load-simulation#ramping-constant) | Closed systems | Use it for a smooth ramp up and ramp down. Usually, this simulation type is used to test databases, message brokers, or any other system that works with a static client's pool of connections and reuses them. |
 | [KeepConstant](load-simulation#keep-constant) | Closed systems | Use it when you need to run and keep a constant amount of Scenario copies(instances) for a specific period. Usually, this simulation type is used to test databases, message brokers, or any other system that works with a static client's pool of connections and reuses them. |
-| [RampingInject](load-simulation#ramping-inject) | Open systems | With this simulation, you control the Scenario injection rate and injection interval. Use it for a smooth ramp up and ramp down. Usually, this simulation type is used to test HTTP API. |
-| [Inject](load-simulation#inject) | Open systems | With this simulation, you control the Scenario injection rate and injection interval. Use it when you want to maintain a constant rate of requests without being affected by the performance of the system you load test. Usually, this simulation type is used to test HTTP API. |
-| [InjectRandom](load-simulation#inject-random) | Open systems | With this simulation, you control the Scenario injection rate and injection interval. Use it when you want to maintain a random rate of requests without being affected by the performance of the system you load test. Usually, this simulation type is used to test HTTP API. |
+| [RampingInject](load-simulation#ramping-inject) | Open systems | With this simulation, **you control the Scenario injection rate** and injection interval. Use it for a smooth ramp up and ramp down. Usually, this simulation type is used to test HTTP API. |
+| [Inject](load-simulation#inject) | Open systems | With this simulation, **you control the Scenario injection rate** and injection interval. Use it when you want to maintain a constant rate of requests without being affected by the performance of the system you load test. Usually, this simulation type is used to test HTTP API. |
+| [InjectRandom](load-simulation#inject-random) | Open systems | With this simulation, **you control the Scenario injection rate** and injection interval. Use it when you want to maintain a random rate of requests without being affected by the performance of the system you load test. Usually, this simulation type is used to test HTTP API. |
 | [Pause](load-simulation#pause) |  | Introduces Scenario pause for a given duration. It's useful for cases when some Scenario start should be delayed or paused in the middle of execution. |
 
 :::info
 Load Simulations can be configured via JSON configuration file.
 :::
 
-### Ramping Constant
+## Ramping Constant
 
 Adds or removes a given number of Scenario copies(instances) with a linear ramp over a given duration. **Each Scenario copy behaves like a long-running thread that runs continually(by specified duration) and will be destroyed when the current load simulation stops.** Use it for a smooth ramp up and ramp down. Usually, this simulation type is used to test databases, message brokers, or any other system that works with a static client's pool of connections and reuses them.
 
@@ -54,7 +54,7 @@ Scenario.Create("scenario", async context =>
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/CSharpProd/HelloWorld/HelloWorldExample.cs).*
 
-### Keep Constant
+## Keep Constant
 
 Keeps activated(constantly running) a fixed number of Scenario copies(instances) which executes as many iterations as possible for a specified duration. **Each Scenario copy behaves like a long-running thread that runs continually(by specified duration) and will be destroyed when the current load simulation stops.** Use it when you need to run and hold a constant amount of Scenario copies(instances) for a specific period. Usually, this simulation type is used to test databases, message brokers, or any other system that works with a static client's pool of connections and reuses them.
 
@@ -98,7 +98,7 @@ Scenario.Create("scenario", async context =>
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/CSharpProd/HelloWorld/HelloWorldExample.cs).*
 
-### Ramping Inject
+## Ramping Inject
 
 Injects a given number of Scenario copies(instances) with a linear ramp over a given duration. **Each Scenario copy behaves like a short-running thread that runs only once and then is destroyed.** With this simulation, you control the Scenario injection rate and injection interval. Use it for a smooth ramp up and ramp down. Usually, this simulation type is used to test HTTP API.
 
@@ -130,7 +130,7 @@ Scenario.Create("scenario", async context =>
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/CSharpProd/HelloWorld/LoadSimulation/ScenarioInjectRate.cs).*
 
-### Inject
+## Inject
 
 Injects a given number of Scenario copies(instances) during a given duration. **Each Scenario copy behaves like a short-running thread that runs only once and then is destroyed.** With this simulation, you control the Scenario injection rate and injection interval. Use it when you want to maintain a constant rate of requests without being affected by the performance of the system you load test. Usually, this simulation type is used to test HTTP API.
 
@@ -188,7 +188,7 @@ Scenario.Create("scenario", async context =>
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/CSharpProd/HelloWorld/LoadSimulation/ScenarioInjectRate.cs).*
 
-### Inject Random
+## Inject Random
 
 Injects a given random number of Scenario copies(instances) during a given duration. **Each Scenario copy behaves like a short-running thread that runs only once and then is destroyed.** With this simulation, you control the Scenario injection rate and injection interval. Use it when you want to maintain a random rate of requests without being affected by the performance of the system you load test. Usually, this simulation type is used to test HTTP API.
 
@@ -214,7 +214,7 @@ Scenario.Create("scenario", async context =>
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/CSharpProd/HelloWorld/LoadSimulation/ScenarioInjectRate.cs).*
 
-### Pause
+## Pause
 
 Introduces Scenario pause for a given duration. It's useful for cases when some Scenario start should be delayed or paused in the middle of execution.
 
