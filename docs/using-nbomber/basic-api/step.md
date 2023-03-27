@@ -61,7 +61,7 @@ At the end of execution, NBomber will printout the scenario's statistics result:
 
 ## Using ScenarioContext inside Step
 
-[ScenarioContext](scenario#scenario-context) is very useful abstarction that can be used inside `Step`.
+[ScenarioContext](scenario#scenario-context) is very useful abstraction that can be used inside `Step`.
 
 ```csharp
 var scenario = Scenario.Create("scenario", async context =>
