@@ -8,7 +8,17 @@ This is a living document containing the NBomber team’s priorities as well as 
 
 ### Past and Future Work
 
-#### v4.1
+#### v4.2
+
 - [ ] [Monitoring the Agents and Coordinators](https://github.com/PragmaticFlow/NBomber/issues/492)
-- [ ] [Cluster data partition](https://github.com/PragmaticFlow/NBomber/issues/499)
-- [ ] [Configurable Cluster synchronisation period](https://github.com/PragmaticFlow/NBomber/issues/522)
+- [ ] [Metrics Api](https://github.com/PragmaticFlow/NBomber/issues/572)
+
+#### v4.1.2
+
+- [x] [Release Notes](https://github.com/PragmaticFlow/NBomber/releases/tag/v4.1.2)
+
+#### v4.1
+
+- [x] [Release Notes](https://github.com/PragmaticFlow/NBomber/releases/tag/v4.1.0)
+- [x] [HTTP support of HttpCompletionOption and CancellationToken](https://github.com/PragmaticFlow/NBomber/issues/536)
+- [x] [Cluster auto scenario partition](https://github.com/PragmaticFlow/NBomber/issues/499)
