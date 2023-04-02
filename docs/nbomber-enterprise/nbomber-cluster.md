@@ -14,6 +14,12 @@ NBomber Cluster is an additional runtime component that can run NBomber load tes
 We assume that you are already familiar with the basics of NBomber API and can create and run simple load tests. Also, you should be familiar with configuring your tests via [JSON configuration](../using-nbomber/basic-api/json-config).
 :::
 
+## Terminology
+
+- `Coordinator` is a component responsible for coordinating the execution of the entire test.
+- `Agent` is a component responsible for running load test scenarios and reacting to the commands from the coordinator.
+- `Message Broker` is a communication point in the cluster. All network communication between Coordiantor and Agents goes via the message broker.
+
 ## Why do you need the cluster?
 
 - **The capacity of single NBomber node is no longer enough** to create a relevant load, and you want to run load test scenarios on multiple nodes.
