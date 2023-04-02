@@ -2,7 +2,6 @@
 id: coordinator
 title: Coordinator
 sidebar_position: 1
-draft: true
 ---
 
 import ClusterImage from './img/cluster.jpg'; 
@@ -59,6 +58,23 @@ Available settings:
 - `TargetScenarios` specifies target scenarios that Coordinator will execute only. It's an optional parameter. Usually, for high-load scenarios is better to keep this parameter empty to unload Coordinator.
 - `Agents` specifies AgentGroup(s) with TargetScenarios.
 - `MinAgentsCount` specifies a minimal number of agents to start the test. This parameter is optional. If it's not set, the Coordinator will try to discover available agents and wait until the cluster is stabilized. If this parameter is set, Coordinator will wait until the required number of agents become available.
+
+This is the type definition for CoordinatorSettings:
+
+```fsharp
+type AgentGroupSettings = {
+    AgentGroup: string
+    TargetScenarios: string list
+}
+
+type CoordinatorSettings = {
+    ClusterId: string
+    NATSServerURL: string
+    TargetScenarios: string list option
+    Agents: AgentGroupSettings list
+    MinAgentsCount: int option
+}
+```
 
 ### Coordinator JSON Config with GlobalSettings
 
