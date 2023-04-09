@@ -86,7 +86,7 @@ const config = {
             position: 'left',
           },
           {
-            href: 'https://gitter.im/nbomber/community',
+            href: 'https://nbomberworkspace.slack.com/',
             label: 'Chat',
             position: 'left'
           },

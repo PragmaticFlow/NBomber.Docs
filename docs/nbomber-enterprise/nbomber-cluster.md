@@ -6,7 +6,7 @@ sidebar_position: 0
 
 import ClusterImage from './img/cluster.jpg'; 
 
-<center><img src={ClusterImage} width="80%" height="80%" /></center>
+<center><img src={ClusterImage} width="70%" height="70%" /></center>
 
 NBomber Cluster is an additional runtime component that can run NBomber load tests in a distributed way (on multiple nodes) with flexible orchestration.
 

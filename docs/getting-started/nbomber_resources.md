@@ -8,7 +8,7 @@ On this page, you will find information about where you can ask your NBomber que
 
 ## Questions and discussions
 
-The community forum on [Gitter](https://gitter.im/nbomber/community) is the primary support channel of the NBomber community. It’s the place to discuss features, recommendations and support type of questions.
+The community forum on [Slack](https://nbomberworkspace.slack.com/) is the primary support channel of the NBomber community. It’s the place to discuss features, recommendations and support type of questions.
 
 Use [Stack Overflow](https://stackoverflow.com/search?q=nbomber) to ask code-level questions or if you encountered a particular error. Start out by searching using the NBomber tag, and if you find no prior answers, just create a new question using the NBomber and load-testing tags.
 
