@@ -11,7 +11,7 @@ Follow along to learn how to:
 - Create HTTP load test.
 - Ramp the number of requests up and down as the test runs.
 
-:::note
+:::info
 Installation prerequisites
 
 - [.NET SDK](https://dotnet.microsoft.com/download).
