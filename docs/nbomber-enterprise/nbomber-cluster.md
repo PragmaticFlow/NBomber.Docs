@@ -26,6 +26,8 @@ We assume that you are already familiar with the basics of NBomber API and can c
 
 - **You want to get a flexible scenario placement strategy among available nodes.** With this feature, you can specify the placement for each scenario in the cluster. For example, you want to test some web service by running the `Create User` scenario on one group of nodes but the `Read User` scenario on the second. And on the third group of nodes, you run `Publish message to Kafka` scenario.
 
+- **You want to run tests from different geographical regions to verify the latency.**
+
 ## What NBomber Cluster provides?
 
 - It can run multiple scenarios on multiple nodes with flexible topology (scenario placement strategy).
