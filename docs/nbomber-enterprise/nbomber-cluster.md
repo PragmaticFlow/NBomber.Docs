@@ -45,3 +45,6 @@ We assume that you are already familiar with the basics of NBomber API and can c
 ### What are the API-level differences between NBomber Cluster and NBomber?
 
 The main differnce is that NBomber Cluster is using `NBomberClusterRunner` instead of  `NBomberRunner`. NBomberClusterRunner provides additional settings related to running scenarios in a cluster. Also, the `JSON Config` is a bit extended for NBomber Cluster to provide a few additional settings for scenario placement in the cluster.
+
+
+<!-- startup Order for agents and coordinator -->
