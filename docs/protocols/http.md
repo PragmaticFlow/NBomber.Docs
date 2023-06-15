@@ -129,7 +129,7 @@ using var httpClient = new HttpClient(socketsHandler);
 
 HttpClient should be used carefully since the wrong use of it can cause `socket exhaustion problems`. You can read more about this problem in this article: [You are using HttpClient wrong](https://www.aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/). The basic recommendations are:
 - Use a singleton HttpClient (shared instance) per Scenario. 
-- Do not create many HttpClient. Instead just reuse a single instance per Scenario.
+- Do not create many HttpClient instances. Instead just reuse a single instance per Scenario.
 - Disposing HttpClient is not a cheap operation. It can cause `socket exhaustion problems`.
 
 ```csharp
