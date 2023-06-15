@@ -8,10 +8,14 @@ This is a living document containing the NBomber team’s priorities as well as 
 
 ### Past and Future Work
 
-#### v4.2
+#### v5.1
+- [ ] [Cluster: add support of AutoCluster config](https://github.com/PragmaticFlow/NBomber/issues/592)
 
-- [ ] [Monitoring the Agents and Coordinators](https://github.com/PragmaticFlow/NBomber/issues/492)
-- [ ] [Metrics Api](https://github.com/PragmaticFlow/NBomber/issues/572)
+#### v5.0
+
+- [x] [New HTML Report](https://twitter.com/AntyaDev/status/1668604141394960385)
+- [x] [Monitoring the Agents and Coordinators](https://github.com/PragmaticFlow/NBomber/issues/492)
+- [x] [Metrics Api](https://github.com/PragmaticFlow/NBomber/issues/572)
 
 #### v4.1.2
 

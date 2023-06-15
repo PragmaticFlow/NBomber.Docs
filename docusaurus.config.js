@@ -79,19 +79,24 @@ const config = {
             label: 'Roadmap',
             position: 'left',
           },
+          {
+            to: 'https://github.com/PragmaticFlow/NBomber/issues',
+            label: 'Issue Tracker',
+            position: 'left',
+          },
           {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://github.com/PragmaticFlow/NBomber',
+            to: 'https://github.com/PragmaticFlow',
             label: 'GitHub',
             position: 'left',
           },
           {
-            href: 'https://nbomberworkspace.slack.com/',
+            to: 'https://nbomberworkspace.slack.com/',
             label: 'Chat',
             position: 'left'
           },
           {
-            href: 'https://github.com/PragmaticFlow/NBomber/tree/dev/examples/CSharpProd',
+            to: 'https://github.com/PragmaticFlow/NBomber/tree/dev/examples/CSharpProd',
             label: 'Examples',
             position: 'left'
           },     
