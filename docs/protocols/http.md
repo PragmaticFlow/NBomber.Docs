@@ -63,7 +63,7 @@ var scenario = Scenario.Create("my scenario", async context =>
     
     var response = await Http.Send(httpClient, request);
 
-    return reponse;
+    return response;
 });
 ```
 
