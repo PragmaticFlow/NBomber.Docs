@@ -174,8 +174,11 @@ namespace NBomberTest
             {
                 var request =
                     Http.CreateRequest("GET", "https://nbomber.com")
-                        .WithHeader("Accept", "text/html")
-                        .WithBody(new StringContent("{ some JSON }"));
+                        .WithHeader("Accept", "text/html");
+                        // .WithHeader("Accept", "application/json")
+                        // .WithBody(new StringContent("{ id: 1 }", Encoding.UTF8, "application/json");
+                        // .WithBody(new ByteArrayContent(new [] {1,2,3}))
+                        
 
                 var response = await Http.Send(httpClient, request);
 

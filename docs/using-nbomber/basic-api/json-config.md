@@ -47,6 +47,8 @@ NBomberRunner
 MyLoadTest.dll --config="config.json"
 ```
 
+## Scenario custom settings
+
 This is a complete JSON Config example that you can use to override the settings you wish. In addition to JSON Config, you will find a corresponding C#(on the C# tab) code example that shows all settings that JSON Config will override. **Also, consider how CustomSettings will be passed and loaded inside the C# example.**
 
 <Tabs>
@@ -87,8 +89,7 @@ This is a complete JSON Config example that you can use to override the settings
     "ReportFileName": "custom_report_name",
     "ReportFolder": "./my_reports",
     "ReportFormats": ["Html", "Txt"],
-    "ReportingInterval": "00:00:30",
-    "EnableHintsAnalyzer": false
+    "ReportingInterval": "00:00:30"
   }
 }
 
@@ -158,8 +159,7 @@ public class JSONConfigExample
             .WithReportFileName("my_report")
             .WithReportFolder("report_folder")
             .WithReportFormats(ReportFormat.Txt, ReportFormat.Html)
-            .WithReportingInterval(TimeSpan.FromSeconds(10))
-            .EnableHintsAnalyzer(true)
+            .WithReportingInterval(TimeSpan.FromSeconds(10))            
             .Run();
     }
 }
