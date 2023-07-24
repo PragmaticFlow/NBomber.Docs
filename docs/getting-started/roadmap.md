@@ -8,8 +8,13 @@ This is a living document containing the NBomber team’s priorities as well as 
 
 ### Past and Future Work
 
-#### v5.1
+#### v5.2
 - [ ] [Cluster: add support of AutoCluster config](https://github.com/PragmaticFlow/NBomber/issues/592)
+
+#### v5.1
+- [x] [Add simple progress bar for warm up](https://github.com/PragmaticFlow/NBomber/issues/604)
+- [x] [Fix incorrect construction of html-reports](https://github.com/PragmaticFlow/NBomber/issues/605)
+- [x] [Fix version for cluster HTML report](https://github.com/PragmaticFlow/NBomber/issues/601)
 
 #### v5.0
 

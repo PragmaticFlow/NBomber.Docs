@@ -75,6 +75,11 @@ const config = {
             position: 'left',
           },
           {
+            to: 'https://www.youtube.com/@nbomber5716',            
+            label: 'Videos',
+            position: 'left',
+          },
+          {
             to: 'docs/getting-started/roadmap',            
             label: 'Roadmap',
             position: 'left',
