@@ -12,11 +12,11 @@ NBomber Cluster is a feature of NBomber that allows running NBomber load tests i
 
 ## Terminology
 
-In the cluster mode, NBomber can run either as Coordinator (aka Leader) or Agent (aka Worker).
+In the cluster mode, the single NBomber instance(process) can run either as Coordinator (aka Leader) or Agent (aka Worker).
 
-- `Coordinator` is a cluster role which is responsible for coordinating the execution of the entire test. The coordinator can be only one per cluster.
+- `Coordinator` is a cluster role which is responsible for coordinating the execution of the entire test. The coordinator can be only one per cluster. The cluster can't start without Coordinator.
 - `Agent` is a cluster role which is responsible for running load test scenarios and reacting to the commands from the coordinator.
-- `Message Broker` is a communication point in the cluster. All network communication between Coordiantor and Agents goes via the message broker. Usually, it is used by the coordinator to send commands to agents. Also, agents can send metrics to the coordinator for further aggregation.
+- `Message Broker` is a communication point in the cluster. All network communication between the coordinator and agents goes via the message broker. Usually, it is used by the coordinator to send commands to agents. Also, agents can send metrics to the coordinator for further aggregation.
 
 :::info
 NBomber is using [NATS](https://nats.io/) message broker. The simplest way to [install](../getting-started/installation#install-nats-message-broker) it is using Docker.
