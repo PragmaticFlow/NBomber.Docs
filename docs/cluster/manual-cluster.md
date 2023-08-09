@@ -1,12 +1,9 @@
 ---
-id: coordinator
-title: Coordinator
-sidebar_position: 1
+id: manual-cluster
+title: Manual Cluster
+sidebar_position: 3
+draft: true
 ---
-
-import ClusterImage from './img/cluster.jpg'; 
-
-<center><img src={ClusterImage} width="70%" height="70%" /></center>
 
 Coordinator is a component responsible for coordinating the execution of the entire test for NBomber Cluster: scenario warm-up/start/stop/placement, fetching all metrics from Agent(s), etc. 
 

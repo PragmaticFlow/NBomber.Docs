@@ -1,7 +1,7 @@
 ---
 id: scenario-auto-partitions
 title: Scenario Auto Partitions
-sidebar_position: 3
+sidebar_position: 4
 draft: true
 ---
 

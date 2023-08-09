@@ -1,7 +1,7 @@
 ---
 id: hello_world_tutorial
 title: Hello World Tutorial
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 This documentation will help you go from a total beginner to a seasoned NBomber expert!

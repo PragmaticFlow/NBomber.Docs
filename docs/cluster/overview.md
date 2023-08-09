@@ -1,24 +1,26 @@
 ---
-id: nbomber-cluster
-title: NBomber Cluster
+id: overview
+title: Overview
 sidebar_position: 0
 ---
 
 import ClusterImage from './img/cluster.jpg'; 
 
-<center><img src={ClusterImage} width="70%" height="70%" /></center>
+<center><img src={ClusterImage} width="60%" height="60%" /></center>
 
-NBomber Cluster is an additional runtime component that can run NBomber load tests in a distributed way (on multiple nodes) with flexible orchestration.
-
-:::info
-We assume that you are already familiar with the basics of NBomber API and can create and run simple load tests. Also, you should be familiar with configuring your tests via [JSON configuration](../using-nbomber/basic-api/json-config).
-:::
+NBomber Cluster is a feature of NBomber that allows running NBomber load tests in a distributed way (on multiple nodes) with flexible orchestration.
 
 ## Terminology
 
-- `Coordinator` is a component responsible for coordinating the execution of the entire test.
-- `Agent` is a component responsible for running load test scenarios and reacting to the commands from the coordinator.
-- `Message Broker` is a communication point in the cluster. All network communication between Coordiantor and Agents goes via the message broker.
+In the cluster mode, NBomber can run either as Coordinator (aka Leader) or Agent (aka Worker).
+
+- `Coordinator` is a cluster role which is responsible for coordinating the execution of the entire test. The coordinator can be only one per cluster.
+- `Agent` is a cluster role which is responsible for running load test scenarios and reacting to the commands from the coordinator.
+- `Message Broker` is a communication point in the cluster. All network communication between Coordiantor and Agents goes via the message broker. Usually, it is used by the coordinator to send commands to agents. Also, agents can send metrics to the coordinator for further aggregation.
+
+:::info
+NBomber is using [NATS](https://nats.io/) message broker. The simplest way to [install](../getting-started/installation#install-nats-message-broker) it is using Docker.
+:::
 
 ## Why do you need the cluster?
 
@@ -37,14 +39,9 @@ We assume that you are already familiar with the basics of NBomber API and can c
 - It provides auto partition assignment for the same scenario in the cluster. It's a valuable feature when you want to assign some data range per Agent. In this way, each Agent that runs the same scenario will automatically receive a partition number(keys range) that can be used to load/prepare some data.
 - It supports all(TXT, CSV, MD, HTML) report types.
 
-### What are the limitations of NBomber Cluster?
+## What are the limitations of NBomber Cluster?
 
 - Is there a limit on the number of nodes in the cluster? No.
 - Is there any limitation on the number of clusters that can run concurrently? No.
-
-### What are the API-level differences between NBomber Cluster and NBomber?
-
-The main differnce is that NBomber Cluster is using `NBomberClusterRunner` instead of  `NBomberRunner`. NBomberClusterRunner provides additional settings related to running scenarios in a cluster. Also, the `JSON Config` is a bit extended for NBomber Cluster to provide a few additional settings for scenario placement in the cluster.
-
 
 <!-- startup Order for agents and coordinator -->
