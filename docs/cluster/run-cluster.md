@@ -31,7 +31,7 @@ NBomberRunner
 
 - `ManualCluster` - this type provides an advanced way to configure a cluster manually for Coordinator and Agents. The main benefit of this type of configuration is that it allows you to choose the scenario placement topology. You will be able to specify the TargetScenarios for Agents and Coordiantor separately. For example, you want to test some web service by running the `Create User` scenario on one Agent node but the `Read User` scenario on the second Agent. With `ManualCluster` configuration, you can configure a cluster with a concrete scenario placement per node (AgentGroup) in the cluster. This configuration type is recommended when you have a concrete need for granular scenario placement inside a cluster.
 
-For simplicity, we will be using AutoCluster configuration for a cluster with three nodes (1 Coordinator + 2 Agents).
+For simplicity, we will be using AutoCluster configuration for a cluster with two nodes (Coordinator + 1 Agent).
 
 ```json title="autocluster-config.json"
 {
@@ -50,7 +50,7 @@ For simplicity, we will be using AutoCluster configuration for a cluster with th
 
             "Agent": {
                 "TargetScenarios": ["test_scenario"],
-                "AgentsCount": 2
+                "AgentsCount": 1
             }
         }
 

@@ -12,7 +12,7 @@ import AutoClusterImage from './img/autocluster.jpg';
 
 ### AutoCluster Config
 
-This is a basic example of AutoCluster configuration for a cluster with three nodes (1 Coordinator + 2 Agents): 
+This is a basic example of AutoCluster configuration for a cluster with two nodes (Coordinator + 1 Agent): 
 
 ```json title="autocluster-config.json"
 {
@@ -31,7 +31,7 @@ This is a basic example of AutoCluster configuration for a cluster with three no
 
             "Agent": {
                 "TargetScenarios": ["test_scenario"],
-                "AgentsCount": 2
+                "AgentsCount": 1
             }
         }
 
@@ -65,7 +65,7 @@ This is example of AutoCluster configuration with a ScenariosSettings:
 
             "Agent": {
                 "TargetScenarios": ["test_scenario"],
-                "AgentsCount": 2
+                "AgentsCount": 1
             }
         }
 
