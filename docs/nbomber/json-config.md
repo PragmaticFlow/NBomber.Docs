@@ -168,7 +168,7 @@ public class JSONConfigExample
 </TabItem>
 </Tabs>
 
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/CSharpProd/Features/CustomSettings/config.json).*
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/Features/CustomSettings/config.json).*
 
 ## JSON Infrastracture Config
 
@@ -234,4 +234,4 @@ This is an example of JSON Infrastracture Config.
 }
 ```
 
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/CSharpProd/Features/RealtimeReporting/InfluxDB/infra-config.json).*
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/Features/RealtimeReporting/InfluxDB/infra-config.json).*

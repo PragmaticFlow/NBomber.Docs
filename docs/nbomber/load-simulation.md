@@ -52,7 +52,7 @@ Scenario.Create("scenario", async context =>
 );
 ```
 
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/CSharpProd/HelloWorld/HelloWorldExample.cs).*
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/HelloWorldExample.cs).*
 
 ## Keep Constant
 
@@ -96,7 +96,7 @@ Scenario.Create("scenario", async context =>
 );
 ```
 
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/CSharpProd/HelloWorld/HelloWorldExample.cs).*
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/HelloWorldExample.cs).*
 
 ## Ramping Inject
 
@@ -128,7 +128,7 @@ Scenario.Create("scenario", async context =>
 );
 ```
 
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/CSharpProd/HelloWorld/LoadSimulation/ScenarioInjectRate.cs).*
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/LoadSimulation/ScenarioInjectRate.cs).*
 
 ## Inject
 
@@ -186,7 +186,7 @@ Scenario.Create("scenario", async context =>
 );
 ```
 
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/CSharpProd/HelloWorld/LoadSimulation/ScenarioInjectRate.cs).*
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/LoadSimulation/ScenarioInjectRate.cs).*
 
 ## Inject Random
 
@@ -212,7 +212,7 @@ Scenario.Create("scenario", async context =>
 );
 ```
 
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/CSharpProd/HelloWorld/LoadSimulation/ScenarioInjectRate.cs).*
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/LoadSimulation/ScenarioInjectRate.cs).*
 
 ## Pause
 
@@ -241,4 +241,4 @@ Scenario.Create("scenario", async context =>
 );
 ```
 
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/CSharpProd/HelloWorld/LoadSimulation/DelayedScenarioStart.cs).*
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/LoadSimulation/DelayedScenarioStart.cs).*

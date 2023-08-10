@@ -74,7 +74,7 @@ var scenario = Scenario.Create("scenario_with_init", async context =>
     return Task.CompletedTask;
 });
 ```
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/CSharpProd/HelloWorld/ScenarioWithInit.cs).*
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/ScenarioWithInit.cs).*
 
 One of the widespread use cases for scenario init is to fetch a global JWT token for the whole load test scenario.
 
@@ -93,7 +93,7 @@ var scenario = Scenario.Create("scenario_with_init", async context =>
 });
 ```
 
-Another widespread use case is to get and apply CustomSettings for the Scenario from the JSON configuration file. *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/CSharpProd/Features/CustomSettings).*
+Another widespread use case is to get and apply CustomSettings for the Scenario from the JSON configuration file. *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/Features/CustomSettings).*
 
 ```csharp
 var scenario = Scenario.Create("scenario_with_init", async context =>
@@ -139,7 +139,7 @@ var scenario = Scenario.Create("scenario_with_clean", async context =>
     return Task.CompletedTask;
 });
 ```
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/CSharpProd/HelloWorld/ScenarioWithInit.cs).*
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/ScenarioWithInit.cs).*
 
 ## Scenario Context
 

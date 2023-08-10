@@ -205,4 +205,4 @@ Finally, you reach this point! Here you can find additional information which he
 
 <!-- - [Learn general concepts](general-concepts)
 - [Loadtesting basics](loadtesting-basics) -->
-- [Examples](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/CSharpProd)
+- [Examples](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo)

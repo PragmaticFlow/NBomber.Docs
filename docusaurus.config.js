@@ -101,7 +101,7 @@ const config = {
             position: 'left'
           },
           {
-            to: 'https://github.com/PragmaticFlow/NBomber/tree/dev/examples/CSharpProd',
+            to: 'https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo',
             label: 'Examples',
             position: 'left'
           },     

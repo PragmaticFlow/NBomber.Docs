@@ -169,7 +169,7 @@ var scenario = Scenario.Create("scenario", async context =>
 });
 ```
 
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/CSharpProd/HelloWorld/StepsShareData.cs).*
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/StepsShareData.cs).*
 
 ## Step and retry logic
 

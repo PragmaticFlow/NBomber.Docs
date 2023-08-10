@@ -70,8 +70,7 @@ NBomberRunner
 ### Examples
 |Type|Language
 |--|--|
-| [NBomber](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/CSharpProd) | C# |
-| [NBomber Enterprise](https://github.com/PragmaticFlow/NBomber.Enterprise.Examples) | C# |
+| [NBomber](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo) | C# |
 
 ### Contributing
 Would you like to help make NBomber even better? We keep a list of issues that are approachable for newcomers under the [good-first-issue](https://github.com/PragmaticFlow/NBomber/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) label.
