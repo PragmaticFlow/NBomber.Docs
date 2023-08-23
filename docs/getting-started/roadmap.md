@@ -8,8 +8,15 @@ This is a living document containing the NBomber team’s priorities as well as 
 
 ### Past and Future Work
 
+#### v5.2.1
+- [x] [Release Notes](https://github.com/PragmaticFlow/NBomber/releases/tag/v5.2.1)
+- [x] [Migrate NBomber to netstandard2.1](https://github.com/PragmaticFlow/NBomber/issues/619)
+- [x] [Add Scenario Completion Timeout](https://github.com/PragmaticFlow/NBomber/issues/618)
+
 #### v5.2
-- [ ] [Cluster: add support of AutoCluster config](https://github.com/PragmaticFlow/NBomber/issues/592)
+- [x] [Release Notes](https://github.com/PragmaticFlow/NBomber/releases/tag/v5.2.0)
+- [x] [Merge NBomber.Cluster into NBomber](https://github.com/PragmaticFlow/NBomber/issues/609)
+- [x] [Add support of AutoCluster](https://github.com/PragmaticFlow/NBomber/issues/592)
 
 #### v5.1
 - [x] [Add simple progress bar for warm up](https://github.com/PragmaticFlow/NBomber/issues/604)
