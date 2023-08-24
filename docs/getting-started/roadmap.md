@@ -8,6 +8,18 @@ This is a living document containing the NBomber team’s priorities as well as 
 
 ### Past and Future Work
 
+#### v5.4
+- [ ] [Add Global Scenario Iteration Number](https://github.com/PragmaticFlow/NBomber/issues/617)
+- [ ] [Add Load simulation with Iterations](https://github.com/PragmaticFlow/NBomber/issues/621)
+- [ ] [Add user load distribution across the different scenarios](https://github.com/PragmaticFlow/NBomber/issues/531)
+- [ ] [Add API for scenario distribution](https://github.com/PragmaticFlow/NBomber/issues/607)
+
+#### v5.3
+- [ ] [Add support of Manual Cluster](https://github.com/PragmaticFlow/NBomber/issues/620)
+- [ ] [Add Cluster Shared Context](https://github.com/PragmaticFlow/NBomber/issues/580)
+- [ ] [Add support of Local HTTP Server to render realtime HTML reports](https://github.com/PragmaticFlow/NBomber/issues/593)
+- [ ] [Add HTTP tracing for NBomber.Http](https://github.com/PragmaticFlow/NBomber/issues/528)
+
 #### v5.2.1
 - [x] [Release Notes](https://github.com/PragmaticFlow/NBomber/releases/tag/v5.2.1)
 - [x] [Migrate NBomber to netstandard2.1](https://github.com/PragmaticFlow/NBomber/issues/619)
