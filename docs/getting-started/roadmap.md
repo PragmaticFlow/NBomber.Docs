@@ -20,6 +20,10 @@ This is a living document containing the NBomber team’s priorities as well as 
 - [ ] [Add support of Local HTTP Server to render realtime HTML reports](https://github.com/PragmaticFlow/NBomber/issues/593)
 - [ ] [Add HTTP tracing for NBomber.Http](https://github.com/PragmaticFlow/NBomber/issues/528)
 
+#### v5.2.2
+- [x] [Release Notes](https://github.com/PragmaticFlow/NBomber/releases/tag/v5.2.2)
+- [x] [Fix WarmupDuration for cluster mode](https://github.com/PragmaticFlow/NBomber/issues/623)
+
 #### v5.2.1
 - [x] [Release Notes](https://github.com/PragmaticFlow/NBomber/releases/tag/v5.2.1)
 - [x] [Migrate NBomber to netstandard2.1](https://github.com/PragmaticFlow/NBomber/issues/619)
