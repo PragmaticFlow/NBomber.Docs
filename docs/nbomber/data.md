@@ -58,6 +58,8 @@ var csvData  = Data.LoadCsv<User>("https://test-host.com/users-feed-data.csv");
 var jsonData = Data.LoadJson<User[]>("https://test-host.com/users-feed-data.json");
 ```
 
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/Features/DataFeed).*
+
 ### Inject data
 
 After loading the data, we will need to inject it into [Scenario](../nbomber/scenario).
