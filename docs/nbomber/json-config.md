@@ -47,9 +47,9 @@ NBomberRunner
 MyLoadTest.dll --config="config.json"
 ```
 
-## Scenario custom settings
+### Overriding settings via JSON
 
-This is a complete JSON Config example that you can use to override the settings you wish. In addition to JSON Config, you will find a corresponding C#(on the C# tab) code example that shows all settings that JSON Config will override. **Also, consider how CustomSettings will be passed and loaded inside the C# example.**
+This is a complete JSON Config example that you can use to override the settings you wish. In addition to JSON Config, you will find a corresponding C#(on the C# tab) code example that shows all settings that JSON Config will override. **Also, consider how CustomSettings and GlobalCustomSettings will be passed and loaded inside the C# example.**
 
 <Tabs>
 <TabItem value="JSON" label="JSON" default>
@@ -85,6 +85,12 @@ This is a complete JSON Config example that you can use to override the settings
           "MaxFailCount": 500
       }
     ],
+
+    // highlight-start
+    "GlobalCustomSettings": {            
+        "ConnectionString": "my_db_connection_string"
+    },
+    // highlight-end
     
     "ReportFileName": "custom_report_name",
     "ReportFolder": "./my_reports",
@@ -104,6 +110,11 @@ public class CustomScenarioSettings
 {
     public string MyTestField { get; set; }
     public int MyPauseMs { get; set; }
+}
+
+public class GlobalScenarioSettings
+{
+    public string ConnectionString { get; set; }
 }
 
 public class JSONConfigExample
@@ -130,7 +141,7 @@ public class JSONConfigExample
         })
         .WithInit(context => 
         {      
-            // On Scenario Init, the CustomScenarioSettings defined in JSON Config
+            // On Scenario Init, the corresponding CustomSettings defined in JSON Config
             // will be passed and loaded here.
             // highlight-start
             _customSettings = context.CustomSettings.Get<CustomScenarioSettings>();
@@ -138,6 +149,16 @@ public class JSONConfigExample
             context.Logger.Information(
                 "test init received CustomSettings.MyTestField '{0}'",
                 _customSettings.MyTestField
+            );
+            // highlight-end
+
+            // highlight-start
+            // if you want some settings to be shared globally among all scenarios
+            // you can use GlobalCustomSettings for this
+            var globalSettings = context.GlobalCustomSettings.Get<GlobalScenarioSettings>();
+            context.Logger.Information(
+                "test init received GlobalSettings.ConnectionString '{0}'",
+                globalSettings.ConnectionString
             );
             // highlight-end
 
@@ -168,7 +189,7 @@ public class JSONConfigExample
 </TabItem>
 </Tabs>
 
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/Features/CustomSettings/config.json).*
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/Features/CustomSettings).*
 
 ## JSON Infrastracture Config
 
