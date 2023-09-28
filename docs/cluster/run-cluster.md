@@ -81,6 +81,8 @@ NBomberRunner
     .Run();
 ```
 
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/Cluster/AutoCluster).*
+
 ### Run Local Dev Cluster
 
 :::info

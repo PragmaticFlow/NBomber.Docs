@@ -11,11 +11,13 @@ import DataFeedImage from './img/data-feed.jpeg';
 The NBomber.Data package provides functionality for NBomber to work with data.
 
 :::info
-To start working with NBomber.Data package you should install it:
+To start working with [NBomber.Data](https://www.nuget.org/packages/NBomber.Data) package you should install it:
 
 ```code
 dotnet add package NBomber.Data
 ```
+
+Also, the [source code is available on Github](https://github.com/PragmaticFlow/NBomber.Data).
 :::
 
 ## Generate random bytes
