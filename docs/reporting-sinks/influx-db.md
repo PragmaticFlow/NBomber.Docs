@@ -23,21 +23,6 @@ The simple way to run InfluxDB is via Docker. By this link, you can find a [dock
 
 :::
 
-```csharp
-var influxDbSink = new InfluxDBSink(
-    new InfluxDBClient("http://localhost:8086", "token")
-);
-
-var scenario = Scenario.Create("scenario", async context => { ... });
-
-NBomberRunner
-    .RegisterScenarios(scenario)    
-    .WithReportingInterval(TimeSpan.FromSeconds(5))
-    .WithReportingSinks(influxDbSink);
-```
-
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/Features/RealtimeReporting/InfluxDB).*
-
 ### Configuring InfluxDB Sink via JSON Config
 
 To configure InfluxDB Sink we will use [JSON Infrastracture Config](../nbomber/json-config#json-infrastracture-config) file
@@ -47,9 +32,8 @@ To configure InfluxDB Sink we will use [JSON Infrastracture Config](../nbomber/j
     "InfluxDBSink": {
       "Url": "http://localhost:8086",
       "Database": "nbomber",
-      "UserName": "",
-      "Password": "",
-      "Token": "",
+      "UserName": "username",
+      "Password": "password",      
       "CustomTags": [{"Key": "environment", "Value": "linux"}]
     }
 }
@@ -66,7 +50,9 @@ NBomberRunner
     .RegisterScenarios(scenario)    
     .WithReportingInterval(TimeSpan.FromSeconds(5))
     .WithReportingSinks(influxDbSink)
+    // highlight-start
     .LoadInfraConfig("infra-config.json");
+    // highlight-end
 ```
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/Features/RealtimeReporting/InfluxDB).*
@@ -97,14 +83,6 @@ var scenario = Scenario.Create("scenario", async context =>
 ### Working with InfluxDB v1 and v2
 
 **For InfluxDB v1:**
-
-```csharp
-var influxDbSink = new InfluxDBSink(
-    new InfluxDBClient("http://localhost:8086", "username", "password", "database")
-);
-```
-Or via JSON config.
-
 ```json title="infra-config.json"
 {
     "InfluxDBSink": {
@@ -118,21 +96,37 @@ Or via JSON config.
 ```
 
 **For InfluxDB v2:**
-
-```csharp
-var influxDbSink = new InfluxDBSink(
-    new InfluxDBClient("http://localhost:8086", "token")
-);
-```
-
-Or via JSON config.
-
 ```json title="infra-config.json"
 {
     "InfluxDBSink": {
-      "Url": "http://localhost:8086",      
-      "Token": "token",
+      "Url": "http://localhost:8086",
+      "Token": "Token",
+      "Org": "Org",
+      "Bucket": "nbomber",
       "CustomTags": [{"Key": "environment", "Value": "linux"}]
     }
 }
+```
+
+### Connecting to InfluxDB via code
+
+You might have a situation that requires you to connect to InfluxDB via code. For this, you can inject an instance of InfluxDBClient.
+
+**For InfluxDB v1:**
+```csharp
+var influxDbSink = new InfluxDBSink(
+    new InfluxDBClient("http://localhost:8086", "username", "password", "database", retentionPolicy: "autogen")
+);
+```
+
+**For InfluxDB v2:**
+```csharp
+var influxOpt = new InfluxDBClientOptions("http://localhost:8086");
+influxOpt.Org = "Org";
+influxOpt.Bucket = "nbomber";
+influxOpt.Token = "Token"
+
+var influxDbSink = new InfluxDBSink(
+    new InfluxDBClient(influxOpt)
+);
 ```
