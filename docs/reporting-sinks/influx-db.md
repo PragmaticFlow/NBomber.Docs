@@ -82,7 +82,7 @@ var scenario = Scenario.Create("scenario", async context =>
 
 ### Working with InfluxDB v1 and v2
 
-**For InfluxDB v1:**
+For InfluxDB v1:
 ```json title="infra-config.json"
 {
     "InfluxDBSink": {
@@ -95,7 +95,7 @@ var scenario = Scenario.Create("scenario", async context =>
 }
 ```
 
-**For InfluxDB v2:**
+For InfluxDB v2:
 ```json title="infra-config.json"
 {
     "InfluxDBSink": {
@@ -112,14 +112,14 @@ var scenario = Scenario.Create("scenario", async context =>
 
 You might have a situation that requires you to connect to InfluxDB via code. For this, you can inject an instance of InfluxDBClient.
 
-**For InfluxDB v1:**
+For InfluxDB v1:
 ```csharp
 var influxDbSink = new InfluxDBSink(
     new InfluxDBClient("http://localhost:8086", "username", "password", "database", retentionPolicy: "autogen")
 );
 ```
 
-**For InfluxDB v2:**
+For InfluxDB v2:
 ```csharp
 var influxOpt = new InfluxDBClientOptions("http://localhost:8086");
 influxOpt.Org = "Org";
