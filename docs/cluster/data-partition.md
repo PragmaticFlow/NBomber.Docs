@@ -1,7 +1,7 @@
 ---
 id: data-partition
 title: Data Partition
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 Usually, working in the cluster mode requires handling data by partitions (key ranges). NBomber provides built-in functionality for this called **Scenario Auto Partitioning**.

@@ -29,11 +29,11 @@ NBomberRunner
 
 - [AutoCluster](auto-cluster) - it's a cluster configuration type that provides an easy way to establish a cluster. **With this type of configuration Coordinator will be chosen automatically by leader election.** It's recommended to start with `AutoCluster` since it is simpler to set up and fits the majority of load tests.
 
-- `ManualCluster` - this type provides an advanced way to configure a cluster manually for Coordinator and Agents. The main benefit of this type of configuration is that it allows you to choose the scenario placement topology. You will be able to specify the TargetScenarios for Agents and Coordiantor separately. For example, you want to test some web service by running the `Create User` scenario on one Agent node but the `Read User` scenario on the second Agent. With `ManualCluster` configuration, you can configure a cluster with a concrete scenario placement per node (AgentGroup) in the cluster. This configuration type is recommended when you have a concrete need for granular scenario placement inside a cluster.
+- [ManualCluster](manual-cluster) - this type provides an advanced way to configure a cluster manually for Coordinator and Agents. The main benefit of this type of configuration is that it allows you to choose the scenario placement topology. You will be able to specify the TargetScenarios for Agents and Coordiantor separately. For example, you want to test some web service by running the `Create User` scenario on one Agent node but the `Read User` scenario on the second Agent. With `ManualCluster` configuration, you can configure a cluster with a concrete scenario placement per node (AgentGroup) in the cluster. This configuration type is recommended when you have a concrete need for granular scenario placement inside a cluster.
 
 For simplicity, we will be using AutoCluster configuration for a cluster with two nodes (Coordinator + 1 Agent).
 
-```json title="autocluster-config.json"
+```json title="auto-cluster-config.json"
 {
     "TestSuite": "my test suite",
     "TestName": "my test",
@@ -75,7 +75,7 @@ var scenario = Scenario.Create("test_scenario", async context => { ... });
 NBomberRunner
     .RegisterScenarios(scenario)
     // highlight-start
-    .LoadConfig("autocluster-config.json")
+    .LoadConfig("auto-cluster-config.json")
     .License("YOUR_ENTERPRISE_LICENSE_KEY")
     // highlight-end
     .Run();
@@ -86,33 +86,5 @@ NBomberRunner
 ### Run Local Dev Cluster
 
 :::info
-If you don't have an enterprise license key but you want to try NBomber Cluster you can run it in the development mode via `NBomberRunner.EnableLocalDevCluster`.
+If you don't have an enterprise license key but you want to try NBomber Cluster you can run it in the development mode via [LocalDevCluster](local-dev-cluster).
 :::
-
-LocalDevCluster provides you a full flagged cluster mode with with a limitation that you can run only two nodes per cluster(Coordinator + 1 Agent).
-
-```csharp
-var scenario = Scenario.Create("test_scenario", async context => { ... });
-
-NBomberRunner
-    .RegisterScenarios(scenario)
-    .LoadConfig("autocluster-config.json")
-    // highlight-start
-    .EnableLocalDevCluster(true)
-    // highlight-end
-    .Run();
-```
-
-### Run Cluster via CLI
-
-Another option to run cluster is via using [CLI arguments](../getting-started/cli):
-
-```
-MyLoadTest.dll --config="autocluster-config.json" --license="YOUR_ENTERPRISE_LICENSE_KEY"
-```
-
-For local dev cluster you can use:
-```
-MyLoadTest.dll --config="autocluster-config.json" --cluster-local-dev=true
-```
-<!-- startup Order for agents and coordinator -->

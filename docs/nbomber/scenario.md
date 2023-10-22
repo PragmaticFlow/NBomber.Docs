@@ -315,6 +315,27 @@ var scenario = Scenario.Create("scenario", async context =>
 .WithMaxFailCount(10);
 ```
 
+You can also use [JSON configuration](json-config) to override this setting.
+
+```json
+{
+    "GlobalSettings": {
+        
+        "ScenariosSettings": [
+            {
+                "ScenarioName": "test_youtube",
+                "WarmUpDuration": "00:00:02",                
+
+                // highlight-start
+                "MaxFailCount": 500
+                // highlight-end
+            }
+        ]
+
+    }
+}
+```
+
 ## Empty scenario
 
 This method creates empty `Scenario`.
@@ -363,6 +384,8 @@ You can also use [JSON configuration](json-config) to override this setting.
         ...
     },
 
+    // highlight-start
     "ScenarioCompletionTimeout": "00:05:00"
+    // highlight-end
 }
 ```

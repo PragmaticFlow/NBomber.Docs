@@ -40,14 +40,18 @@ Installation prerequisites
 - [Docker](https://docs.docker.com/engine/install/) - If you decide to run NBomber Cluster that depends on NATS message broker or any database (Redis, PostgreSQL, etc.) for your load tests, installing Docker with Docker Compose would be helpful. 
 :::
 
-To run NBomber Cluster, you need to install [NATS](https://nats.io/) message broker. The simple way is to use Docker for this. NATS should be configured to use JetStream. In the `docker-compose.yaml` file, we enable JetStream on startup via `command: --js`.
+To run NBomber Cluster, you need to install [NATS](https://nats.io/) message broker. The simple way is to use Docker for this. 
+
+:::info
+**Please, use NATS version 2.9.9**. NATS should be configured to use JetStream. In the `docker-compose.yaml` file, we enable JetStream on startup via `command: --js`. Also, a single-node NATS server is enough to run multiple NBomber Clusters in parallel.
+:::
 
 ```yaml title="docker-compose.yaml"
 version: "3.4"
 services:
 
     nats:
-        image: "nats:2.9.6"
+        image: "nats:2.9.9"
         // highlight-start
         command: --js
         // highlight-end

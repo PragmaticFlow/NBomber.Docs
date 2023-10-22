@@ -19,14 +19,14 @@ In the cluster mode, the single NBomber instance(process) can run either as Coor
 - `Message Broker` is a communication point in the cluster. All network communication between the coordinator and agents goes via the message broker. Usually, it is used by the coordinator to send commands to agents. Also, agents can send metrics to the coordinator for further aggregation.
 
 :::info
-NBomber is using [NATS](https://nats.io/) message broker. The simplest way to [install](../getting-started/installation#install-nats-message-broker) it is using Docker.
+NBomber is depend on [NATS](https://nats.io/) message broker. The simplest way to [install](../getting-started/installation#install-nats-message-broker) it is using Docker. <br /> **Please, use NATS version 2.9.9**
 :::
 
 ## Why do you need the cluster?
 
 - **The capacity of single NBomber node is no longer enough** to create a relevant load, and you want to run load test scenarios on multiple nodes.
 
-- **You want to get a flexible scenario placement strategy among available nodes.** With this feature, you can specify the placement for each scenario in the cluster. For example, you want to test some web service by running the `Create User` scenario on one group of nodes but the `Read User` scenario on the second. And on the third group of nodes, you run `Publish message to Kafka` scenario.
+- **You want to get a flexible scenario placement strategy among available nodes.** With this feature, you can specify the placement for each scenario in the cluster. For example, you want to test some web service by running the `CreateUser` scenario on one group of nodes but the `ReadUser` scenario on the second. And on the third group of nodes, you run `SaveUser` scenario.
 
 - **You want to run tests from different geographical regions to verify the latency.**
 

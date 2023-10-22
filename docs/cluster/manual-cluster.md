@@ -2,126 +2,126 @@
 id: manual-cluster
 title: Manual Cluster
 sidebar_position: 3
-draft: true
 ---
 
-Coordinator is a component responsible for coordinating the execution of the entire test for NBomber Cluster: scenario warm-up/start/stop/placement, fetching all metrics from Agent(s), etc. 
+import ManualClusterImage from './img/manual-cluster.jpg'; 
+
+<center><img src={ManualClusterImage} width="100%" height="100%" /></center>
+
+`ManualCluster` - it's a cluster configuration type that provides additional control on Scenario placement. **With this type of configuration, you can deploy different types of Scenarios on different sets of nodes**. Basically, you can specify the placement for each Scenario in the cluster (via AgentGroups). Also, Coordinator and Agent should be assigned manually on startup via code or CLI arguments. 
+
+For example, you want to test some web service by running the `CreateUser` scenario on limited group of nodes but the `ReadUser` scenario on the second group of nodes. And on the third group of nodes, you would like to run periodically `SaveUser` scenario. This is perfect use case for ManualCluster since it provides you ability to run deploy different type of Scenarios on different set of nodes.
 
 :::info
-Only one Coordinator is allowed per cluster.
+If you are a beginner, starting with [AutoCluster](auto-cluster) is recommended since it is simpler to set up and fits the majority of load tests.
 :::
 
-## Coordinator JSON Config
+## ManualCluster Config
 
-On the binary level Coordinator and Agent are the same NBomber applications. The only difference is what JSON Config file will be loaded. To start acting as a Coordiantor, NBomberClusterRunner should load Coordinator JSON Config file. To load JSON Config, you can use: local file path, HTTP URL, CLI argument "--config".
+This is a basic example of ManualCluster configuration for a cluster with two nodes (Coordinator + 1 Agent). This config looks similar to [AutoCluster config](auto-cluster#autocluster-config), except it contains the settings for AgentGroups. 
+
+```json title="manual-cluster-config.json"
+{
+    "TestSuite": "my test suite",
+    "TestName": "my test",
+
+    "ClusterSettings": {
+
+        "ManualCluster": {
+            "ClusterId": "test_cluster",
+            "NATSServerURL": "nats://localhost",
+
+            "Coordinator": {
+                "TargetScenarios": ["test_scenario"]
+            },
+
+            "Agent": {
+                // highlight-start
+                "AgentGroups": [{ "AgentGroup": "1", "TargetScenarios": ["test_scenario"] }],
+                // highlight-end
+                "AgentsCount": 1
+            }
+        }
+
+    }    
+}
+```
+
+The main settings are:
+
+- `ClusterId` is the Id of the NBomber Cluster that will be shared between the NBomber nodes(processes). By this id, NBomber node will be able to discover all participants in the cluster.
+- `NATSServerURL` is the URL to the NATS host server. In our example, we will use a `localhost` since we host the NATS message broker on the local machine using docker-compose. You can find more info about NATS connection string by [this link](https://docs.nats.io/using-nats/developer/connecting).
+- `TargetScenarios` specifies target scenarios that will be executed in the cluster. You can specify different TargetScenarios for Coordinator and Agents.
+- `AgentGroups` specifies the list of AgentGroup that contains target scenarios per assigned group.
+- `AgentsCount` specifies the number of Agents that should join the cluster (by ClusterId) to allow Coordinator to start a load test.
+
+### Agent and AgentGroup
+
+`Agent` is a cluster role which is responsible for running load test scenarios and reacting to the commands from the coordinator. `AgentGroup` represents a virtual group for Agent node type. This group contains TargetScenarios that will be executed on the agents under this group. 
+
+```json
+"Agent": {    
+    "AgentGroups": [
+        { "AgentGroup": "1", "TargetScenarios": ["scneario_1"] },
+        { "AgentGroup": "2", "TargetScenarios": ["scenario_2"] },
+        { "AgentGroup": "my_group", "TargetScenarios": ["scenario_3"] }
+    ],    
+    "AgentsCount": 1
+}
+```
+
+To start NBomber process as Agent you should use this command:
+
+```
+MyLoadTest.dll --config="manual-cluster-config.json" --cluster-node-type=agent --cluster-agent-group=my_group
+```
+
+By executing this command NBomber process will start as Agent under: `"AgentGroup": "1", "TargetScenarios": ["scneario_1"]`
+
+*Here, you can find a list of all available [CLI arguments](../getting-started/cli).*
+
+Also, you can start Agent via code:
 
 ```csharp
-NBomberClusterRunner
-    .RegisterScenarios(scenario)    
-    .LoadConfig("coordinator-config.json")    
-    .Run();
+var scenario1 = Scenario.Create("scneario_1", async context => { ... });
+var scenario2 = Scenario.Create("scenario_2", async context => { ... });
+var scenario3 = Scenario.Create("scenario_3", async context => { ... });
+
+NBomberRunner
+    .RegisterScenarios(scenario1, scenario2, scenario3)
+    .LoadConfig("manual-cluster-config.json")
+    .WithAgentGroup("my_group")
+    .WithNodeType(NodeType.Agent)
+    .Run(args);
 ```
 
-*To get more information about JSON Config, please read [this page](../using-nbomber/basic-api/json-config).*
+### Coordinator
 
-Example:
+Coordinator is a cluster role responsible for coordinating the execution of the entire test for NBomber Cluster: scenario warm-up/start/stop/placement, fetching all metrics from Agent(s), etc. 
 
-```json
-{
-    "ClusterSettings": {
+:::info
+Only one instance of Coordinator is allowed per cluster.
+:::
 
-        "Coordinator": {
-            "ClusterId": "nbomber_cluster",
-            "NATSServerURL": "nats://localhost",            
-            
-            "TargetScenarios": ["publisher"],
-            
-            "Agents": [
-                { "AgentGroup": "1", "TargetScenarios": ["slow_subscribers"] },
-                { "AgentGroup": "2", "TargetScenarios": ["fast_subscribers"] }
-            ],
-            
-            "MinAgentsCount": 100
-        }
+To start NBomber process as Coordinator you should use this command:
 
-    }
-}
+```
+MyLoadTest.dll --config="manual-cluster-config.json" --cluster-node-type=coordinator 
 ```
 
-Available settings:
+*Here, you can find a list of all available [CLI arguments](../getting-started/cli).*
 
-- `ClusterId` is the Id of the NBomber Cluster that will be shared between the Coordinator and Agents. By this id, Coordinator will be able to discover all relevant Agent(s) in the cluster. Cluster Id can be any string value.
-- `NATSServerURL` is the URL to the NATS host server. You can find more infor about NATS connection string by [this link](https://docs.nats.io/using-nats/developer/connecting). 
-- `TargetScenarios` specifies target scenarios that Coordinator will execute only. It's an optional parameter. Usually, for high-load scenarios is better to keep this parameter empty to unload Coordinator.
-- `Agents` specifies AgentGroup(s) with TargetScenarios.
-- `MinAgentsCount` specifies a minimal number of agents to start the test. This parameter is optional. If it's not set, the Coordinator will try to discover available agents and wait until the cluster is stabilized. If this parameter is set, Coordinator will wait until the required number of agents become available.
+Also, you can start Coordinator via code:
 
-This is the type definition for CoordinatorSettings:
+```csharp
+var scenario1 = Scenario.Create("scneario_1", async context => { ... });
+var scenario2 = Scenario.Create("scenario_2", async context => { ... });
+var scenario3 = Scenario.Create("scenario_3", async context => { ... });
 
-```fsharp
-type AgentGroupSettings = {
-    AgentGroup: string
-    TargetScenarios: string list
-}
-
-type CoordinatorSettings = {
-    ClusterId: string
-    NATSServerURL: string
-    TargetScenarios: string list option
-    Agents: AgentGroupSettings list
-    MinAgentsCount: int option
-}
-```
-
-### Coordinator JSON Config with GlobalSettings
-
-In addition to the basics coordinator's settings, the Coordinator JSON Config can contain GlobalSettings.
-
-Example:
-
-```json
-{
-    "TestSuite": "NATS Load Tests",
-    "TestName": "Ping Pong",
-
-    "ClusterSettings": {
-        "Coordinator": {
-            "ClusterId": "nbomber_test_cluster",
-            "NATSServerURL": "nats://my-nats",
-            "TargetScenarios": ["http_scenario"],
-            "Agents": [
-                { "AgentGroup": "1", "TargetScenarios": ["http_scenario"] }
-            ]
-        }
-    },
-
-    "GlobalSettings": {
-
-        "ScenariosSettings": [
-            {
-                "ScenarioName": "http_scenario",
-                "WarmUpDuration": "00:00:01",
-
-                "LoadSimulationsSettings": [
-                    { "Inject": [100, "00:00:01", "00:01:00"] }
-                ]
-            },
-            {
-                "ScenarioName": "my-test-scenario",
-
-                "LoadSimulationsSettings": [
-                    { "Inject": [1, "00:00:01", "00:00:30"] }
-                ],
-
-                "CustomSettings": {
-                    "TargetHost": "localhost",
-                    "MsgSizeInBytes": 1000,
-                    "PauseMs": 100
-                },
-
-                "MaxFailCount": 500
-            }
-        ]
-    }
-}
+NBomberRunner
+    .RegisterScenarios(scenario1, scenario2, scenario3)
+    .LoadConfig("manual-cluster-config.json")
+    .WithNodeType(NodeType.Coordinator)
+    .WithAgentsCount(50)
+    .Run(args);
 ```

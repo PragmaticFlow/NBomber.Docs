@@ -8,9 +8,13 @@ import AutoClusterImage from './img/autocluster.jpg';
 
 <center><img src={AutoClusterImage} width="90%" height="90%" /></center>
 
-`AutoCluster` - it's a cluster configuration type that provides an easy way to establish a cluster. **With this type of configuration Coordinator will be chosen automatically by leader election.** It's recommended to start with `AutoCluster` since it is simpler to set up and fits the majority of load tests.
+`AutoCluster` - it's a cluster configuration type that provides an easy way to establish a cluster. **With this type of configuration Coordinator will be chosen automatically by leader election.** 
 
-### AutoCluster Config
+:::info
+If you are a beginner, starting with AutoCluster is recommended since it is simpler to set up and fits the majority of load tests.
+:::
+
+## AutoCluster Config
 
 This is a basic example of AutoCluster configuration for a cluster with two nodes (Coordinator + 1 Agent): 
 
@@ -48,7 +52,7 @@ The main settings are:
 
 This is example of AutoCluster configuration with a ScenariosSettings:
 
-```json title="autocluster-config.json"
+```json title="auto-cluster-config.json"
 {
     "TestSuite": "my test suite",
     "TestName": "my test",
