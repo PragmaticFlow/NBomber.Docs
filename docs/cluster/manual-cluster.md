@@ -18,7 +18,7 @@ If you are a beginner, starting with [AutoCluster](auto-cluster) is recommended 
 
 ## ManualCluster Config
 
-This is a basic example of ManualCluster configuration for a cluster with two nodes (Coordinator + 1 Agent). This config looks similar to [AutoCluster config](auto-cluster#autocluster-config), except it contains the settings for AgentGroups. 
+This is a basic example of ManualCluster configuration for a cluster with two nodes (Coordinator + 1 Agent). This config looks similar to [AutoCluster config](auto-cluster#autocluster-config), except it contains `"ManualCluster"` instead of `"AutoCluster"` and the settings for `AgentGroups`. 
 
 ```json title="manual-cluster-config.json"
 {
@@ -27,7 +27,9 @@ This is a basic example of ManualCluster configuration for a cluster with two no
 
     "ClusterSettings": {
 
+        // highlight-start
         "ManualCluster": {
+        // highlight-end
             "ClusterId": "test_cluster",
             "NATSServerURL": "nats://localhost",
 
@@ -55,7 +57,7 @@ The main settings are:
 - `AgentGroups` specifies the list of AgentGroup that contains target scenarios per assigned group.
 - `AgentsCount` specifies the number of Agents that should join the cluster (by ClusterId) to allow Coordinator to start a load test.
 
-### Agent and AgentGroup
+## Agent and AgentGroup
 
 `Agent` is a cluster role which is responsible for running load test scenarios and reacting to the commands from the coordinator. `AgentGroup` represents a virtual group for Agent node type. This group contains TargetScenarios that will be executed on the agents under this group. 
 
@@ -70,10 +72,12 @@ The main settings are:
 }
 ```
 
-To start NBomber process as Agent you should use this command:
+### Run Agent
+
+To start NBomber process as Agent you should specify `--cluster-node-type=agent` and agent group `--cluster-agent-group={group_name}`:
 
 ```
-MyLoadTest.dll --config="manual-cluster-config.json" --cluster-node-type=agent --cluster-agent-group=1
+MyLoadTest.dll --config="manual-cluster-config.json" --cluster-node-type=agent --cluster-agent-group=1 --license=YOUR_LICENSE_KEY
 ```
 
 By executing this command NBomber process will start as Agent under: `"AgentGroup": "1", "TargetScenarios": ["scneario_1"]`
@@ -95,7 +99,7 @@ NBomberRunner
     .Run(args);
 ```
 
-### Coordinator
+## Coordinator
 
 Coordinator is a cluster role responsible for coordinating the execution of the entire test for NBomber Cluster: scenario warm-up/start/stop/placement, fetching all metrics from Agent(s), etc. 
 
@@ -103,10 +107,12 @@ Coordinator is a cluster role responsible for coordinating the execution of the 
 Only one instance of Coordinator is allowed per cluster.
 :::
 
-To start NBomber process as Coordinator you should use this command:
+### Run Coordinator
+
+To start NBomber process as Coordinator you should specify `--cluster-node-type=coordinator`:
 
 ```
-MyLoadTest.dll --config="manual-cluster-config.json" --cluster-node-type=coordinator 
+MyLoadTest.dll --config="manual-cluster-config.json" --cluster-node-type=coordinator --license=YOUR_LICENSE_KEY
 ```
 
 *Here, you can find a list of all available [CLI arguments](../getting-started/cli).*

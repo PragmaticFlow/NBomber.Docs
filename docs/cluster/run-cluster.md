@@ -18,14 +18,7 @@ To run NBomber in the cluster mode, you need:
 - Choose [cluster configuration type](#cluster-configuration-types) with related settings.
 - Run as many NBomber instances(copies of NBomber process) with the specified configuration type as you want for the cluster.
 
-```csharp
-// Run as many NBomber instances as you want
-NBomberRunner
-    .RegisterScenarios(scenario)    
-    .LoadConfig("autocluster-config.json") // file configuration path
-```
-
-### Cluster configuration types
+## Cluster configuration types
 
 - [AutoCluster](auto-cluster) - it's a cluster configuration type that provides an easy way to establish a cluster. **With this type of configuration Coordinator will be chosen automatically by leader election.** It's recommended to start with `AutoCluster` since it is simpler to set up and fits the majority of load tests.
 
@@ -40,7 +33,9 @@ For simplicity, we will be using AutoCluster configuration for a cluster with tw
 
     "ClusterSettings": {
 
+        // highlight-start
         "AutoCluster": {
+        // highlight-end            
             "ClusterId": "test_cluster",
             "NATSServerURL": "nats://localhost",
 
@@ -67,7 +62,7 @@ The main settings are:
 
 Let's assume we already have a Scenario named `"test_scenario"` that we want to run in the cluster. The only thing that we need is to load the cluster configuration (in our case it's AutoCluster) and run it. 
 
-### Run Cluster
+## Run Cluster
 
 ```csharp
 var scenario = Scenario.Create("test_scenario", async context => { ... });
@@ -82,6 +77,20 @@ NBomberRunner
 ```
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/Cluster/AutoCluster).*
+
+### Run via CLI args
+
+```
+MyLoadTest.dll --config="auto-cluster-config.json"
+```
+
+You can also pass other CLI args:
+
+```
+MyLoadTest.dll --config="auto-cluster-config.json" --cluster-agents-count=5 --license=YOUR_LICENSE_KEY
+```
+
+*Here, you can find a list of all available [CLI arguments](../getting-started/cli).*
 
 ### Run Local Dev Cluster
 

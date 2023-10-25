@@ -25,7 +25,9 @@ This is a basic example of AutoCluster configuration for a cluster with two node
 
     "ClusterSettings": {
 
+        // highlight-start
         "AutoCluster": {
+        // highlight-end            
             "ClusterId": "test_cluster",
             "NATSServerURL": "nats://localhost",
 
@@ -59,7 +61,9 @@ This is example of AutoCluster configuration with a ScenariosSettings:
 
     "ClusterSettings": {
 
+        // highlight-start
         "AutoCluster": {
+        // highlight-end
             "ClusterId": "test_cluster",
             "NATSServerURL": "nats://localhost",
 
@@ -88,3 +92,33 @@ This is example of AutoCluster configuration with a ScenariosSettings:
     }
 }
 ```
+
+## Run Cluster
+
+```csharp
+var scenario = Scenario.Create("test_scenario", async context => { ... });
+
+NBomberRunner
+    .RegisterScenarios(scenario)
+    // highlight-start
+    .LoadConfig("auto-cluster-config.json")
+    .License("YOUR_ENTERPRISE_LICENSE_KEY")
+    // highlight-end
+    .Run();
+```
+
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/Cluster/AutoCluster).*
+
+### Run via CLI args
+
+```
+MyLoadTest.dll --config="auto-cluster-config.json"
+```
+
+You can also pass other CLI args:
+
+```
+MyLoadTest.dll --config="auto-cluster-config.json" --cluster-agents-count=5 --license=YOUR_LICENSE_KEY
+```
+
+*Here, you can find a list of all available [CLI arguments](../getting-started/cli).*
