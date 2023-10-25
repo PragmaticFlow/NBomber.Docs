@@ -73,7 +73,7 @@ The main settings are:
 To start NBomber process as Agent you should use this command:
 
 ```
-MyLoadTest.dll --config="manual-cluster-config.json" --cluster-node-type=agent --cluster-agent-group=my_group
+MyLoadTest.dll --config="manual-cluster-config.json" --cluster-node-type=agent --cluster-agent-group=1
 ```
 
 By executing this command NBomber process will start as Agent under: `"AgentGroup": "1", "TargetScenarios": ["scneario_1"]`

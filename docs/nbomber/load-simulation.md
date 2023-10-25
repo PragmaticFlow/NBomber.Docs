@@ -26,7 +26,7 @@ Here is a table of load simulations available in NBomber:
 | [Pause](load-simulation#pause) |  | Introduces Scenario pause for a given duration. It's useful for cases when some Scenario start should be delayed or paused in the middle of execution. |
 
 :::info
-Load Simulations can be configured via JSON configuration file.
+Load Simulations can be configured via [JSON Config](json-config) file.
 :::
 
 ## Ramping Constant
