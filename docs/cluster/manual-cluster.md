@@ -8,13 +8,13 @@ import ManualClusterImage from './img/manual-cluster.jpg';
 
 <center><img src={ManualClusterImage} width="100%" height="100%" /></center>
 
-`ManualCluster` - it's a cluster configuration type that provides additional control on Scenario placement. **With this type of configuration, you can deploy different types of Scenarios on different sets of nodes**. Basically, you can specify the placement for each Scenario in the cluster (via AgentGroups). Also, Coordinator and Agent should be assigned manually on startup via code or CLI arguments. 
-
-For example, you want to test some web service by running the `CreateUser` scenario on limited group of nodes but the `ReadUser` scenario on the second group of nodes. And on the third group of nodes, you would like to run periodically `SaveUser` scenario. This is perfect use case for ManualCluster since it provides you ability to run deploy different type of Scenarios on different set of nodes.
-
 :::info
 If you are a beginner, starting with [AutoCluster](auto-cluster) is recommended since it is simpler to set up and fits the majority of load tests.
 :::
+
+`ManualCluster` - it's a cluster configuration type that provides additional control on Scenario placement. **With this type of configuration, you can deploy different types of Scenarios on different sets of nodes**. Basically, you can specify the placement for each Scenario in the cluster (via AgentGroups). Also, Coordinator and Agent should be assigned manually on startup via code or CLI arguments. 
+
+For example, you want to test some web service by running the `CreateUser` scenario on limited group of nodes but the `ReadUser` scenario on the second group of nodes. And on the third group of nodes, you would like to run periodically `SaveUser` scenario. This is perfect use case for ManualCluster since it provides you ability to run deploy different type of Scenarios on different set of nodes.
 
 ## ManualCluster Config
 

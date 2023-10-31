@@ -31,7 +31,7 @@ Load Simulations can be configured via [JSON Config](json-config) file.
 
 ## Ramping Constant
 
-Adds or removes a given number of Scenario copies(instances) with a linear ramp over a given duration. **Each Scenario copy behaves like a long-running thread that runs continually(by specified duration) and will be destroyed when the current load simulation stops.** Use it for a smooth ramp up and ramp down. Usually, this simulation type is used to test databases, message brokers, or any other system that works with a static client's pool of connections and reuses them.
+Adds or removes a given number of Scenario copies(instances) with a linear ramp over a given duration. **Each Scenario copy behaves like a long-running thread that runs continually(by specified duration) and will be destroyed when the current load simulation stops. Alternatively you can think of a single Scenario copy as a single virtual user.** Use it for a smooth ramp up and ramp down. Usually, this simulation type is used to test databases, message brokers, or any other system that works with a static client's pool of connections and reuses them.
 
 **Example**: In this example, we combined two simulations: ramp up from 0 to 50 and ramp down from 50 to 20. The NBomber scheduler will be activated periodically to add a new `Scenario` copy instance into the running `Scenarios pool`. This simulation will continue ramping up copies from 0 to 50 until the end duration. After this, the following simulation will start smoothly ramping down Scenario copies from 50 to 20. 
 
@@ -56,7 +56,7 @@ Scenario.Create("scenario", async context =>
 
 ## Keep Constant
 
-Keeps activated(constantly running) a fixed number of Scenario copies(instances) which executes as many iterations as possible for a specified duration. **Each Scenario copy behaves like a long-running thread that runs continually(by specified duration) and will be destroyed when the current load simulation stops.** Use it when you need to run and hold a constant amount of Scenario copies(instances) for a specific period. Usually, this simulation type is used to test databases, message brokers, or any other system that works with a static client's pool of connections and reuses them.
+Keeps activated(constantly running) a fixed number of Scenario copies(instances) which executes as many iterations as possible for a specified duration. **Each Scenario copy behaves like a long-running thread that runs continually(by specified duration) and will be destroyed when the current load simulation stops. Alternatively you can think of a single Scenario copy as a single virtual user.** Use it when you need to run and hold a constant amount of Scenario copies(instances) for a specific period. Usually, this simulation type is used to test databases, message brokers, or any other system that works with a static client's pool of connections and reuses them.
 
 **Example 1**: This simulation will create and start 20 Scenario copies and keep them running until the end duration. Each Scenario copy act like a long-running thread that executes some logic in a loop. 
 
@@ -100,7 +100,7 @@ Scenario.Create("scenario", async context =>
 
 ## Ramping Inject
 
-Injects a given number of Scenario copies(instances) with a linear ramp over a given duration. **Each Scenario copy behaves like a short-running thread that runs only once and then is destroyed.** With this simulation, you control the Scenario injection rate and injection interval. Use it for a smooth ramp up and ramp down. Usually, this simulation type is used to test HTTP API.
+Injects a given number of Scenario copies(instances) with a linear ramp over a given duration. **Each Scenario copy behaves like a short-running thread that runs only once and then is destroyed. Alternatively you can think of a single Scenario copy as a single virtual user.** With this simulation, you control the Scenario injection rate and injection interval. Use it for a smooth ramp up and ramp down. Usually, this simulation type is used to test HTTP API.
 
 **Example**: In this example, we combined two simulations: ramp up from 0 to 50 and then ramp down from 50 to 20. The NBomber scheduler will be activated every second(by injection interval) to inject a new Scenario copy, then run it once, destroy it afterward, and then repeat such flow for the next(after 1 second) injection phase. This simulation will continue ramping up the injection rate from 0 to 50 until the end duration. After this, the following simulation will start smoothly ramping down the injection rate from 50 to 20.
 
@@ -132,7 +132,7 @@ Scenario.Create("scenario", async context =>
 
 ## Inject
 
-Injects a given number of Scenario copies(instances) during a given duration. **Each Scenario copy behaves like a short-running thread that runs only once and then is destroyed.** With this simulation, you control the Scenario injection rate and injection interval. Use it when you want to maintain a constant rate of requests without being affected by the performance of the system you load test. Usually, this simulation type is used to test HTTP API.
+Injects a given number of Scenario copies(instances) during a given duration. **Each Scenario copy behaves like a short-running thread that runs only once and then is destroyed. Alternatively you can think of a single Scenario copy as a single virtual user.** With this simulation, you control the Scenario injection rate and injection interval. Use it when you want to maintain a constant rate of requests without being affected by the performance of the system you load test. Usually, this simulation type is used to test HTTP API.
 
 **Example 1**: This simulation will start injecting Scenario copies at a rate of 50 copies per 1 second for 30 seconds. Each Scenario copy will be executed only once and then destroyed.
 
@@ -190,7 +190,7 @@ Scenario.Create("scenario", async context =>
 
 ## Inject Random
 
-Injects a given random number of Scenario copies(instances) during a given duration. **Each Scenario copy behaves like a short-running thread that runs only once and then is destroyed.** With this simulation, you control the Scenario injection rate and injection interval. Use it when you want to maintain a random rate of requests without being affected by the performance of the system you load test. Usually, this simulation type is used to test HTTP API.
+Injects a given random number of Scenario copies(instances) during a given duration. **Each Scenario copy behaves like a short-running thread that runs only once and then is destroyed. Alternatively you can think of a single Scenario copy as a single virtual user.** With this simulation, you control the Scenario injection rate and injection interval. Use it when you want to maintain a random rate of requests without being affected by the performance of the system you load test. Usually, this simulation type is used to test HTTP API.
 
 **Example**: This simulation will start injecting Scenario copies with a random rate of 50 to 70 copies per 1 second for 30 seconds. Each Scenario copy will be executed only once and then destroyed.
 
