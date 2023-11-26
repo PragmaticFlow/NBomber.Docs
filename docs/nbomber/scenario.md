@@ -366,26 +366,4 @@ var initDbScn =
 
 ## Scenario Timeouts
 
-### Scenario Completion Timeout
-When NBomber finishes load tests, it waits for all running scenarios to complete their tasks. By default, Scenario completion timeout is 1 minute. This setting is globally applied for all scenarios.
-
-```csharp
-NBomberRunner
-    .RegisterScenarios(scenario)
-    .WithScenarioCompletionTimeout(TimeSpan.FromMinutes(5))
-    .Run();
-```
-
-You can also use [JSON configuration](json-config) to override this setting.
-
-```json
-{
-    "GlobalSettings": {
-        ...
-    },
-
-    // highlight-start
-    "ScenarioCompletionTimeout": "00:05:00"
-    // highlight-end
-}
-```
+[Scenario Timeouts](timeouts)
