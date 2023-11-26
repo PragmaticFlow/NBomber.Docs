@@ -30,6 +30,8 @@ You can also use [JSON configuration](json-config) to override this setting.
 }
 ```
 
+*You can find the complete example [by this link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/Features/Timeouts/ScenarioCompletionTimeout.cs).*
+
 ## Operation cancellation after timeout
 
 There might be situations where you need to cancel some operation after specified timeout. For this, you can use standard .NET [CancellationTokenSource](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtokensource?view=net-8.0). 
@@ -55,6 +57,8 @@ var scenario = Scenario.Create("scenario_with_timeout", async context =>
 );
 ```
 
+*You can find the complete example [by this link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/ScenarioWithTimeout.cs).*
+
 The same approach can be applied to any other asynchronous operation.
 
 **Example 2:** 
@@ -63,7 +67,7 @@ The same approach can be applied to any other asynchronous operation.
 var scenario = Scenario.Create("http_scenario", async context =>
 {
     using var timeout = new CancellationTokenSource();
-    timeout.CancelAfter(600); // the operation will be canceled after 600 ms
+    timeout.CancelAfter(50); // the operation will be canceled after 50 ms
 
     var request =
         Http.CreateRequest("GET", "https://nbomber.com")
@@ -80,3 +84,5 @@ var scenario = Scenario.Create("http_scenario", async context =>
     return response;
 })
 ```
+
+*You can find the complete example [by this link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HTTP/HttpWithTimeoutExample.cs).*

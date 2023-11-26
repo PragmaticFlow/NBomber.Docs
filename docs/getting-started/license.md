@@ -55,3 +55,14 @@ NBomberRunner
     .RegisterScenarios(scenario1)
     .Run(args);
 ```
+
+Also, environment variables can be used to get the license key.
+
+```csharp
+var licenseKey = Environment.GetEnvironmentVariable("YOUR_LICENSE_KEY");
+
+NBomberRunner
+    .RegisterScenarios(scenario1)
+    .WithLicense(licenseKey)
+    .Run();
+```
