@@ -152,7 +152,7 @@ interface IScenarioContext
     ScenarioInfo ScenarioInfo { get; }
     NodeInfo NodeInfo { get; }
     ILogger Logger { get; }
-    int InvocationNumber { get; }
+    Int64 InvocationNumber { get; }
     Dictionary<string,obj> Data { get; }
     void StopScenario(string scenarioName, string reason);
     void StopCurrentTest(string reason);

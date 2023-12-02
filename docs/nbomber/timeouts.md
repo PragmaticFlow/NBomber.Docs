@@ -74,10 +74,7 @@ var scenario = Scenario.Create("http_scenario", async context =>
             .WithHeader("Content-Type", "application/json");
             //.WithBody(new StringContent("{ some JSON }", Encoding.UTF8, "application/json"));    
 
-    var clientArgs = new HttpClientArgs(
-        httpCompletion: HttpCompletionOption.ResponseHeadersRead, // or ResponseContentRead
-        cancellationToken: timeout.Token
-    );
+    var clientArgs = HttpClientArgs.Create(timeout.Token);
 
     var response = await Http.Send(httpClient, clientArgs, request);
 
