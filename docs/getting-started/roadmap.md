@@ -9,10 +9,11 @@ This is a living document containing the NBomber team’s priorities as well as 
 ### Past and Future Work
 
 #### vNext
-- [ ] [Add Step.Pause](https://github.com/PragmaticFlow/NBomber/issues/626)
-- [ ] [Add user load distribution across the different scenarios](https://github.com/PragmaticFlow/NBomber/issues/531)
 - [ ] [Add API for distributions like Zipfan, Uniform](https://github.com/PragmaticFlow/NBomber/issues/607)
 - [ ] [Add HTTP tracing for NBomber.Http](https://github.com/PragmaticFlow/NBomber/issues/528)
+
+#### v5.4.1
+- [x] [Release Notes](https://github.com/PragmaticFlow/NBomber/releases/tag/v5.4.1)
 
 #### v5.4.0
 - [x] [Release Notes](https://github.com/PragmaticFlow/NBomber/releases/tag/v5.4.0)
