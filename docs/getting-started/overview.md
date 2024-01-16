@@ -29,7 +29,7 @@ NBomber as a modern framework provides:
 - Zero dependencies on semantic model (Pull/Push)
 - Very flexible configuration and dead simple API
 - [Distributed cluster support](../cluster/overview)
-- Real-time reporting
+- [Real-time reporting](../reporting-sinks/grafana)
 - CI/CD integration (xUnit and NUnit runners are supported)
 - Plugins/extensions support - add your own plugins or data sinks
 - [Data feed support](../nbomber/data) - inject real or fake data into your tests

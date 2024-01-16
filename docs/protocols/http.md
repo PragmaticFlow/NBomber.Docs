@@ -4,6 +4,9 @@ title: HTTP
 sidebar_position: 0
 ---
 
+[![build](https://github.com/PragmaticFlow/NBomber.Http/actions/workflows/build.yml/badge.svg)](https://github.com/PragmaticFlow/NBomber.Http/actions/workflows/build.yml)
+[![NuGet](https://img.shields.io/nuget/v/nbomber.http.svg)](https://www.nuget.org/packages/nbomber.http/)
+
 import ConsoleMetricsImage from './img/console_metrics.jpg';
 import HTMLHistoryMetricsImage from './img/html_history_metrics.jpg';
 
@@ -12,7 +15,7 @@ To work with HTTP, NBomber provides [NBomber.Http](https://github.com/PragmaticF
 - [HttpMetricsPlugin](#httpmetricsplugin) to get real-time metrics about the current Http connections.
 
 :::info
-To start working with NBomber.Http plugin you should install it:
+To install NBomber.Http plugin you should execute the following *dotnet* command:
 
 ```code
 dotnet add package NBomber.Http
