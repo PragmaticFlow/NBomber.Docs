@@ -4,15 +4,15 @@ title: WebSockets
 sidebar_position: 1
 ---
 
-[![build](https://github.com/PragmaticFlow/NBomber.WebSockets/actions/workflows/build.yml/badge.svg)](https://github.com/PragmaticFlow/NBomber.WebSockets/actions/workflows/build.yml)
-[![NuGet](https://img.shields.io/nuget/v/nbomber.websockets.svg)](https://www.nuget.org/packages/nbomber.websockets/)
-
 WebSockets is a protocol that provides full-duplex communication channels over a single TCP connection. It is commonly used by single-page apps (SPAs) and mobile apps, to add server-push based functionality, which usually improves performance. Also, it is used for applications that require real-time communication.
 
 To work with WebSockets, NBomber provides [NBomber.WebSockets](https://github.com/PragmaticFlow/NBomber.WebSockets) plugin. 
 
 :::info
 To install [NBomber.WebSockets](https://www.nuget.org/packages/nbomber.websockets/) package you should execute the following *dotnet* command:
+
+[![build](https://github.com/PragmaticFlow/NBomber.WebSockets/actions/workflows/build.yml/badge.svg)](https://github.com/PragmaticFlow/NBomber.WebSockets)
+[![NuGet](https://img.shields.io/nuget/v/nbomber.websockets.svg)](https://www.nuget.org/packages/nbomber.websockets/)
 
 ```code
 dotnet add package NBomber.WebSockets

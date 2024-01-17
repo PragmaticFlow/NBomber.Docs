@@ -10,11 +10,11 @@ import DataFeedImage from './img/data-feed.jpeg';
 
 The [NBomber.Data](https://github.com/PragmaticFlow/NBomber.Data) plugin provides functionality for NBomber to work with data. It helps you generate random bytes or use DataFeed abstraction to feed data into your load test scenario.
 
-[![build](https://github.com/PragmaticFlow/NBomber.Data/actions/workflows/build.yml/badge.svg)](https://github.com/PragmaticFlow/NBomber.Data/actions/workflows/build.yml)
-[![NuGet](https://img.shields.io/nuget/v/nbomber.data.svg)](https://www.nuget.org/packages/nbomber.data/)
-
 :::info
 To install [NBomber.Data](https://www.nuget.org/packages/NBomber.Data) package you should execute the following *dotnet* command:
+
+[![build](https://github.com/PragmaticFlow/NBomber.Data/actions/workflows/build.yml/badge.svg)](https://github.com/PragmaticFlow/NBomber.Data)
+[![NuGet](https://img.shields.io/nuget/v/nbomber.data.svg)](https://www.nuget.org/packages/nbomber.data/)
 
 ```code
 dotnet add package NBomber.Data

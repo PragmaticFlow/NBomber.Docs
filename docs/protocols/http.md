@@ -4,9 +4,6 @@ title: HTTP
 sidebar_position: 0
 ---
 
-[![build](https://github.com/PragmaticFlow/NBomber.Http/actions/workflows/build.yml/badge.svg)](https://github.com/PragmaticFlow/NBomber.Http/actions/workflows/build.yml)
-[![NuGet](https://img.shields.io/nuget/v/nbomber.http.svg)](https://www.nuget.org/packages/nbomber.http/)
-
 import ConsoleMetricsImage from './img/console_metrics.jpg';
 import HTMLHistoryMetricsImage from './img/html_history_metrics.jpg';
 
@@ -16,6 +13,9 @@ To work with HTTP, NBomber provides [NBomber.Http](https://github.com/PragmaticF
 
 :::info
 To install [NBomber.Http](https://www.nuget.org/packages/nbomber.http) package you should execute the following *dotnet* command:
+
+[![build](https://github.com/PragmaticFlow/NBomber.Http/actions/workflows/build.yml/badge.svg)](https://github.com/PragmaticFlow/NBomber.Http)
+[![NuGet](https://img.shields.io/nuget/v/nbomber.http.svg)](https://www.nuget.org/packages/nbomber.http/)
 
 ```code
 dotnet add package NBomber.Http
