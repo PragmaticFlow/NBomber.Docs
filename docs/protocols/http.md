@@ -15,7 +15,7 @@ To work with HTTP, NBomber provides [NBomber.Http](https://github.com/PragmaticF
 - [HttpMetricsPlugin](#httpmetricsplugin) to get real-time metrics about the current Http connections.
 
 :::info
-To install NBomber.Http plugin you should execute the following *dotnet* command:
+To install [NBomber.Http](https://www.nuget.org/packages/nbomber.http) package you should execute the following *dotnet* command:
 
 ```code
 dotnet add package NBomber.Http

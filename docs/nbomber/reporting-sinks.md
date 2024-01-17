@@ -17,7 +17,7 @@ ReportingSink is a pluggable functionality that NBomber uses to save real-time m
 In case you need to add your custom Reporting Sink for your database storage that is not yet supported. Or maybe you want to enrich statistics data with your tags, metadata, etc. For this you should implement **IReportingSink** interface.
 
 ```csharp
-interface IReportingSink : IDisposable
+public interface IReportingSink : IDisposable
 {
     Task Init(IBaseContext context, IConfiguration infraConfig);
     Task Start();

@@ -138,6 +138,7 @@ var scenario = Scenario.Create("scenario_with_clean", async context =>
     context.Logger.Information("MY CLEAN");
     return Task.CompletedTask;
 });
+
 ```
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/ScenarioWithInit.cs).*
 
@@ -146,7 +147,7 @@ var scenario = Scenario.Create("scenario_with_clean", async context =>
 ScenarioContext represents the execution context of the currently running Scenario. It provides functionality to log particular events, get information about the test, thread id, scenario copy/instance number, etc. Also, it provides the option to stop all or particular scenarios manually. 
 
 ```csharp
-interface IScenarioContext
+public interface IScenarioContext
 {
     TestInfo TestInfo { get; }
     ScenarioInfo ScenarioInfo { get; }
