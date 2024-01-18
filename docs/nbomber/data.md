@@ -205,6 +205,8 @@ To generate fake data for your tests, we highly recommend looking at [Bogus fake
 :::info
 To install [Bogus](https://www.nuget.org/packages/bogus) package you should execute the following *dotnet* command:
 
+[![NuGet](https://img.shields.io/nuget/v/bogus.svg)](https://www.nuget.org/packages/bogus)
+
 ```code
 dotnet add package Bogus
 ```
