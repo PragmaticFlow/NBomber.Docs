@@ -4,6 +4,10 @@ title: WebSockets
 sidebar_position: 1
 ---
 
+import WebSocketsImage from './img/web_sockets.jpg'; 
+
+<center><img src={WebSocketsImage} width="50%" height="50%" /></center>
+
 WebSockets is a protocol that provides full-duplex communication channels over a single TCP connection. It is commonly used by single-page apps (SPAs) and mobile apps, to add server-push based functionality, which usually improves performance. Also, it is used for applications that require real-time communication.
 
 To work with WebSockets, NBomber provides [NBomber.WebSockets](https://github.com/PragmaticFlow/NBomber.WebSockets) plugin. 
