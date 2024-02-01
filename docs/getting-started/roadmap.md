@@ -9,8 +9,11 @@ This is a living document containing the NBomber team’s priorities as well as 
 ### Past and Future Work
 
 #### vNext
-- [ ] [Add API for distributions like Zipfan, Uniform](https://github.com/PragmaticFlow/NBomber/issues/607)
-- [ ] [Add HTTP tracing for NBomber.Http](https://github.com/PragmaticFlow/NBomber/issues/528)
+- [ ] [Planned Backlog v5.6.0](https://github.com/PragmaticFlow/NBomber/issues?q=is%3Aopen+is%3Aissue+label%3A5.6)
+- [ ] [Planned Backlog v5.7.0](https://github.com/PragmaticFlow/NBomber/issues?q=is%3Aopen+is%3Aissue+label%3A5.7)
+
+#### v5.5.0
+- [x] [Release Notes](https://github.com/PragmaticFlow/NBomber/releases/tag/v5.5.0)
 
 #### v5.4.1
 - [x] [Release Notes](https://github.com/PragmaticFlow/NBomber/releases/tag/v5.4.1)

@@ -9,6 +9,7 @@ import NBomberLogoImage from './img/nbomber_logo.png';
 <center><img src={NBomberLogoImage} width="70%" height="70%" /></center>
 
 [![NuGet](https://img.shields.io/nuget/v/nbomber.svg)](https://www.nuget.org/packages/nbomber/)
+[![Nuget](https://img.shields.io/nuget/dt/nbomber.svg)](https://www.nuget.org/packages/nbomber/)
 
 ### What is NBomber?
 
