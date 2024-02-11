@@ -22,7 +22,107 @@ dotnet add package NBomber.Http
 ```
 :::
 
-## Http CreateRequest
+## HTTP API
+
+HTTP plugin provides helper methods that works with native [HttpClient](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-8.0). These methods help reduce the boilerplate needed to build `HttpRequestMessage`, send or receive JSON objects, calculate data transfer, etc. 
+
+Basic Example:
+
+```csharp
+using var httpClient = new HttpClient();
+
+var scenario = Scenario.Create("http_scenario", async context =>
+{   
+    var request =
+        Http.CreateRequest("GET", "https://nbomber.com")
+            .WithHeader("Accept", "application/json")
+            .WithBody(new StringContent("{ some JSON }", Encoding.UTF8, "application/json"));
+
+    var response = await Http.Send(httpClient, request);
+
+    return response;
+});
+
+```
+
+Advanced Example:
+
+```csharp
+using var httpClient = new HttpClient();
+
+var scenario = Scenario.Create("http_scenario", async context =>
+{
+    var step1 = await Step.Run("step_1", context, async () =>
+    {
+        var request =
+            Http.CreateRequest("GET", "https://nbomber.com")
+                .WithHeader("Accept", "application/json")
+                .WithBody(new StringContent("{ some JSON }", Encoding.UTF8, "application/json"));
+
+        var response = await Http.Send(httpClient, request);
+
+        return response;
+    });
+
+    // example of sending JSON as a body 
+    // Http.WithJsonBody<T>() will automatically serialize object to JSON
+    // the header "Accept": "application/json" will be added automatically
+
+    var step2 = await Step.Run("step_2", context, async () =>
+    {
+        var user = new UserData { UserId = 1, Title = "test user" };
+
+        var request = 
+            Http.CreateRequest("POST", "https://nbomber.com")
+                .WithJsonBody(user);
+        
+        var response = await Http.Send(httpClient, request);
+
+        return response;
+    });
+
+    // example of using Http.Send<TResponse>
+    // it sends HTTP request 
+    // and deserialize JSON response to specific type
+
+    var step3 = await Step.Run("step_3", context, async () =>
+    {
+        var request = 
+            Http.CreateRequest("GET", "https://jsonplaceholder.typicode.com/todos/1")
+                .WithHeader("Accept", "application/json");
+
+        var response = await Http.Send<UserData>(httpClient, request);
+
+        // user: UserData type
+        var user = response.Payload.Value;
+        var userId = response.Payload.Value.UserId;
+
+        return response;
+    });
+
+    // example of using CancellationToken for timeout operation
+
+    var step4 = await Step.Run("step_4", context, async () =>
+    {
+        using var timeout = new CancellationTokenSource();
+        timeout.CancelAfter(50); // the operation will be canceled after 50 ms
+
+        var clientArgs = HttpClientArgs.Create(timeout.Token);
+
+        var request = 
+            Http.CreateRequest("GET", "https://jsonplaceholder.typicode.com/todos/1")
+                .WithHeader("Accept", "application/json");
+
+        var response = await Http.Send(httpClient, clientArgs, request);
+
+        return response;
+    });
+
+    return Response.Ok();
+});
+```
+
+### CreateRequest
 
 This method should be used to create HTTP request. 
 
@@ -33,7 +133,7 @@ public static HttpRequestMessage CreateRequest(string method, string url)
 Example:
 
 ```csharp
-var scenario = Scenario.Create("my scenario", async context =>
+var scenario = Scenario.Create("http_scenario", async context =>
 {
     var request = Http.CreateRequest("GET", "https://nbomber.com")
                       .WithHeader("Accept", "text/html");
@@ -44,7 +144,7 @@ var scenario = Scenario.Create("my scenario", async context =>
 });
 ```
 
-## Http Send
+### Send
 
 This method should be used to send HTTP request.
 
@@ -59,7 +159,7 @@ Example 1:
 ```csharp
 using var httpClient = new HttpClient();
 
-var scenario = Scenario.Create("my scenario", async context =>
+var scenario = Scenario.Create("http_scenario", async context =>
 {
     var request = Http.CreateRequest("GET", "https://nbomber.com")
                       .WithHeader("Accept", "text/html");
@@ -73,30 +173,165 @@ var scenario = Scenario.Create("my scenario", async context =>
 });
 ```
 
-Example 2: in this example we use HttpClientArgs
+Example 2: in this example we use [HttpClientArgs](#httpclientargs).
 
 ```csharp
 using var httpClient = new HttpClient();
 
-var scenario = Scenario.Create("my scenario", async context =>
+var scenario = Scenario.Create("http_scenario", async context =>
 {
     var request = Http.CreateRequest("GET", "https://nbomber.com")
                       .WithHeader("Accept", "application/json");
                       // .WithHeader("Accept", "application/json")
                       // .WithBody(new StringContent("{ id: 1 }", Encoding.UTF8, "application/json");
-                      // .WithBody(new ByteArrayContent(new [] {1,2,3}))
+                      // .WithBody(new ByteArrayContent(new [] {1,2,3}))    
     
-    // with HttpClientArgs you can add:
-    // -- CancellationToken
-    // -- HttpCompletionOption - https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpcompletionoption?view=net-7.0
-
-    var clientArgs = new HttpClientArgs(HttpCompletionOption.ResponseHeadersRead, CancellationToken.None);
+    var clientArgs = HttpClientArgs.Create(
+        CancellationToken.None,
+        httpCompletion: HttpCompletionOption.ResponseContentRead,
+        jsonOptions: JsonSerializerOptions.Default
+    );
             
     var response = await Http.Send(httpClient, clientArgs, request);
 
     return response;
 });
 ```
+
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HTTP/HttpClientArgsExample.cs).*
+
+### JSON support
+
+HTTP plugin provides helper methods that simplify working with JSON format.
+
+- `Http.WithJsonBody<T>(data)` - Populates request body by serializing data record to JSON format. Also, it adds HTTP header: *"Accept": "application/json"*.
+
+```csharp
+using var httpClient = new HttpClient();
+
+Http.GlobalJsonSerializerOptions = new JsonSerializerOptions
+{
+    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+};
+
+var scenario = Scenario.Create("http_scenario", async context =>
+{    
+    var user = new UserData { UserId = 1, Title = "anton" };
+
+    var request =
+        Http.CreateRequest("GET", "https://nbomber.com")
+            .WithJsonBody(user);          
+            
+    var response = await Http.Send(httpClient, request);
+
+    return response;
+});
+```
+
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HTTP/HttpSendJsonExample.cs).*
+
+- `Http.Send<TResponse>` - Send request and deserialize HTTP response body to JSON format.
+
+```csharp
+using var httpClient = new HttpClient();
+
+Http.GlobalJsonSerializerOptions = new JsonSerializerOptions
+{
+    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+};
+
+var scenario = Scenario.Create("http_scenario", async context =>
+{
+    var request =
+        Http.CreateRequest("GET", "https://jsonplaceholder.typicode.com/todos/1")
+            .WithHeader("Accept", "application/json");
+
+    var response = await Http.Send<UserData>(httpClient, request);
+
+    var title = response.Payload.Value.Title;
+    var userId = response.Payload.Value.UserId;
+
+    return response;    
+});
+```
+
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HTTP/HttpSendJsonExample.cs).*
+
+:::info
+For JSON serialization you can set global serializer options:
+
+```csharp
+Http.GlobalJsonSerializerOptions = new JsonSerializerOptions
+{
+    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+};
+```
+
+If the global serializer options doesn't fit for your use case and you need more granular control, you can pass different serializer options for each request via **HttpClientArgs**.
+
+```csharp
+var clientArgs = HttpClientArgs.Create(
+    CancellationToken.None,
+    httpCompletion: HttpCompletionOption.ResponseContentRead,
+    jsonOptions: JsonSerializerOptions.Default // you set custom options
+);
+        
+var response = await Http.Send(httpClient, clientArgs, request);
+```
+:::
+
+### Timeout operation
+
+```csharp
+var scenario = Scenario.Create("http_scenario", async context =>
+{
+    using var timeout = new CancellationTokenSource();
+    timeout.CancelAfter(50); // the operation will be canceled after 50 ms
+
+    var clientArgs = HttpClientArgs.Create(timeout.Token);
+
+    var request = 
+        Http.CreateRequest("GET", "https://jsonplaceholder.typicode.com/todos/1")
+            .WithHeader("Accept", "application/json");
+
+    var response = await Http.Send(httpClient, clientArgs, request);
+
+    return response;
+});
+```
+
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HTTP/HttpWithTimeoutExample.cs).*
+
+### HttpClientArgs
+
+HttpClientArgs represents a structure that can configure HTTP clients per request. You can use it to set request timeout, or `JsonSerializerOptions`.
+
+Example:
+
+```csharp
+var scenario = Scenario.Create("http_scenario", async context =>
+{
+    var request =
+        Http.CreateRequest("GET", "https://nbomber.com")
+            .WithHeader("Content-Type", "application/json");
+            .WithBody(new StringContent("{ some JSON }", Encoding.UTF8, "application/json"));
+
+    var clientArgs = HttpClientArgs.Create(
+        CancellationToken.None,
+        httpCompletion: HttpCompletionOption.ResponseHeadersRead, // or ResponseContentRead
+        jsonOptions: new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        }
+    );
+
+    var response = await Http.Send(httpClient, clientArgs, request);
+
+    return response;
+});
+```
+
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HTTP/HttpClientArgsExample.cs).*
 
 ## HttpMetricsPlugin
 
