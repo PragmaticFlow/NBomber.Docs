@@ -1,7 +1,7 @@
 ---
 id: dynamic-workloads
 title: Dynamic Workloads
-sidebar_position: 9
+sidebar_position: 10
 ---
 
 import WorkloadsImage from './img/workloads.jpg'; 

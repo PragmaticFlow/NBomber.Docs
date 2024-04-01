@@ -1,7 +1,7 @@
 ---
 id: reporting-sinks
 title: Reporting Sinks
-sidebar_position: 6
+sidebar_position: 7
 ---
 
 import ReportingSinksImage from './img/reporting-sinks.jpeg';

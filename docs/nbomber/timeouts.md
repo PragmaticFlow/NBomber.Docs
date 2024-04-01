@@ -1,7 +1,7 @@
 ---
 id: timeouts
 title: Timeouts
-sidebar_position: 8
+sidebar_position: 9
 ---
 
 On this page, you will learn about possible timeouts in NBomber.

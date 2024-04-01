@@ -1,7 +1,7 @@
 ---
 id: data
 title: Data
-sidebar_position: 5
+sidebar_position: 4
 ---
 
 import DataFeedImage from './img/data-feed.jpeg';

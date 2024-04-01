@@ -1,7 +1,7 @@
 ---
 id: client-pool
 title: Client Pool
-sidebar_position: 7
+sidebar_position: 8
 ---
 
 import ClientPoolImage from './img/client-pool.jpeg';
