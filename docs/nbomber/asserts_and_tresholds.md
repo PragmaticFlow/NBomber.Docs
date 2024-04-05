@@ -129,3 +129,24 @@ var statusCode = scnStats1.Fail.StatusCodes.Get("503");
 ```
 
 *The defination of all (ScenarioStats, StepStats, StatusCodeStats, etc) stats types you can find by [this link](https://github.com/PragmaticFlow/NBomber.Contracts/blob/dev/src/NBomber.Contracts/Stats.fs#L126).*
+
+## Bytes API
+
+To work with bytes and be able to convert them to KB, MB, GB, NBomber provides a module `Bytes`.
+
+```csharp
+Bytes.FromKb(long kilobytes) // from Kb to bytes
+Bytes.FromMb(long megabytes) // from MB to bytes
+Bytes.FromGb(long gigabytes) // from GB to bytes
+
+Bytes.ToKb(long bytes) // bytes to Kb
+Bytes.ToMb(long bytes) // bytes to MB
+Bytes.ToGb(long bytes) // bytes to GB
+```
+
+You can use these helper functions to define thresholds.
+
+```csharp
+// all data transfers should be bigger than 10GB
+Assert.True(stats.Ok.DataTransfer.AllBytes > Bytes.FromGb(10));
+```
