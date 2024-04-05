@@ -93,9 +93,9 @@ var scenario = Scenario.Create("http_scenario", async context =>
 
         var response = await Http.Send<UserData>(httpClient, request);
 
-        // user: UserData type
-        var user = response.Payload.Value;
-        var userId = response.Payload.Value.UserId;
+        // user: UserData        
+        var user = response.Payload.Value.Data;
+        var userId = user.UserId;
 
         return response;
     });
@@ -248,8 +248,9 @@ var scenario = Scenario.Create("http_scenario", async context =>
 
     var response = await Http.Send<UserData>(httpClient, request);
 
-    var title = response.Payload.Value.Title;
-    var userId = response.Payload.Value.UserId;
+    var userData = response.Payload.Value.Data;
+    var title = userData.Title;
+    var userId = userData.UserId;
 
     return response;    
 });

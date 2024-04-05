@@ -116,13 +116,16 @@ var result = NBomberRunner
 var scnStats1 = result.ScenarioStats.Get("scenario_1");
 var scnStats2 = result.ScenarioStats.Get("scenario_2");
 
+// check that step "login" exist in the list
+bool isLoginExist = scnStats1.StepStats.Exists("login");
 // get "login" step stats
 var loginStats = scnStats1.StepStats.Get("login");
 
 // check that status code "503" exist in the list
 bool isExist = scnStats1.Fail.StatusCodes.Exists("503");
-
 // get stats of status code "503"
-// in case of the empty result, the exception will be thrown
+// in case of status not found, the exception will be thrown
 var statusCode = scnStats1.Fail.StatusCodes.Get("503");
 ```
+
+*The defination of all (ScenarioStats, StepStats, StatusCodeStats, etc) stats types you can find by [this link](https://github.com/PragmaticFlow/NBomber.Contracts/blob/dev/src/NBomber.Contracts/Stats.fs#L126).*
