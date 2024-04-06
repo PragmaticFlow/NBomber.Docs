@@ -334,6 +334,58 @@ var scenario = Scenario.Create("http_scenario", async context =>
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HTTP/HttpClientArgsExample.cs).*
 
+### Tracing HTTP requests
+
+The HTTP plugin supports the tracing of requests and corresponding responses. For this you need to pass `Logger` into `HttpClientArgs`.
+
+```csharp
+using var httpClient = new HttpClient();
+
+var scenario = Scenario.Create("http_scenario", async context =>
+{
+    var request =
+        Http.CreateRequest("GET", "https://jsonplaceholder.typicode.com/todos/1")
+            .WithHeader("Accept", "application/json");
+
+    // highlight-start
+    var clientArgs = HttpClientArgs.Create(logger: context.Logger);
+    // highlight-end
+
+    var response = await Http.Send(httpClient, clientArgs, request);
+
+    return response;
+})
+```
+
+After running this example, we will have a log file populated with HTTP tracing. Each trace message contains correspondent `TraceId`.
+
+```csharp title="nbomber-log-20240406.txt"
+2024-04-06 10:56:11.090 +03:00 [DBG] [ThreadId:7] HTTP Request:
+// highlight-start
+ TraceId: 30774c79337a4d3e9c6fa897bdb87ad1
+// highlight-end
+ Method: GET
+ RequestUri: "https://jsonplaceholder.typicode.com/todos/1"
+ HttpVersion: 1.1
+ Headers: Accept: application/json
+ Content: 
+
+2024-04-06 10:56:11.994 +03:00 [DBG] [ThreadId:9] HTTP Response:
+// highlight-start
+ TraceId: 30774c79337a4d3e9c6fa897bdb87ad1
+// highlight-end
+ HttpVersion: 1.1
+ StatusCode: "OK"
+ ReasonPhrase: OK
+ Headers: Date: Sat, 06 Apr 2024 07:56:10 GMT, Connection: keep-alive, Report-To: {"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1712102103&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&s=NEDTWuReF%2Ftx6jFV3Ve%2FTGNlbenGGlra6iQD4Wu%2BL1k%3D"}]}, Reporting-Endpoints: heroku-nel=https://nel.heroku.com/reports?ts=1712102103&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&s=NEDTWuReF%2Ftx6jFV3Ve%2FTGNlbenGGlra6iQD4Wu%2BL1k%3D, Nel: {"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}, X-Powered-By: Express, X-Ratelimit-Limit: 1000, X-Ratelimit-Remaining: 999, X-Ratelimit-Reset: 1712102115, Vary: Origin, Accept-Encoding, Access-Control-Allow-Credentials: true, Cache-Control: max-age=43200, Pragma: no-cache, X-Content-Type-Options: nosniff, ETag: W/"53-hfEnumeNh6YirfjyjaujcOPPT+s", Via: 1.1 vegur, CF-Cache-Status: HIT, Age: 23727, Accept-Ranges: bytes, Server: cloudflare, CF-RAY: 8700384848945b45-VIE, Alt-Svc: h3=":443"
+ Content: {
+  "userId": 1,
+  "id": 1,
+  "title": "delectus aut autem",
+  "completed": false
+}
+```
+
 ## HttpMetricsPlugin
 
 HttpMetricsPlugin - provides a monitoring layer for HTTP connections.
