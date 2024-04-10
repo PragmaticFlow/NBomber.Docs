@@ -8,7 +8,9 @@ import MqttImage from './img/mqtt.jpg';
 
 <center><img src={MqttImage} width="70%" height="70%" /></center>
 
-To work with MQTT protocol, NBomber provides [NBomber.MQTT](https://github.com/PragmaticFlow/NBomber.MQTT) plugin that includes sending requests and receiving responses with tracking of data transfer and status codes.
+MQTT is a standard messaging protocol for the Internet of Things (IoT). It is designed as an extremely lightweight publish/subscribe messaging transport that is ideal for connecting remote devices with a small code footprint and minimal network bandwidth. MQTT today is used in a wide variety of industries, such as automotive, manufacturing, telecommunications, oil and gas, etc.
+
+To work with MQTT protocol, NBomber provides [NBomber.MQTT](https://github.com/PragmaticFlow/NBomber.MQTT) plugin that includes functionality for sending and receiving messages, including tracking of data transfer and status codes.
 
 :::info
 To install [NBomber.MQTT](https://github.com/PragmaticFlow/NBomber.MQTT) package you should execute the following *dotnet* command:
@@ -23,7 +25,7 @@ dotnet add package NBomber.MQTT
 
 ## MQTT API
 
-MQTT plugin provides a wrapper over the popular library [MQTTnet](https://github.com/dotnet/MQTTnet). The wrapper implements basic methods to publish and receive messages.
+MQTT plugin provides a wrapper over the popular library [MQTTnet](https://github.com/dotnet/MQTTnet). The wrapper implements basic methods for publishing and receiving messages.
 
 ```csharp
 var payload = Data.GenerateRandomBytes(200);
@@ -76,10 +78,12 @@ var scenario = Scenario.Create("mqtt_scenario", async ctx =>
 
 ### Original IMqttClient
 
-NBomber MQTT plugin is basically a wrapper over the popular library [MQTTnet](https://github.com/dotnet/MQTTnet). If you need to work with the original *IMqttClient* from *MQTTnet* library, you can use public `Client` property.
+NBomber MQTT plugin is basically a wrapper over the popular library [MQTTnet](https://github.com/dotnet/MQTTnet). If you need to work with the original *IMqttClient* from *MQTTnet* library, you can use public `Client` property. All native methods are available for usage.
 
 ```csharp
 using var mqtt = new MqttClient(new MqttFactory().CreateMqttClient());
 
+// highlight-start
 var originalClient = mqtt.Client;
+// highlight-end
 ```

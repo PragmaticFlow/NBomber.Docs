@@ -57,21 +57,21 @@ NBomberRunner
 With NBomber you have several options to introduce randomize behaviour to simulate dynamic workload.
 
 - Use of LoadSimulation with random injection: [InjectRandom](load-simulation#inject-random)
-- [Distribute logic by ThreadNumber](#distribute-logic-by-threadnumber)
+- [Distribute logic by InstanceNumber](#distribute-logic-by-instancenumber)
 - [Distribute logic by probability](#distribute-logic-by-probability)
 
-### Distribute logic by ThreadNumber
+### Distribute logic by InstanceNumber
 
-With NBomber, you can distribute logic across a range of ThreadNumber.
+With NBomber, you can distribute logic across a range of Scenario's instances/copies.
 
 ```csharp
 var scenario = Scenario.Create("home_page", async context =>
 {
-    if (context.ScenarioInfo.ThreadNumber % 9 < 3)
+    if (context.ScenarioInfo.InstanceNumber % 9 < 3)
     {
         // 0-2 range, run step 1
     }
-    else if (context.ScenarioInfo.ThreadNumber % 9 < 6)
+    else if (context.ScenarioInfo.InstanceNumber % 9 < 6)
     {
         // 3-5 range, run step 2
     }
@@ -85,7 +85,7 @@ var scenario = Scenario.Create("home_page", async context =>
 );
 ```
 
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/Features/DynamicWorkload/ThreadIdDistributionExample.cs).*
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/Features/DynamicWorkload/InstanceNumberDistributionExample.cs).*
 
 ## Distribute logic by probability
 

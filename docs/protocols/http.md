@@ -336,7 +336,7 @@ var scenario = Scenario.Create("http_scenario", async context =>
 
 ### Tracing HTTP requests
 
-The HTTP plugin supports the tracing of requests and corresponding responses. For this you need to pass `Logger` into `HttpClientArgs`.
+The HTTP plugin supports tracing requests and corresponding responses. To do this, you need to pass `Logger` into `HttpClientArgs`.
 
 ```csharp
 using var httpClient = new HttpClient();

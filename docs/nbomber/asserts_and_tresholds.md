@@ -10,7 +10,7 @@ import ThresholdsImage from './img/thresholds.jpg';
 
 ## Thresholds
 
-Thresholds are the pass/fail criteria that you define for your test stats. NBomber provides detailed stats that should be used for defining thresholds. For example, you can create thresholds for any combination of the following expectations:
+Thresholds are the pass/fail criteria that you define for your load test. NBomber provides detailed stats that should be used to define thresholds. For example, you can create thresholds for any combination of the following expectations:
 
 - 75% of requests have a response time below 200ms.
 - 99% of requests have a response time below 400ms.
@@ -105,7 +105,7 @@ dotnet add package Microsoft.NET.Test.Sdk
 
 ## Scenario Stats API
 
-NBomber provides some extensions methods to work with final stats.
+NBomber provides extension methods to work with final stats.
 
 ```csharp
 var result = NBomberRunner
@@ -150,3 +150,5 @@ You can use these helper functions to define thresholds.
 // all data transfers should be bigger than 10GB
 Assert.True(stats.Ok.DataTransfer.AllBytes > Bytes.FromGb(10));
 ```
+
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/xUnitExample/LoadTestExample.cs#L85).*

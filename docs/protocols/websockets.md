@@ -165,3 +165,15 @@ var ping = await Step.Run("disconnect", context, async () =>
     return Response.Ok();
 });
 ```
+
+### Original ClientWebSocket
+
+NBomber.WebSockets plugin is basically a wrapper over native [ClientWebSocket](https://learn.microsoft.com/en-us/dotnet/api/system.net.websockets.clientwebsocket?view=net-8.0) that provides extenions to simplify WebSockets handling. If you need to work with the original *ClientWebSocket*, you can use public `Client` property. All native methods are available for usage.
+
+```csharp
+using var websocket = new WebSocket(new WebSocketConfig());
+
+// highlight-start
+var originalClient = websocket.Client;
+// highlight-end
+```
