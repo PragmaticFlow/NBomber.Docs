@@ -5,10 +5,10 @@ sidebar_position: 5
 ---
 
 :::info
-NBomber is free only for personal use. You can't use it for an organization.
+NBomber is FREE only for personal use. You can't use FREE version for an organization.
 :::
 
-NBomber supports two type of license:
+NBomber supports two types of license:
 
 - Business license - Allows the use of NBomber within your organization.
 - Enterprise license - Allows the use of NBomber within your organization, and additionally, provides access to the cluster mode of execution.
@@ -17,7 +17,7 @@ NBomber supports two type of license:
 If you're interested in experimenting with NBomber Cluster but do not have an enterprise license, you can use of the [Local Dev Cluster](../cluster/local-dev-cluster).
 :::
 
-## License limitations
+## Frequently asked questions
 
 | Question | Answer | 
 | - | - |
@@ -26,7 +26,7 @@ If you're interested in experimenting with NBomber Cluster but do not have an en
 | How many executions can be run in parallel? | Unlimited |
 | How many users can use the license in parallel? | Unlimited |
 
-## Load license
+## How to load license
 
 To load the license, you can use NBomberRunner
 

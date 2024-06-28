@@ -7,9 +7,9 @@ sidebar_position: 1
 :::info
 Installation prerequisites
 
-- [.NET SDK](https://dotnet.microsoft.com/download).
-- [Visual Studio Code](https://code.visualstudio.com/) with [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp) extension installed.
-- [Docker](https://docs.docker.com/engine/install/) - If you decide to run NBomber Cluster that depends on NATS message broker or any database (Redis, PostgreSQL, etc.) for your load tests, installing Docker with Docker Compose would be helpful.  
+- [.NET SDK](https://dotnet.microsoft.com/download)
+- [Visual Studio Code](https://code.visualstudio.com/) with [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp) extension.
+- [Docker](https://docs.docker.com/engine/install/) - If you decide to run NBomber Cluster, installing Docker and Docker Compose is required.
 
 :::
 
@@ -37,7 +37,7 @@ dotnet add package NBomber
 :::info
 Installation prerequisites
 
-- [Docker](https://docs.docker.com/engine/install/) - If you decide to run NBomber Cluster that depends on NATS message broker or any database (Redis, PostgreSQL, etc.) for your load tests, installing Docker with Docker Compose would be helpful. 
+- [Docker](https://docs.docker.com/engine/install/) - If you decide to run NBomber Cluster, installing Docker and Docker Compose is required.
 :::
 
 To run NBomber Cluster, you need to install [NATS](https://nats.io/) message broker. The simple way is to use Docker for this. 
