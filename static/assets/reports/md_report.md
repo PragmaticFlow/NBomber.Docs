@@ -4,7 +4,7 @@ test suite: `nbomber_default_test_suite_name`
 
 test name: `nbomber_default_test_name`
 
-session id: `2024-06-27_07.51.42_session_ccf412f0`
+session id: `2024-06-28_11.34.95_session_a43e988b`
 
 > scenario stats
 
@@ -30,9 +30,9 @@ load simulations:
 |---|---|
 |name|`global information`|
 |request count|all = `18030`, ok = `18030`, RPS = `100.2`|
-|latency|min = `33.23` ms, mean = `133.8` ms, max = `1728.73` ms, StdDev = `104.41`|
-|latency percentile|p50 = `109.82` ms, p75 = `139.01` ms, p95 = `380.67` ms, p99 = `563.2` ms|
-|data transfer|min = `49.936` KB, mean = `49.952` KB, max = `49.94` KB, all = `879.3` MB|
+|latency (ms)|min = `32.85`, mean = `134.59`, max = `2750.7`, StdDev = `117.1`|
+|latency percentile (ms)|p50 = `108.48`, p75 = `139.52`, p95 = `388.1`, p99 = `584.7`|
+|data transfer (KB)|min = `49.936`, mean = `49.952`, max = `49.94`, all = `879.3` MB|
 
 
 > status codes for scenario: `http_scenario`
