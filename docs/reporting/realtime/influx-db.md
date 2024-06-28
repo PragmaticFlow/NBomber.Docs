@@ -4,7 +4,7 @@ title: InfluxDB
 sidebar_position: 0
 ---
 
-Using [Reporting Sinks](../nbomber/reporting-sinks), you can store NBomber metrics in [InfluxDB](https://www.influxdata.com/) and analyze your performance results with [InfluxDB UI](https://docs.influxdata.com/influxdb/v2/visualize-data/) or [Grafana](https://grafana.com/).
+Using [Reporting Sinks](/docs/nbomber/reporting-sinks.md), you can store NBomber metrics in [InfluxDB](https://www.influxdata.com/) and analyze your performance results with [InfluxDB UI](https://docs.influxdata.com/influxdb/v2/visualize-data/) or [Grafana](https://grafana.com/).
 
 :::info
 To start working with [NBomber.Sinks.InfluxDB](https://www.nuget.org/packages/NBomber.Sinks.InfluxDB) package you should install it:
@@ -25,7 +25,7 @@ The simple way to run InfluxDB is via Docker. By this link, you can find a [dock
 
 ### Configuring InfluxDB Sink via JSON Config
 
-To configure InfluxDB Sink we will use [JSON Infrastracture Config](../nbomber/json-config#json-infrastracture-config) file
+To configure InfluxDB Sink we will use [JSON Infrastracture Config](/docs/nbomber/json-config.md#json-infrastracture-config) file
 
 ```json title="infra-config.json"
 {

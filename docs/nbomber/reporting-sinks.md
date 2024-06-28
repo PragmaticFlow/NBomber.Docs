@@ -10,7 +10,7 @@ import ReportingSinksImage from './img/reporting-sinks.jpeg';
 
 ReportingSink is a pluggable functionality that NBomber uses to save real-time metrics and final statistics. With this functionality, you can add any storage support that you would like to use with NBomber. The available sinks:
 
-- [NBomber.Sinks.InfluxDB](../reporting-sinks/influx-db) - reporting sink that writes real-time metrics and final statistics to InfluxDB.
+- [NBomber.Sinks.InfluxDB](../reporting/realtime/influx-db) - reporting sink that writes real-time metrics and final statistics to InfluxDB.
 
 ## Implementing custom Reporting Sink
 
