@@ -9,6 +9,9 @@ Using [Reporting Sinks](/docs/nbomber/reporting-sinks.md), you can store NBomber
 :::info
 To start working with [NBomber.Sinks.InfluxDB](https://www.nuget.org/packages/NBomber.Sinks.InfluxDB) package you should install it:
 
+[![build](https://github.com/PragmaticFlow/NBomber.Sinks.InfluxDB/actions/workflows/build.yml/badge.svg)](https://github.com/PragmaticFlow/NBomber.Sinks.InfluxDB)
+[![NuGet](https://img.shields.io/nuget/v/NBomber.Sinks.InfluxDB.svg)](https://www.nuget.org/packages/NBomber.Sinks.InfluxDB/)
+
 ```code
 dotnet add package NBomber.Sinks.InfluxDB
 ```
