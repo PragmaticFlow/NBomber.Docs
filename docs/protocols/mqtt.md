@@ -12,6 +12,10 @@ MQTT is a standard messaging protocol for the Internet of Things (IoT). It is de
 
 To work with MQTT protocol, NBomber provides [NBomber.MQTT](https://github.com/PragmaticFlow/NBomber.MQTT) plugin that includes functionality for sending and receiving messages, including tracking of data transfer and status codes.
 
+:::warning
+This package is experimental and might be subject to breaking API changes in the future. While we intend to keep experimental packages as stable as possible, we may need to introduce breaking changes.
+:::
+
 :::info
 To install [NBomber.MQTT](https://github.com/PragmaticFlow/NBomber.MQTT) package you should execute the following *dotnet* command:
 

@@ -6,6 +6,10 @@ sidebar_position: 1
 
 Using [Reporting Sinks](/docs/nbomber/reporting-sinks.md), you can store NBomber metrics in [TimescaleDB](https://www.timescale.com/) and analyze your performance results with [NBomber.MetricsUI](https://github.com/PragmaticFlow/NBomber.MetricsUI) (*in development*) or [Grafana](https://grafana.com/).
 
+:::warning
+This package is experimental and might be subject to breaking API changes in the future. While we intend to keep experimental packages as stable as possible, we may need to introduce breaking changes.
+:::
+
 :::info
 To start working with [NBomber.Sinks.Timescale](https://www.nuget.org/packages/NBomber.Sinks.Timescale) package you should install it:
 

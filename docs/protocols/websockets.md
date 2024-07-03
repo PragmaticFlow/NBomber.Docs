@@ -12,6 +12,10 @@ WebSockets is a protocol that provides full-duplex communication channels over a
 
 To work with WebSockets, NBomber provides [NBomber.WebSockets](https://github.com/PragmaticFlow/NBomber.WebSockets) plugin. 
 
+:::warning
+This package is experimental and might be subject to breaking API changes in the future. While we intend to keep experimental packages as stable as possible, we may need to introduce breaking changes.
+:::
+
 :::info
 To install [NBomber.WebSockets](https://www.nuget.org/packages/nbomber.websockets/) package you should execute the following *dotnet* command:
 
