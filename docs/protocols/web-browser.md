@@ -8,11 +8,11 @@ import WebBrowserImage from './img/web_browser.jpg';
 
 <center><img src={WebBrowserImage} width="60%" height="40%" /></center>
 
-The WebBrowser package brings browser automation and end-to-end web testing to NBomber. It adds browser-level APIs to interact with browsers and collect frontend performance metrics as part of your NBomber tests. This package aims to provide rough compatibility with the Playwright and Puppeteer API, so you don't need to learn a completely new API.
+The WebBrowser package brings browser automation and end-to-end web testing to NBomber. It adds browser-level APIs to interact with browsers and collect frontend performance metrics as part of your NBomber tests. This package brings **Playwright** and **Puppeteer API**, so you don't need to learn a completely new API.
 
 ## Use case for browser testing
 
-The primary use case for the browser testing is to test performance at the browser level. Browser-level testing allows you to measure user experience and identify issues that are challenging to detect at the protocol level.
+The primary use case for the browser testing is to test performance at the browser level. Browser-level testing allows you to measure user experience and identify issues that are challenging to detect at the protocol level. You can interact with the browser to script tests much closer to the actual website experience. You'll get insight into what your user sees on a browser level and catch issues skipped from the protocol level. At the same time, you can adopt a hybrid approach to performance testing by leveraging the existing functionalities of NBomber and performing backend load testing on a protocol level, all in the same scenario. This gives you a full picture of how the user experience is under different load scenarios.
 
 To work with WebBrowsers, NBomber provides [NBomber.WebBrowser](https://github.com/PragmaticFlow/NBomber.WebBrowser) package that includes extensions for Playwright and Puppeteer frameworks.
 
