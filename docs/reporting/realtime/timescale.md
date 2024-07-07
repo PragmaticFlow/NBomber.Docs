@@ -4,7 +4,13 @@ title: TimescaleDB
 sidebar_position: 1
 ---
 
-Using [Reporting Sinks](/docs/nbomber/reporting-sinks.md), you can store NBomber metrics in [TimescaleDB](https://www.timescale.com/) and analyze your performance results with [NBomber.MetricsUI](https://github.com/PragmaticFlow/NBomber.MetricsUI) (*in development*) or [Grafana](https://grafana.com/).
+import TimescaleImage from './img/timescale.jpg';
+
+<center><img src={TimescaleImage} width="55%" height="50%" /></center>
+
+[TimescaleDB](https://www.timescale.com/) is an open-source database designed to make SQL scalable for time-series data. It is engineered up from PostgreSQL and packaged as a PostgreSQL extension, providing automatic partitioning across time and space (partitioning key), as well as full SQL support.
+
+Using [Reporting Sinks](/docs/nbomber/reporting-sinks.md) extension for TimescaleDB, you can store NBomber metrics into TimescaleDB and analyze your performance results with [NBomber.MetricsUI](https://github.com/PragmaticFlow/NBomber.MetricsUI) (*in development*) or [Grafana](https://grafana.com/).
 
 :::warning
 This package is experimental and might be subject to breaking API changes in the future. While we intend to keep experimental packages as stable as possible, we may need to introduce breaking changes.

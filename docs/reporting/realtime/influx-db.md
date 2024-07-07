@@ -4,7 +4,9 @@ title: InfluxDB
 sidebar_position: 0
 ---
 
-Using [Reporting Sinks](/docs/nbomber/reporting-sinks.md), you can store NBomber metrics in [InfluxDB](https://www.influxdata.com/) and analyze your performance results with [InfluxDB UI](https://docs.influxdata.com/influxdb/v2/visualize-data/) or [Grafana](https://grafana.com/).
+[InfluxDB](https://www.influxdata.com/) is an open-source time series database developed by the company InfluxData. It is used for storage and retrieval of time series data in fields such as operations monitoring, application metrics, Internet of Things sensor data, and real-time analytics.
+
+Using [Reporting Sinks](/docs/nbomber/reporting-sinks.md), you can store NBomber metrics into InfluxDb and analyze your performance results with [InfluxDB UI](https://docs.influxdata.com/influxdb/v2/visualize-data/) or [Grafana](https://grafana.com/).
 
 :::info
 To start working with [NBomber.Sinks.InfluxDB](https://www.nuget.org/packages/NBomber.Sinks.InfluxDB) package you should install it:
