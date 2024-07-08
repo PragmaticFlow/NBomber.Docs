@@ -148,7 +148,10 @@ NBomberRunner
     .RegisterScenarios(scenario)
     .WithReportFinalizer(data =>
     {
-        var scnStats = data.ScenarioStats.Where(x => x.ScenarioName != "hidden").ToArray();
+        var scnStats = data.ScenarioStats
+            .Where(x => x.ScenarioName != "hidden")
+            .ToArray();
+            
         return ReportData.Create(scnStats);
     })
     .Run();

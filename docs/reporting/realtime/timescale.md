@@ -5,6 +5,7 @@ sidebar_position: 1
 ---
 
 import TimescaleImage from './img/timescale.jpg';
+import TimescaleDataImage from './img/timescale-data.jpg';
 
 <center><img src={TimescaleImage} width="55%" height="50%" /></center>
 
@@ -65,6 +66,10 @@ NBomberRunner
 ```
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/Features/RealtimeReporting/TimescaleDB).*
+
+During the load test run, NBomber's metrics will appear in TimescaleDB, and you can query them.
+
+<center><img src={TimescaleDataImage} width="100%" height="100%" /></center>
 
 ### Connecting to TimescaleDB via code
 
