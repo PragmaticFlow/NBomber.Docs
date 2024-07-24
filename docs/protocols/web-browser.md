@@ -43,17 +43,15 @@ To work with the Playwright API, make sure you get familiar with their [document
 :::
 
 ```csharp
-// downloading the Chrome
-var installedBrowser = await new BrowserFetcher(SupportedBrowser.Chrome).DownloadAsync(BrowserTag.Stable);
-var browserPath = installedBrowser.GetExecutablePath();
+//Make sure to install Playwright from powershell command  pwsh bin/Debug/netX/playwright.ps1 install before running the test
+//This will download the dependent browsers necessary to run playwright tests
 
 using var playwright = await Playwright.CreateAsync();
 
 await using var browser = await playwright.Chromium.LaunchAsync(
     new BrowserTypeLaunchOptions
     {
-        Headless = true,
-        ExecutablePath = browserPath
+        Headless = true
     }
 );
 
@@ -63,7 +61,7 @@ var scenario = Scenario.Create("playwright_scenario", async context =>
 
     await Step.Run("open nbomber", context, async () =>
     {
-        var pageResponse = await page.GotoAsync("https://nbomber.com/");
+        await page.GotoAsync("https://nbomber.com/");
 
         var html = await page.ContentAsync();
         var totalSize = await page.GetDataTransferSize();
@@ -73,7 +71,7 @@ var scenario = Scenario.Create("playwright_scenario", async context =>
 
     await Step.Run("open bing", context, async () =>
     {
-        var pageResponse = await page.GotoAsync("https://www.bing.com/maps");
+        await page.GotoAsync("https://www.bing.com/maps");
 
         await page.WaitForSelectorAsync(".searchbox input");
         await page.FocusAsync(".searchbox input");
