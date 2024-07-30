@@ -119,7 +119,7 @@ Maintains a constant number of activated (constantly running) Scenario copies (v
 This load simulation type is appropriate when you aim for a specific number of virtual users to complete a fixed total number of iterations. Typically, this simulation type is applied to test closed systems where you have control over the concurrent number (not rate) of users or client connections. It can be applied to databases, message brokers, or any other system that uses a static client pool of persistent connections and reuses them. An example use case is quick performance tests in the development build cycle. As developers make changes, they might run the test against the local code to test for performance regressions.
 
 :::info
-This load simulation type can't be mixed with any other simulations.
+This load simulation type can't be mixed with any other simulations. You can use it only as a single iteration type.
 :::
 
 **Example**: This simulation will create and start 100 Scenario copies(virtual users) and keep them running until the iteration count reaches 1000. Each Scenario copy acts like a long-running thread that executes some logic in a loop. 
@@ -146,7 +146,7 @@ Injects a given number of Scenario copies (virtual users) by rate until a specif
 Use it when you want to maintain a constant rate of requests and run a fixed number of iterations without being affected by the performance of the system you load test. This simulation type is commonly employed for testing websites and HTTP APIs. An example use case is quick performance tests in the development build cycle. As developers make changes, they might run the test against the local code to test for performance regressions.
 
 :::info
-This load simulation type can't be mixed with any other simulations.
+This load simulation type can't be mixed with any other simulations. You can use it only as a single iteration type.
 :::
 
 **Example**: This simulation will start injecting Scenario copies(virtual users) at a rate of 100 copies per 1 second until the iteration count reaches 1000. Each Scenario copy will be executed only once and then destroyed.
