@@ -241,7 +241,7 @@ public class FakeDataGenExample
         })
         .WithInit(ctx =>
         {
-            // we crate 5 users and our Simulation.KeepConstant(copies: 5)
+            // we create 5 users and our Simulation.KeepConstant(copies: 5)
             var users = GenerateFakeUsers(5).ToArray();
 
             _usersFeed = DataFeed.Constant(users);
