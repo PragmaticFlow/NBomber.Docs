@@ -87,7 +87,7 @@ Scenario.Create("scenario", async context =>
 );
 ```
 
-**Example 2**: In this example, we combined three simulations: ramp up from 0 to 50, keeps 50 copies running for 1 minute, and then ramp down from 50 to 0. On the first simulation(`RampingConstant`), the NBomber scheduler will be activated periodically to add a new Scenario copy instance into the running Scenarios pool. This simulation will continue ramping up copies from 0 to 50 until the end duration. After this, the following simulation(`KeepConstant`) will keep the running 50 copies for 1 minute, and then the last simulation(`RampingConstant`) starts smoothly ramping down Scenario copies from 50 to 0. 
+**Example 2**: In this example, we combined three simulations: ramp up from 0 to 50, keeps 50 copies running for 1 minute, and then ramp down from 50 to 0. On the first simulation(`RampingConstant`), the NBomber scheduler will be activated periodically to add a new Scenario copy instance into the running Scenarios pool. This simulation will continue ramping up copies from 0 to 50 until the end duration. After this, the following simulation(`KeepConstant`) will keep the running 50 copies for 30 seconds, and then the last simulation(`RampingConstant`) starts smoothly ramping down Scenario copies from 50 to 0.
 
 ```csharp
 Scenario.Create("scenario", async context =>
