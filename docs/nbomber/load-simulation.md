@@ -87,7 +87,7 @@ Scenario.Create("scenario", async context =>
 );
 ```
 
-**Example 2**: In this example, we combined three simulations: ramp up from 0 to 50, keeps 50 copies running for 1 minute, and then ramp down from 50 to 0. On the first simulation(`RampingConstant`), the NBomber scheduler will be activated periodically to add a new Scenario copy instance into the running Scenarios pool. This simulation will continue ramping up copies from 0 to 50 until the end duration. After this, the following simulation(`KeepConstant`) will keep the running 50 copies for 30 seconds, and then the last simulation(`RampingConstant`) starts smoothly ramping down Scenario copies from 50 to 0.
+**Example 2**: In this example, we combined three simulations: ramp up from 0 to 50, keeps 50 copies running for 30 seconds, and then ramp down from 50 to 0. On the first simulation(`RampingConstant`), the NBomber scheduler will be activated periodically to add a new Scenario copy instance into the running Scenarios pool. This simulation will continue ramping up copies from 0 to 50 until the end duration. After this, the following simulation(`KeepConstant`) will keep the running 50 copies for 30 seconds, and then the last simulation(`RampingConstant`) starts smoothly ramping down Scenario copies from 50 to 0.
 
 ```csharp
 Scenario.Create("scenario", async context =>
@@ -235,7 +235,7 @@ Scenario.Create("scenario", async context =>
 );
 ```
 
-**Example 2**: In this example, we combined three simulations: ramp up from 0 to 50, keep the injection rate at 50 for 1 minute, and then ramp down from 50 to 0. On the first simulation(`RampingInject`), the NBomber scheduler will be activated every second(by injection interval) to inject a new Scenario copy. This simulation will continue ramping up the injection rate from 0 to 50 until the end duration. After this, the following simulation(`Inject`) will keep injecting with the injection rate of 50 copies per 1 sec for 1 minute, and then the last simulation(`RampingInject`) starts smoothly ramping down the injection rate from 50 to 0 copies. 
+**Example 2**: In this example, we combined three simulations: ramp up from 0 to 50, keep the injection rate at 50 for 30 seconds, and then ramp down from 50 to 0. On the first simulation(`RampingInject`), the NBomber scheduler will be activated every second(by injection interval) to inject a new Scenario copy. This simulation will continue ramping up the injection rate from 0 to 50 until the end duration. After this, the following simulation(`Inject`) will keep injecting with the injection rate of 50 copies per 1 sec for 30 seconds, and then the last simulation(`RampingInject`) starts smoothly ramping down the injection rate from 50 to 0 copies. 
 
 ```csharp
 Scenario.Create("scenario", async context =>
