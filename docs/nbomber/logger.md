@@ -127,7 +127,7 @@ Here's an example of how you can configure Serilog to use the Elasticsearch sink
 :::info
 Installation prerequisites
 
-You should have installed Elasticsearch database and Kibana. If you don't have it, you can use Docker Compose environment bootstrap by [following link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/Features/ElasticsearchLogger/docker-compose.yaml).
+You should have installed Elasticsearch database and Kibana. If you don't have it, you can use Docker Compose environment bootstrap by [following link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/Features/Logger/Elasticsearch/docker-compose.yaml).
 :::
 
 #### Add Elasticsearch sink
