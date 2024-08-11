@@ -8,11 +8,12 @@ import ClientPoolImage from './img/client-pool.jpeg';
 
 <center><img src={ClientPoolImage} width="95%" height="95%" /></center>
 
-Client Pool is an additional component that should be used for load tests that require reusing initialized clients (WebSockets, gRPC, Redis, etc.). There could be situations where you might need to reuse client instances with persistent connections. For example, you want to test a throughput of WebSockets API (or some database/message queue) for a hundred virtual users. Usually, such a target system requires you to open a persistent connection and reuse it for sending/receiving data through it. Your load test scenario shouldn't create and initialize a new client/connection for every turn. Instead, it should take a client/connection from a shared pool.
+ClientPool is an additional component that should be used for load tests that require reusing initialized clients (WebSockets, gRPC, Redis, etc.). There could be situations where you might need to reuse client instances with persistent connections. For example, you want to test a throughput of WebSockets API (or some database/message queue) for a hundred virtual users. Usually, such a target system requires you to open a persistent connection and reuse it for sending/receiving data through it. Your load test scenario shouldn't create and initialize a new client/connection for every turn. Instead, it should take a client/connection from a shared pool.
 
 Let's look at these examples to understand the difference between creating a client for every turn vs. reusing a client from the client pool.
 
-Creating a client for every turn:
+Creating a client for every turn: In this example, we create `WebsocketClient` instance for every scenario iteration, disconnect it, and clean it.
+
 ```csharp
 var scenario = Scenario.Create("scenario", async context =>
 {
@@ -26,7 +27,8 @@ var scenario = Scenario.Create("scenario", async context =>
 });
 ```
 
-Reusing a client from Client Pool:
+Reusing a client from ClientPool: In this example, we do not create an new instance of `WebsocketClient` every time but rather get it from the ClientPool. This implies that all `WebsocketClient` instances available from ClientPool are created before usage. Also, we don't disconnect/dispose a client after each scenario iteration, we keep them alive in ClientPool.
+
 ```csharp
 var scenario = Scenario.Create("scenario", async context =>
 {
@@ -67,7 +69,7 @@ var scenario = Scenario.Create("scenario", async context =>
 });
 ```
 
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/Features/ClientPool).*
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/WebSockets/ClientPool/ClientPoolWebSocketsExample.cs).*
 
 ## Getting clients from Client Pool
 
@@ -92,7 +94,7 @@ var scenario = Scenario.Create("scenario", async context =>
 });
 ```
 
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/Features/ClientPool).*
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/WebSockets/ClientPool/ClientPoolWebSocketsExample.cs).*
 
 ## Disposing clients from Client Pool
 
@@ -128,4 +130,4 @@ var scenario = Scenario.Create("scenario", async context =>
 });
 ```
 
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/Features/ClientPool).*
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/WebSockets/ClientPool/ClientPoolWebSocketsExample.cs).*
