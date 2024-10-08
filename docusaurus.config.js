@@ -39,7 +39,7 @@ const config = {
           editUrl: 'https://github.com/PragmaticFlow/NBomber.Docs/blob/dev',          
         },
         blog: {
-          showReadingTime: true,
+          showReadingTime: true,          
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           // editUrl:
