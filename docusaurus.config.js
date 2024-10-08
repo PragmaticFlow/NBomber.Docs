@@ -161,8 +161,12 @@ const config = {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
         additionalLanguages: ['csharp', 'fsharp', 'json'],
-      },
+      }
     }),
+
+    plugins: [
+      require.resolve('docusaurus-lunr-search')
+    ],
 };
 
 module.exports = config;
