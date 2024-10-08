@@ -13,7 +13,7 @@ import NBomberLogoImage from './img/nbomber_logo.png';
 
 ### What is NBomber?
 
-NBomber is a modern and flexible load-testing framework for Pull and Push scenarios, designed to test any system regardless of a protocol (HTTP/WebSockets/AMQP, etc) or a semantic model (Pull/Push).
+NBomber is a modern and flexible load-testing framework designed to test any system regardless of a protocol (HTTP/WebSockets/AMQP, etc) or a semantic model (Pull/Push).
 
 NBomber is free for personal use, developer-centric, and extensible.
 Using NBomber, you can test the reliability and performance of your systems and catch performance regressions and problems earlier. 

@@ -35,7 +35,7 @@ var scenario = Scenario.Create("http_scenario", async context =>
 {   
     var request =
         Http.CreateRequest("GET", "https://nbomber.com")
-            .WithHeader("Accept", "application/json")
+            .WithHeader("Content-Type", "application/json")
             .WithBody(new StringContent("{ some JSON }", Encoding.UTF8, "application/json"));
 
     var response = await Http.Send(httpClient, request);
@@ -56,7 +56,7 @@ var scenario = Scenario.Create("http_scenario", async context =>
     {
         var request =
             Http.CreateRequest("GET", "https://nbomber.com")
-                .WithHeader("Accept", "application/json")
+                .WithHeader("Content-Type", "application/json")
                 .WithBody(new StringContent("{ some JSON }", Encoding.UTF8, "application/json"));
 
         var response = await Http.Send(httpClient, request);
@@ -66,7 +66,7 @@ var scenario = Scenario.Create("http_scenario", async context =>
 
     // example of sending JSON as a body 
     // Http.WithJsonBody<T>() will automatically serialize object to JSON
-    // the header "Accept": "application/json" will be added automatically
+    // the header "Content-Type": "application/json" will be added automatically
 
     var step2 = await Step.Run("step_2", context, async () =>
     {
@@ -89,7 +89,7 @@ var scenario = Scenario.Create("http_scenario", async context =>
     {
         var request = 
             Http.CreateRequest("GET", "https://jsonplaceholder.typicode.com/todos/1")
-                .WithHeader("Accept", "application/json");
+                .WithHeader("Content-Type", "application/json");
 
         var response = await Http.Send<UserData>(httpClient, request);
 
@@ -111,7 +111,7 @@ var scenario = Scenario.Create("http_scenario", async context =>
 
         var request = 
             Http.CreateRequest("GET", "https://jsonplaceholder.typicode.com/todos/1")
-                .WithHeader("Accept", "application/json");
+                .WithHeader("Content-Type", "application/json");
 
         var response = await Http.Send(httpClient, clientArgs, request);
 
@@ -136,8 +136,8 @@ Example:
 var scenario = Scenario.Create("http_scenario", async context =>
 {
     var request = Http.CreateRequest("GET", "https://nbomber.com")
-                      .WithHeader("Accept", "text/html");
-                      // .WithHeader("Accept", "application/json")
+                      .WithHeader("Content-Type", "text/html");
+                      // .WithHeader("Content-Type", "application/json")
                       // .WithBody(new StringContent("{ id: 1 }", Encoding.UTF8, "application/json");
                       // .WithBody(new ByteArrayContent(new [] {1,2,3}))
     ... 
@@ -162,8 +162,8 @@ using var httpClient = new HttpClient();
 var scenario = Scenario.Create("http_scenario", async context =>
 {
     var request = Http.CreateRequest("GET", "https://nbomber.com")
-                      .WithHeader("Accept", "text/html");
-                      // .WithHeader("Accept", "application/json")
+                      .WithHeader("Content-Type", "text/html");
+                      // .WithHeader("Content-Type", "application/json")
                       // .WithBody(new StringContent("{ id: 1 }", Encoding.UTF8, "application/json");
                       // .WithBody(new ByteArrayContent(new [] {1,2,3}))
     
@@ -181,8 +181,8 @@ using var httpClient = new HttpClient();
 var scenario = Scenario.Create("http_scenario", async context =>
 {
     var request = Http.CreateRequest("GET", "https://nbomber.com")
-                      .WithHeader("Accept", "application/json");
-                      // .WithHeader("Accept", "application/json")
+                      .WithHeader("Content-Type", "application/json");
+                      // .WithHeader("Content-Type", "application/json")
                       // .WithBody(new StringContent("{ id: 1 }", Encoding.UTF8, "application/json");
                       // .WithBody(new ByteArrayContent(new [] {1,2,3}))    
     
@@ -204,7 +204,7 @@ var scenario = Scenario.Create("http_scenario", async context =>
 
 HTTP plugin provides helper methods that simplify working with JSON format.
 
-- `Http.WithJsonBody<T>(data)` - Populates request body by serializing data record to JSON format. Also, it adds HTTP header: *"Accept": "application/json"*.
+- `Http.WithJsonBody<T>(data)` - Populates request body by serializing data record to JSON format. Also, it adds HTTP header: *"Content-Type": "application/json"*.
 
 ```csharp
 using var httpClient = new HttpClient();
@@ -244,7 +244,7 @@ var scenario = Scenario.Create("http_scenario", async context =>
 {
     var request =
         Http.CreateRequest("GET", "https://jsonplaceholder.typicode.com/todos/1")
-            .WithHeader("Accept", "application/json");
+            .WithHeader("Content-Type", "application/json");
 
     var response = await Http.Send<UserData>(httpClient, request);
 
@@ -293,7 +293,7 @@ var scenario = Scenario.Create("http_scenario", async context =>
 
     var request = 
         Http.CreateRequest("GET", "https://jsonplaceholder.typicode.com/todos/1")
-            .WithHeader("Accept", "application/json");
+            .WithHeader("Content-Type", "application/json");
 
     var response = await Http.Send(httpClient, clientArgs, request);
 
@@ -345,7 +345,7 @@ var scenario = Scenario.Create("http_scenario", async context =>
 {
     var request =
         Http.CreateRequest("GET", "https://jsonplaceholder.typicode.com/todos/1")
-            .WithHeader("Accept", "application/json");
+            .WithHeader("Content-Type", "application/json");
 
     // highlight-start
     var clientArgs = HttpClientArgs.Create(logger: context.Logger);
@@ -367,7 +367,7 @@ After running this example, we will have a log file populated with HTTP tracing.
  Method: GET
  RequestUri: "https://jsonplaceholder.typicode.com/todos/1"
  HttpVersion: 1.1
- Headers: Accept: application/json
+ Headers: Content-Type: application/json
  Content: 
 
 2024-04-06 10:56:11.994 +03:00 [DBG] [ThreadId:9] HTTP Response:
