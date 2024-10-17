@@ -9,8 +9,11 @@ import MultipleScenariosImage from './img/multiple_scenarios.jpg';
 import UniformImage from './img/uniform_distribution.jpg'; 
 import ZipfImage from './img/zipf_distribution.jpg'; 
 import MultinominalImage from './img/multinomial.jpg'; 
+import ScenarioWeightImage from './img/scenario_weight.jpg'; 
 
 <center><img src={WorkloadsImage} width="80%" height="80%" /></center>
+
+## Overview
 
 NBomber can schedule different load patterns to simulate dynamic workloads. A test with multiple workloads might better simulate traffic in the real world, where user behavior is rarely uniform. For example, most traffic to a bookstore website might come from users who only search for books and read reviews. A small percentage of thouse users might actively shop, performing actions that involve writes to the database and calls to different APIs.
 
@@ -63,30 +66,20 @@ With NBomber you have several options to introduce randomize behaviour to simula
 
 ### Scenario invocation by Weight probability
 
+<center><img src={ScenarioWeightImage} width="60%" height="60%" /></center>
+
 With NBomber, you have an option to specify **Weight** for each Scenario. The Weight value allows you to control the relative frequency or probability of Scenario's execution. Scenarios with higher weights will run more frequently during the test, while those with lower weights will execute less often, providing flexible control over load distribution. NBomber uses the weights to determine the probability of each Scenario.
 
 Example: In this case, the `"read_scenario"` probability is 80%, and `"write_scenario"` is 20%.
 
 ```csharp
-var readScenario = Scenario.Create("read_scenario", async context =>
-{
-    await Task.Delay(100);
-    return Response.Ok();
-})
-.WithLoadSimulations(
-    Simulation.Inject(rate: 10, interval: TimeSpan.FromSeconds(1), during: TimeSpan.FromSeconds(30))
-)
-.WithWeight(80); // sets 80%
+var readScenario = Scenario
+    .Create("read_scenario", ...)
+    .WithWeight(80); // sets 80%
 
-var writeScenario = Scenario.Create("write_scenario", async context =>
-{
-    await Task.Delay(100);
-    return Response.Ok();
-})
-.WithLoadSimulations(
-    Simulation.Inject(rate: 10, interval: TimeSpan.FromSeconds(1), during: TimeSpan.FromSeconds(30))
-)
-.WithWeight(20); // sets 20%
+var writeScenario = Scenario
+    .Create("write_scenario", ...)
+    .WithWeight(20); // sets 20%
 
 NBomberRunner
     .RegisterScenarios(readScenario, writeScenario)
@@ -202,6 +195,7 @@ var scenario = Scenario.Create("home_page", async context =>
 {
     // context.Random: System.Random
     var stepNumber = context.Random.Next(minValue: 1, maxValue: 11);
+    
     switch (stepNumber)
     {
         case 1: // run step 1
@@ -223,7 +217,7 @@ var scenario = Scenario.Create("home_page", async context =>
 
 <center><img src={ZipfImage} width="30%" height="30%" /></center>
 
-Choose an item according to the Zipfian distribution. For example, when choosing a record, some records will be extremely popular (the head) while most records will be unpopular (the tail). The Zipf distribution is a mathematical concept that describes the frequency of items ranked from most common to least common in a dataset, like word frequencies in a book or city populations. Also, this distribution can be used to describe hot keys/items in database or popular tweets in Tweeter web service. To simulate Zipfian distribution we can use extension method Zipf for Random object.
+Choose an item according to the Zipfian distribution. For example, when choosing a record, some records will be extremely popular (the head) while most records will be unpopular (the tail). The Zipf distribution is a mathematical concept that describes the frequency of items ranked from most common to least common in a dataset, like word frequencies in a book or city populations. Also, this distribution can be used to describe hot keys/items (skewed key distributions) in database or popular tweets in Tweeter web service. To simulate Zipfian distribution we can use extension method Zipf for Random object.
 
 ```csharp
 var scenario = Scenario.Create("zipfian_distribution", async context =>
@@ -257,11 +251,12 @@ Specify probabilities for each item. For example, assigning a probability of 0.9
 
 ```csharp
 // 70% for read, 20% for write, 10% for delete
-var items = new [] { ("read", 70), ("write", 20), ("delete", 10) };
+var items = new[] { ("read", 70), ("write", 20), ("delete", 10) };
 
 var scenario = Scenario.Create("multinomial_distribution", async context =>
 {    
     var randomItem = context.Random.Choice(items);
+
     switch (randomItem)
     {
         case "read": // 70% for read

@@ -18,3 +18,9 @@ The list of available command line (CLI) arguments of NBomber:
 | --cluster-agent-group   | Specifies AgentGroup <br /> *(should be used only for ManualCluster)* | --cluster-agent-group=my_group |
 | --cluster-id            | Overrides ClusterId       | --cluster-id=test_cluster |
 | --cluster-node-type     | Specifies NodeType <br /> *(should be used only for ManualCluster)*  | --cluster-node-type=coordinator <br /> --cluster-node-type=agent |
+
+Example:
+
+```
+dotnet NBomberLoadTest.dll --license=YOUR_LICENSE_KEY --config=config.json
+```

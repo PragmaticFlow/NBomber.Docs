@@ -139,6 +139,7 @@ var scenario = Scenario.Create("http_scenario", async context =>
 })
 .WithThresholds(  
     Threshold.Create(scenarioStats => scenarioStats.Fail.Request.Percent < 10)
+    
     Threshold.Create("step_1", stepStats => stepStats.Fail.Request.Percent < 10),
 )
 ```
