@@ -368,3 +368,7 @@ var initDbScn =
 ## Scenario Timeouts
 
 [Scenario Timeouts](timeouts)
+
+## Scenario Thresholds
+
+[Scenario Thresholds](./asserts_and_thresholds.md#runtime-thresholds)

@@ -21,6 +21,6 @@ The list of available command line (CLI) arguments of NBomber:
 
 Example:
 
-```
-dotnet NBomberLoadTest.dll --license=YOUR_LICENSE_KEY --config=config.json
+```bash
+dotnet MyLoadTest.dll --license=YOUR_LICENSE_KEY --config=config.json
 ```

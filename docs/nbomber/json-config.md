@@ -34,6 +34,14 @@ NBomberRunner
     .Run();
 ```
 
+- Load configuration as JSON content.
+```csharp
+NBomberRunner
+    .RegisterScenarios(scenario)    
+    .LoadConfig("{ YOUR JSON CONFIG }")
+    .Run();
+```
+
 - HTTP URL
 ```csharp
 NBomberRunner
@@ -42,14 +50,16 @@ NBomberRunner
     .Run();
 ```
 
-- CLI argument "--config" or "-c"
+- CLI argument "--config"
 ```bash
-MyLoadTest.dll --config="config.json"
+dotnet MyLoadTest.dll --config="config.json"
 ```
 
 ### Overriding settings via JSON
 
-This is a complete JSON Config example that you can use to override the settings you wish. In addition to JSON Config, you will find a corresponding C#(on the C# tab) code example that shows all settings that JSON Config will override. **Also, consider how CustomSettings and GlobalCustomSettings will be passed and loaded inside the C# example.**
+This is a complete JSON Config example that you can use to override the settings you wish. In addition to JSON Config, you will find a corresponding C#(on the C# tab) code example that shows all settings that JSON Config will override. **Also, consider how CustomSettings and GlobalCustomSettings will be passed and loaded inside the C# example**. 
+- **CustomSettings** allows you to specify custom Scenario settings via JSON, which will be passed only to the corresponding Scenario (for which they are defined). These CustomSettings will be accessible through the ScenarioInit handler.
+- **GlobalCustomSettings** allows you to specify custom settings via JSON which will be available globally across all defined scenarios. This is useful when some of your settings need to be accessible to all scenarios. These GlobalCustomSettings will be accessible through the ScenarioInit handler.
 
 <Tabs>
 <TabItem value="JSON" label="JSON" default>
@@ -68,11 +78,9 @@ This is a complete JSON Config example that you can use to override the settings
           "ScenarioName": "test_youtube",
           "WarmUpDuration": "00:00:02",
 
-          "LoadSimulationsSettings": [
-              { "RampingConstant": [2, "00:00:02"] },
-              { "KeepConstant": [2, "00:00:02"] },
-              { "RampingInject": [2, "00:00:01", "00:00:02"] },
-              { "Inject": [2, "00:00:01", "00:00:02"] }
+          "LoadSimulationsSettings": [              
+              { "RampingInject": [50, "00:00:01", "00:00:30"] },
+              { "Inject": [50, "00:00:01", "00:01:00"] }
           ],          
 
           // highlight-start
@@ -190,6 +198,29 @@ public class JSONConfigExample
 </Tabs>
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/Features/CustomSettings).*
+
+### Overriding LoadSimulation in JSON Config
+
+```json
+"LoadSimulationsSettings": [              
+    { "RampingInject": [50, "00:00:01", "00:00:30"] },
+    { "Inject": [50, "00:00:01", "00:01:00"] }
+    { "RampingInject": [0, "00:00:01", "00:00:30"] },
+],  
+```
+
+On [this page](load-simulation#loadsimulation-in-json-config), you will find instructions on how to override LoadSimulation settings via the JSON configuration.
+
+### Overriding Thresholds in JSON Config
+
+```json
+"ThresholdSettings": [
+    { "OkRequest": "RPS >= 30" },
+    { "OkRequest": "Percent > 90" }
+]
+```
+
+On [this page](asserts_and_thresholds#runtime-thresholds-in-json-config), you will find instructions on how to override Thresholds settings via the JSON configuration.
 
 ## JSON Infrastracture Config
 
