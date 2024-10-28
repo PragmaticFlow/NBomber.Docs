@@ -132,6 +132,8 @@ NBomberRunner
     .RegisterScenarios(regularScenario1, regularScenario2, scenarioWeight1, scenarioWeight2)
     .Run();
 ```
+
+- Scenario Weight can be overridden via [JSON Config](json-config#overriding-scenario-weight-in-json-config).
 :::
 
 ### Step invocation by Scenario.InstanceNumber

@@ -90,7 +90,9 @@ This is a complete JSON Config example that you can use to override the settings
           },
           // highlight-end
 
-          "MaxFailCount": 500
+          "MaxFailCount": 500,
+
+          "Weight": 10
       }
     ],
 
@@ -178,7 +180,8 @@ public class JSONConfigExample
                               during: TimeSpan.FromMinutes(1))
         )
         .WithWarmUpDuration(TimeSpan.FromSeconds(10))
-        .WithMaxFailCount(1_000);
+        .WithMaxFailCount(1_000)
+        .WithWeight(10);
 
         NBomberRunner
             .RegisterScenarios(scenario)
@@ -210,6 +213,17 @@ public class JSONConfigExample
 ```
 
 On [this page](load-simulation#loadsimulation-in-json-config), you will find instructions on how to override LoadSimulation settings via the JSON configuration.
+
+### Overriding Scenario Weight in JSON Config
+
+```json
+"ScenariosSettings": [
+    {
+        "ScenarioName": "test_youtube",
+        "Weight": 10
+    }
+]
+```
 
 ### Overriding Thresholds in JSON Config
 
