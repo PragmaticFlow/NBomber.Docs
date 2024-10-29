@@ -80,7 +80,8 @@ This is a complete JSON Config example that you can use to override the settings
 
           "LoadSimulationsSettings": [              
               { "RampingInject": [50, "00:00:01", "00:00:30"] },
-              { "Inject": [50, "00:00:01", "00:01:00"] }
+              { "Inject": [50, "00:00:01", "00:01:00"] },
+              { "RampingInject": [0, "00:00:01", "00:00:30"] }
           ],          
 
           // highlight-start
@@ -105,7 +106,9 @@ This is a complete JSON Config example that you can use to override the settings
     "ReportFileName": "custom_report_name",
     "ReportFolder": "./my_reports",
     "ReportFormats": ["Html", "Txt"],
-    "ReportingInterval": "00:00:30"
+    "ReportingInterval": "00:00:30",
+    
+    "DisplayConsoleMetrics": true
   }
 }
 
@@ -191,7 +194,8 @@ public class JSONConfigExample
             .WithReportFileName("my_report")
             .WithReportFolder("report_folder")
             .WithReportFormats(ReportFormat.Txt, ReportFormat.Html)
-            .WithReportingInterval(TimeSpan.FromSeconds(10))            
+            .WithReportingInterval(TimeSpan.FromSeconds(10))
+            .DisplayConsoleMetrics(true)            
             .Run();
     }
 }
