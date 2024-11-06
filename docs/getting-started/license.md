@@ -66,3 +66,9 @@ NBomberRunner
     .WithLicense(licenseKey)
     .Run();
 ```
+
+## Offline license validation
+
+:::info
+To validate your license, NBomber requires internet access. However, it also supports offline license validation. If your test environment has limited internet access, you can request offline validation by emailing us directly.
+:::
