@@ -9,7 +9,7 @@ import TimescaleDataImage from './img/timescale-data.jpg';
 
 <center><img src={TimescaleImage} width="55%" height="50%" /></center>
 
-[TimescaleDB](https://www.timescale.com/) is an open-source database designed to make SQL scalable for time-series data. It is engineered up from PostgreSQL and packaged as a PostgreSQL extension, providing automatic partitioning across time and space (partitioning key), as well as full SQL support.
+[TimescaleDB](https://www.timescale.com/) is an open-source database extenion designed to make SQL scalable for time-series data. It is engineered up from PostgreSQL and packaged as a PostgreSQL extension, providing automatic partitioning across time and space (partitioning key), as well as full SQL support.
 
 Using [Reporting Sinks](/docs/nbomber/reporting-sinks.md) extension for TimescaleDB, you can store NBomber metrics into TimescaleDB and analyze your performance results with [NBomber.MetricsUI](https://github.com/PragmaticFlow/NBomber.MetricsUI) (*in development*) or [Grafana](https://grafana.com/).
 
