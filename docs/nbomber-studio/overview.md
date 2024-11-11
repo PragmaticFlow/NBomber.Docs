@@ -2,6 +2,7 @@
 id: overview
 title: Overview
 sidebar_position: 1
+hide_title: true
 ---
 
 import NBomberStudioImage from './img/nbomber-studio-logo.png'; 
