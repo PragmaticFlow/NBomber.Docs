@@ -7,6 +7,9 @@ hide_title: true
 
 import NBomberStudioImage from './img/nbomber-studio-logo.png'; 
 import HistoryImage from './img/history.png'; 
+import EmptyActiveSessionsImage from './img/empty-active-sessions.png'; 
+import OneActiveSessionImage from './img/one-active-session.png'; 
+import OpenedSessionImage from './img/opened-session.png'; 
 
 <center><img src={NBomberStudioImage} width="90%" height="90%" /></center>
 
@@ -14,7 +17,7 @@ import HistoryImage from './img/history.png';
 
 ## Overview
 
-NBomber Studio - is a powerful managment tool designed by NBomber for managing and interacting with NBomber load tests. The tool provides the following capabilities:
+NBomber Studio - is a powerful management tool designed by NBomber for managing and interacting with NBomber load tests. The tool provides the following capabilities:
 
 - Real-time data visibility - allows to monitor ongoing load tests while also analyzing historical test runs. Think of it as a native alternative to Grafana, specifically designed for NBomber load tests. 
 
@@ -23,14 +26,14 @@ NBomber Studio - is a powerful managment tool designed by NBomber for managing a
 ## License
 
 :::info
-NBomber Studio is FREE for personal usage. You can't use FREE version for an organization.
+NBomber Studio is FREE only for personal use. You can't use FREE version for an organization.
 
-For organizational use, a minimum of an NBomber Business license is required.
+For organization usage, a minimum NBomber Business license is required.
 :::
 
 ## Installation
 
-NBomber Studio is provided as a Docker image and requires a PostgreSQL database with the TimescaleDB extension. Below is an example of a Docker compose file that sets up both NBomber Studio and TimescaleDB.
+NBomber Studio is provided as a [Docker image](https://hub.docker.com/r/nbomberdocker/nbomber-studio) and requires a PostgreSQL database with the TimescaleDB extension. Below is an example of a Docker compose file that sets up both NBomber Studio and TimescaleDB.
 
 ```yaml title="docker-compose.yaml"
 services:
@@ -72,6 +75,8 @@ volumes:
 
 ```
 
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/NBomber_Studio).*
+
 :::info
 For production use, it’s important to specify the exact version of the NBomber Studio image rather than using `latest`.
 
@@ -93,6 +98,10 @@ After that, the dependencies should be up and running. Now, let's open web brows
 http://localhost:5333
 ```
 
+You will see a dashboard displaying active sessions, which will initially be empty.
+
+<center><img src={EmptyActiveSessionsImage} width="100%" height="100%" /></center>
+
 ### Run load test 
 The next step is to run an NBomber load test, which will send metrics to TimescaleDB, allowing us to monitor them in NBomber Studio. To do this, let’s set up a basic test that writes data into TimescaleDB.
 
@@ -104,7 +113,9 @@ The following is an example of a load test that writes data into TimescaleDB.
 
 ```csharp
 var config = new TimescaleDbSinkConfig(connectionString: "YOUR CONNECTION STRING");
+// highlight-start
 var timescaleDb = new TimescaleDbSink(config);
+// highlight-end
 
 var scenario = Scenario.Create("user_flow_scenario", async context =>
 {    
@@ -116,8 +127,18 @@ var scenario = Scenario.Create("user_flow_scenario", async context =>
 
 NBomberRunner
     .RegisterScenarios(scenario)    
+    // highlight-start
     .WithReportingSinks(timescaleDb)    
+    // highlight-end
     .Run();
 ```
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/NBomber_Studio).*
+
+After starting the scenario, you should see one active session appear. NBomber Studio automatically detects real-time data updates and refreshes the screen accordingly.
+
+<center><img src={OneActiveSessionImage} width="100%" height="100%" /></center>
+
+Now, we can navigate to this session and analyze our real-time metrics. The dashboard will refresh according to the reporting interval specified in the load test.
+
+<center><img src={OpenedSessionImage} width="100%" height="100%" /></center>
