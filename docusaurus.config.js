@@ -52,6 +52,11 @@ const config = {
         //   trackingID: 'UA-139868155-1',
         //   anonymizeIP: true,
         // },
+
+        googleTagManager: {
+          containerId: 'GTM-N888B7K7',
+        },
+
       }),
     ],
   ],
@@ -166,7 +171,7 @@ const config = {
 
     plugins: [
       require.resolve('docusaurus-lunr-search')
-    ],
+    ]
 };
 
 module.exports = config;
