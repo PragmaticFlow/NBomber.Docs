@@ -163,7 +163,7 @@ var myDataFeed = DataFeed.Constant(users);
 
 ### Read data from CSV
 
-NBomber.Data provides extensions to read data from local or remote JSON file.
+NBomber.Data provides extensions to read data from local or remote CSV file.
 
 ```csharp
 public class User

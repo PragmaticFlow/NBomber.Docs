@@ -186,7 +186,7 @@ var scenario = Scenario.Create("hello_world_scenario", async context =>
 });
 ```
 
-Another popular usage of ScenarioContext is related to share data between steps that you can find by this link.
+*Another popular usage of ScenarioContext is related to share data between steps that you can find by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/StepsShareData.cs).*
 
 ## Scenario WarmUp
 
