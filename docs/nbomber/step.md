@@ -173,7 +173,7 @@ var scenario = Scenario.Create("scenario", async context =>
 
 ## Step and retry logic
 
-In the cloud, transient faults aren't uncommon and an application should be designed to handle them elegantly and transparently. It's a common practice to use retry logic to handle failed requests. NBomber provides a simple option to implement retry logic for Step, the [RestartIterationOnFail](scenario#scenario-restartiterationonfail) should be used.
+In the cloud, transient faults aren't uncommon and an application should be designed to handle them elegantly and transparently. It's a common practice to use retry logic to handle failed requests. NBomber provides a simple option to implement retry logic for Step, the [RestartIterationOnFail](https://nbomber.com/docs/nbomber/scenario#scenario-restartiterationonfail) should be used.
 
 <!-- ### Step and reordering -->
 
