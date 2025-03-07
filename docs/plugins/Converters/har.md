@@ -1,23 +1,18 @@
 ---
-id: overview
-title: Overview
-sidebar_position: 1
+id: har
+title: HAR
+sidebar_position: 2
 hide_title: true
 ---
 
 import NetworkTab from './img/network-tab.png';
+import HarExecuted from './img/har-executed.png';
 
-# NBomber Converter
+# HAR
 
 ## Overview
 
-The NBomber Converter is a .NET tool that creates a NBomber scenario file from the HTTP requests found in a HAR file. It serves as an alternative to the Browser recorder.
-
-## Installation
-The NBomber Converter is available as a NuGet package, which can be installed using the following command.
-    ```bash
-    nuget install NBomber.Converter.Tool
-    ```
+The HAR (HTTP Archive) file format is a JSON-structured file that contains detailed network traffic data about a browser's interactions with the server serving content for a webpage. This archived log can be used by a web browser to export comprehensive performance data regarding the web pages it loads.
 
 ## Prepare the HAR File
     Below are the essential steps to follow for recording HAR in Chrome:
@@ -29,6 +24,13 @@ The NBomber Converter is available as a NuGet package, which can be installed us
    - Type in the URL of your site and begin performing the actions you want your simulated load-test users to carry out.
    - When you're done, click the "Export HAR" button to save your session's content.
    <center><img src={NetworkTab} width="100%" height="100%" /></center>
+
+## Run the NBomber Converter
+    Use the convert command to generate a NBomber script from a HAR file:
+   ```bash
+   nb-converter HarExample.har -t har -o HarHelloWorldScenario.cs
+   ```
+   <center><img src={HarExecuted} width="80%" height="80%" /></center>
    
 ## Edit the auto-generated NBomber script
    In the previous step, the converter created a NBomber script for testing. Now, you should evaluate whether you have to change any part of the NBomber script.        Depending on your use case, you might need to:
@@ -59,7 +61,6 @@ The NBomber Converter is available as a NuGet package, which can be installed us
                     .WithHeader("sec-fetch-dest", "empty")
                     .WithHeader("sec-fetch-mode", "cors")
                     .WithHeader("sec-fetch-site", "same-origin")
-                    .WithHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 OPR/116.0.0.0")
                     .WithHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 OPR/116.0.0.0");
                 request.WithBody(new StringContent(@"{\"name\":\"morpheus\",\"job\":\";leader\"}", Encoding.UTF8, "application/json"));
 
@@ -76,10 +77,3 @@ The NBomber Converter is available as a NuGet package, which can be installed us
     ```
 
     *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/HelloWorldExample.cs).*
-
-
-## Run the NBomber Converter
-    Use the convert command to generate a NBomber script from a HAR file:
-   ```bash
-   nb-converter HarExample.har -o HelloWorldScenario.cs
-   ```
