@@ -64,7 +64,7 @@ This is a complete JSON Config example that you can use to override the settings
 <Tabs>
 <TabItem value="JSON" label="JSON" default>
 
-```json title="config.json"
+```json title="nbomber-config.json"
 {
   "TestSuite": "gitter.io",
   "TestName": "test_http_api",

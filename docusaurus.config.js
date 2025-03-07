@@ -39,7 +39,8 @@ const config = {
           editUrl: 'https://github.com/PragmaticFlow/NBomber.Docs/blob/dev',          
         },
         blog: {
-          showReadingTime: true,          
+          showReadingTime: true,
+          blogSidebarCount: 0
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           // editUrl:
@@ -85,6 +86,17 @@ const config = {
             position: 'left',
           },
           {
+            to: 'https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo',
+            label: 'Examples',
+            position: 'left'
+          },  
+          {to: '/blog', label: 'Blog', position: 'left'},
+          {
+            to: 'https://github.com/PragmaticFlow',
+            label: 'GitHub',
+            position: 'left',
+          }, 
+          {
             to: 'https://www.youtube.com/@nbomber5716',            
             label: 'Videos',
             position: 'left',
@@ -98,23 +110,12 @@ const config = {
             to: 'https://github.com/PragmaticFlow/NBomber/issues',
             label: 'Issue Tracker',
             position: 'left',
-          },
-          {to: '/blog', label: 'Blog', position: 'left'},
-          {
-            to: 'https://github.com/PragmaticFlow',
-            label: 'GitHub',
-            position: 'left',
-          },
+          },          
           {
             to: 'https://nbomberworkspace.slack.com/',
             label: 'Chat',
             position: 'left'
-          },
-          {
-            to: 'https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo',
-            label: 'Examples',
-            position: 'left'
-          },     
+          },            
         ],
       },
       footer: {

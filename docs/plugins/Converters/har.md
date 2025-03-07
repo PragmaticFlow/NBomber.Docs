@@ -3,6 +3,7 @@ id: har
 title: HAR
 sidebar_position: 2
 hide_title: true
+draft: true
 ---
 
 import NetworkTab from './img/network-tab.png';

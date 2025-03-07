@@ -3,6 +3,7 @@ id: postmanCollection
 title: Postman Collection
 sidebar_position: 3
 hide_title: true
+draft: true
 ---
 
 import PostmanCollection from './img/postman-collection.png';

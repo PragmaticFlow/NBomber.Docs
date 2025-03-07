@@ -4,7 +4,7 @@ title: Data Partition
 sidebar_position: 5
 ---
 
-Usually, working in the cluster mode requires handling data by partitions (key ranges). NBomber provides built-in functionality for this called **Scenario Auto Partitioning**.
+Usually, working in the cluster mode requires handling data by partitions (key ranges). NBomber provides built-in functionality for this called **Scenario Auto Partitioning**. During the scenario initialization phase, each agent can receive a partition number (e.g., 1, 2, 3, …). Based on this number, you can determine the data range assigned to that agent. For example, if PartitionNumber = 1, it means that this particular agent will handle user IDs ranging from 0 to 100.
 
 import AutoPartitionImage from './img/auto-partition.jpeg'; 
 

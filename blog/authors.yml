@@ -13,4 +13,12 @@ antyadev:
   url: https://github.com/AntyaDev
   image_url: https://avatars.githubusercontent.com/u/1080518
   socials:    
-    github: AntyaDev    
+    github: AntyaDev
+
+oleksandr_palamarchuk:
+  name: Oleksandr Palamarchuk
+  title: NBomber Core Team
+  url: https://github.com/OleksPal
+  image_url: https://avatars.githubusercontent.com/u/71185886
+  socials:    
+    github: OleksPal

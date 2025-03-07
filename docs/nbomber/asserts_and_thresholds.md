@@ -171,6 +171,7 @@ Threshold.Create(scenarioStats =>
 
 - Runtime Thresholds perform checks periodically, by default every 5 seconds.
 - Runtime Thresholds can be defined in [JSON Config](#runtime-thresholds-in-json-config).
+- In cluster mode, Runtime Thresholds perform checks on the Coordinator node.
 :::
 
 After completing a test that includes Runtime Thresholds, the results of the threshold checks will be available in the HTML report. This allows you to easily review and analyze how the system performed against the defined thresholds throughout the test run.
@@ -250,6 +251,8 @@ public void Runtime_Thresholds_Example()
 
                 { "OkDataTransfer": "p75 < 80" },
 
+                { "Metric": ["my-gauge", "value >= 6.5"] },
+
                 { "StatusCode": ["500", "Percent < 5"] },
                 { "StatusCode": ["400", "Percent < 10"], "AbortWhenErrorCount": 5 },
                 { "StatusCode": ["200", "Percent >= 80"], "AbortWhenErrorCount": 5, "StartCheckAfter": "00:00:10" }
@@ -304,13 +307,14 @@ type ThresholdType =
     | OkLatency      // equivalent to `stats.Ok.Latency`
     | OkDataTransfer // equivalent to `stats.Ok.DataTransfer` 
     | StatusCode     // equivalent to `stats.Ok.StatusCode` and `stats.Fail.StatusCode`
+    | Metric         // equivalent to `metrics.Gauges` and `metrics.Counters`
 ```
 
 List of supported Metric(s):
 
 ```fsharp
 type MetricType = 
-    RPS | Percent | Min | Mean | Max | P50 | P75 | P95 | P99
+    RPS | Percent | Min | Mean | Max | P50 | P75 | P95 | P99 | Value
 ```
 
 Examples:
@@ -327,6 +331,8 @@ Examples:
     { "StepName": "step_1", "OkLatency": "p75 < 80" },
 
     { "OkDataTransfer": "p75 < 80" },
+
+    { "Metric": ["my-gauge", "value >= 6.5"] },
 
     { "StatusCode": ["500", "Percent < 5"] },
     { "StatusCode": ["400", "Percent < 10"], "AbortWhenErrorCount": 5 },
@@ -353,7 +359,7 @@ var scnStats1 = result.ScenarioStats.Get("scenario_1");
 var scnStats2 = result.ScenarioStats.Find("scenario_2");
 
 // check that step "login" exist in the list
-bool isLoginExist = scnStats1.StepStats.Exists("login");
+bool isExist = scnStats1.StepStats.Exists("login");
 
 // gets "login" step stats
 // it throws exception if "login" is not found 
@@ -365,6 +371,14 @@ bool isExist = scnStats1.Fail.StatusCodes.Exists("503");
 // get stats of status code "503"
 // in case of status not found, the exception will be thrown
 var statusCode = scnStats1.Fail.StatusCodes.Get("503");
+
+var counter = metric.Counters.Get("my-counter");    // throws exception if metric is not found 
+var counter = metric.Counters.Find("my-counter");   // returns null if metric is not found 
+bool isExist = metric.Counters.Exists("my-counter"); // check that metric exist in the list
+
+var gauge = metric.Gauges.Get("my-gauge");      // throws exception if metric is not found 
+var gauge = metric.Gauges.Find("my-gauge");     // returns null if metric is not found 
+bool isExist = metric.Gauges.Exists("my-gauge"); // check that metric exist in the list
 ```
 
 *The defination of all (ScenarioStats, StepStats, StatusCodeStats, etc) stats types you can find by [this link](https://github.com/PragmaticFlow/NBomber.Contracts/blob/dev/src/NBomber.Contracts/Stats.fs#L126).*

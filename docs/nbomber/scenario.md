@@ -151,12 +151,39 @@ public interface IScenarioContext
 {
     TestInfo TestInfo { get; }
     ScenarioInfo ScenarioInfo { get; }
+    
+    // Returns information about the current node, node role, etc.
+    // For example, you can use it to get node roles: Coordinator, Agent, or SingleNode.
     NodeInfo NodeInfo { get; }
+
     ILogger Logger { get; }
+    
+    // Represent the current Scenario instance invocation number. It starts from 1.
     Int64 InvocationNumber { get; }
+    
+    // A dictionary that stores Scenario instance data and cleans it after Scenario iteration.
+    // It can be used to share some data between steps.
     Dictionary<string,obj> Data { get; }
+
+    // A dictionary that stores Scenario instance data and keep it for the whole scenario duration.
+    // It can be used to model Virtual User data that bound to Scenario instance. 
+    Dictionary<string,obj> ScenarioInstanceData { get; }
+
+    // Indicates that scenario execution is finished or canceled.
+    // You can listen to changes via ScenarioCancellationToken.IsCancellationRequested.
+    CancellationToken ScenarioCancellationToken { get; }
+    
+    // Represent the basic .NET Random that should be used to introduce dynamic behavior.
+    Random Random { get; }
+
+    // Stops the specified scenario. In the cluster mode, NBomber will stop the specified scenario on all nodes.
     void StopScenario(string scenarioName, string reason);
+    
+    // Stops all scenarios. In the cluster mode, NBomber will stop all scenarios on all nodes.
     void StopCurrentTest(string reason);
+
+    // Returns the current execution time of the Scenario timer.
+    TimeSpan GetScenarioTimerTime();
 }
 ```
 

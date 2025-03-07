@@ -81,7 +81,7 @@ volumes:
 For production use, it’s important to specify the exact version of the NBomber Studio image rather than using `latest`.
 
 ```
-image: nbomberdocker/nbomber-studio:0.1.0
+image: nbomberdocker/nbomber-studio:0.2.1
 ```
 :::
 

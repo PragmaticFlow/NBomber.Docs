@@ -9,7 +9,10 @@ This is a living document containing the NBomber team’s priorities as well as 
 ### Past and Future Work
 
 #### vNext
-- [ ] [Planned Backlog v5.9.0](https://github.com/PragmaticFlow/NBomber/issues?q=is%3Aopen+is%3Aissue+label%3A5.9)
+- [ ] [Planned Backlog v6.1](https://github.com/PragmaticFlow/NBomber/issues?q=is%3Aissue%20state%3Aopen%20label%3A6.1)
+
+#### v6.0.1
+- [x] [Release Notes](https://github.com/PragmaticFlow/NBomber/releases/tag/v6.0.1)
 
 #### v5.8.0
 - [x] [Release Notes](https://github.com/PragmaticFlow/NBomber/releases/tag/v5.8.0)
