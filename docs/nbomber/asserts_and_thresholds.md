@@ -276,7 +276,7 @@ List of ThresholdSetting examples:
 { "StepName": "step_1", "OkLatency": "p75 < 80", "StartCheckAfter": "00:00:20" },
 ```
 
-Simplified defination of ThresholdSetting contract:
+Simplified definition of ThresholdSetting contract:
 
 ```fsharp
 type ThresholdSetting = {
@@ -381,7 +381,7 @@ var gauge = metric.Gauges.Find("my-gauge");     // returns null if metric is not
 bool isExist = metric.Gauges.Exists("my-gauge"); // check that metric exist in the list
 ```
 
-*The defination of all (ScenarioStats, StepStats, StatusCodeStats, etc) stats types you can find by [this link](https://github.com/PragmaticFlow/NBomber.Contracts/blob/dev/src/NBomber.Contracts/Stats.fs#L126).*
+*The definition of all (ScenarioStats, StepStats, StatusCodeStats, etc) stats types you can find by [this link](https://github.com/PragmaticFlow/NBomber.Contracts/blob/dev/src/NBomber.Contracts/Stats.fs#L126).*
 
 ## Bytes Extensions API
 
