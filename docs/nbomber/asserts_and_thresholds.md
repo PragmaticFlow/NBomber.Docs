@@ -258,7 +258,7 @@ public void Runtime_Thresholds_Example()
                 { "StatusCode": ["200", "Percent >= 80"], "AbortWhenErrorCount": 5, "StartCheckAfter": "00:00:10" }
     
             ]
-        }
+        }]
     }
 }
 ```
