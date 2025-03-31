@@ -11,7 +11,7 @@ import ScenarioParallelismImage from './img/scenario_parallelism.jpg';
 
 <center><img src={ScenarioParallelismImage} width="70%" height="70%" /></center>
 
-When it comes to load simulation(workload profile/concurrency/parallelism), systems may behave in multiple different ways, but usually it can be a mix of Open model and Closed model.
+When it comes to load simulation (workload profile/concurrency/parallelism), systems may behave in multiple different ways, but usually it can be a mix of Open model and Closed model.
 
 ## Open model
 
@@ -24,7 +24,7 @@ Open model (Constant Arrival Rate) - New virtual users keep arriving regardless 
 - The focus is on the rate of incoming requests rather than the number of concurrent users
 
 **Avoid if:** 
-- Your system involves user sessions, dependencies between actions, or transactional workflows.
+- Your system involves user sessions, dependencies between actions or transactional workflows (login → search → checkout).
 
 **Example:** news sites, google search, content delivery networks (CDNs).
 :::
@@ -51,7 +51,7 @@ Closed model (User Concurrency) - New virtual users are queued when the system r
 
 In a Closed model, the system processes a new request only after completing the previous one. Each virtual user performs a series of tasks (or a single task) before exiting the system. When the system reaches its capacity, additional virtual users are queued and can only enter once others have exited.
 
-### Which model should I use for testing my system?
+## Which model should I use for testing my system?
 
 Each model represents a different method for simulating user activity, and understanding their differences is crucial for choosing the right model for your testing requirements. Systems may behave in multiple different ways, but usually it can be a mix of Open model and Closed model. 
 
@@ -67,32 +67,32 @@ The issue with testing systems using a **purely Open model** is that its applica
 
 ## Load Simulations
 
+Here is a list of load simulations available in NBomber.
+
+Open model (Constant Arrival Rate):
+- [Ramping Inject](#ramping-inject) - Gradually increasing or decreasing the virtual user arrival rate.
+- [Inject](#inject) - Maintains a constant arrival rate of virtual users.
+- [Inject Random](#inject-random) - Injects virtual users at a random arrival rate within a defined min and max range.
+- [Iterations For Inject](#iterations-for-inject) - Injects virtual users at a specified arrival rate until the target iteration count is reached.
+
+Closed model (User Concurrency):
+- [Ramping Constant](#ramping-constant) - Gradually increasing or decreasing virtual users based on a specified count.
+- [Keep Constant](#keep-constant) - Maintains a constant number of activated (constantly running) virtual users that execute as many iterations as possible within a specified duration.
+- [Iterations For Constant](#iterations-for-constant) - Maintains a constant number of activated (constantly running) virtual users, which continue executing until a specified iteration count is reached.
+
+[Pause](#pause) - Introduces Scenario start delay or pause for a given duration.
+
 :::info
 In a load test, you can run parallel scenarios using both the Open and Closed models within a single test.
-:::
 
-Here is a table of load simulations available in NBomber:
-
-| Load Simulation | Type | Usage |
-| - | - | - |
-| [RampingConstant](#ramping-constant) | Closed model | Increases or decreases the number of Scenario copies (virtual users) in a linear ramp over a specified duration. **This simulation type is suitable if you require virtual users to gradually increase or decrease during specific time intervals**. Typically, this simulation type is employed to test closed model where you have control over the concurrent number (not rate) of users or client connections. |
-| [KeepConstant](#keep-constant) | Closed model | Maintains a constant number of activated (constantly running) Scenario copies (virtual users) that execute as many iterations as possible within a specified duration. **Use this simulation type when you need to run and sustain a consistent number of scenario copies (virtual users) for a specific period**. Typically, this simulation type is applied to test closed model where you have control over the concurrent number (not rate) of users or client connections. |
-| [IterationsForConstant](#iterations-for-constant) | Closed model | Maintains a constant number of activated (constantly running) Scenario copies (virtual users), which continue executing until a specified iteration count is reached. **This load simulation type is appropriate when you aim for a specific number of virtual users to complete a fixed total number of iterations**. Typically, this simulation type is applied to test closed model where you have control over the concurrent number (not rate) of users or client connections. |
-| [IterationsForInject](#iterations-for-inject) | Open model | Injects a given number of Scenario copies (virtual users) by rate until a specified iteration count. **With this simulation, you control the Scenario injection rate and iteration count**. Use it when you want to maintain a constant rate of requests and run a fixed number of iterations without being affected by the performance of the system you load test. This simulation type is commonly employed for testing Open model. |
-| [RampingInject](#ramping-inject) | Open model | Injects a given number of Scenario copies (virtual users) by rate with a linear ramp over a given duration. **With this simulation, you control the Scenario injection rate and injection interval**. Choose this approach when you aim to sustain a smooth ramp-up and ramp-down of request rates. This simulation type is commonly employed for testing Open model. |
-| [Inject](#inject) | Open model | Injects a given number of Scenario copies (virtual users) by rate during a given duration. **With this simulation, you control the Scenario injection rate and injection interval**. Use it when you want to maintain a constant rate of requests without being affected by the performance of the system you load test. This simulation type is commonly employed for testing Open model. |
-| [InjectRandom](#inject-random) | Open model | Injects a given random number of Scenario copies (virtual users) by rate during a given duration. **With this simulation, you control the Scenario injection rate and injection interval**. Use it when you want to maintain a random rate of requests without being affected by the performance of the system you load test. This simulation type is commonly employed for testing Open model. |
-| [Pause](#pause) |  | Introduces Scenario pause for a given duration. It's useful for cases when some Scenario start should be delayed or paused in the middle of execution. |
-
-:::info
 Load Simulations can be configured via [JSON Config](#loadsimulation-in-json-config) file.
 :::
 
 ### Ramping Constant
-Increases or decreases the number of Scenario copies (virtual users) in a linear ramp over a specified duration. Each Scenario copy (virtual user) behaves like a long-running thread that runs continuously (by specified duration) and will be destroyed when the current load simulation stops.   
+Gradually increasing or decreasing virtual users (Scenario instances) based on a specified count. Each Scenario instance behaves like a long-running thread that runs continuously (by specified duration) and will be destroyed when the current load simulation stops.   
 
 #### When to use
-This simulation type is suitable if you require virtual users to gradually increase or decrease during specific time intervals. Typically, this simulation type is employed to test Closed model where you have control over the concurrent number (not rate) of users or client connections.
+This simulation type is suitable if you require virtual users to gradually increase or decrease during specific time intervals. Typically, this simulation type is employed to test Closed model where you have control over the concurrent number (not rate) of virtual users or client connections.
 
 :::info
 This LoadSimulation can be mixed with: [[RampingConstant](#ramping-constant), [KeepConstant](#keep-constant), [Pause](#pause)]  
@@ -120,10 +120,10 @@ Scenario.Create("scenario", async context =>
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/HelloWorldExample.cs).*
 
 ### Keep Constant
-Maintains a constant number of activated (constantly running) Scenario copies (virtual users) that execute as many iterations as possible within a specified duration. Each Scenario copy (virtual user) behaves like a long-running thread that runs continually (by specified duration) and will be destroyed when the current load simulation stops. 
+Maintains a constant number of activated (constantly running) virtual users (Scenario instance) that execute as many iterations as possible within a specified duration. Each Scenario instance behaves like a long-running thread that runs continually by specified duration and will be destroyed when the current load simulation stops. 
 
 #### When to use
-Use this simulation type when you need to run and sustain a consistent number of scenario copies (virtual users) for a specific period. Typically, this simulation type is applied to test Closed model where you have control over the concurrent number (not rate) of users or client connections.
+Use this simulation type when you need to run and sustain a consistent number of virtual users for a specific period. Typically, this simulation type is applied to test Closed model where you have control over the concurrent number (not rate) of virtual users or client connections.
 
 :::info
 This LoadSimulation can be mixed with: [[RampingConstant](#ramping-constant), [KeepConstant](#keep-constant), [Pause](#pause)]  
@@ -170,7 +170,7 @@ Scenario.Create("scenario", async context =>
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/HelloWorldExample.cs).*
 
 ### Iterations For Constant
-Maintains a constant number of activated (constantly running) Scenario copies (virtual users), which continue executing until a specified iteration count is reached. Each Scenario copy (virtual user) behaves like a long-running thread that runs continually (by specified duration) and will be destroyed when the current load simulation stops. 
+Maintains a constant number of activated (constantly running) virtual users (Scenario instances), which continue executing until a specified iteration count is reached. Each Scenario instance behaves like a long-running thread that runs continually by specified duration and will be destroyed when the current load simulation stops. 
 
 #### When to use
 This load simulation type is appropriate when you aim for a specific number of virtual users to complete a fixed total number of iterations. Typically, this simulation type is applied to test Closed model where you have control over the concurrent number (not rate) of users or client connections. An example use case is quick performance tests in the development build cycle. As developers make changes, they might run the test against the local code to test for performance regressions.
@@ -188,7 +188,7 @@ Scenario.Create("scenario", async context =>
     return Response.Ok();
 })
 .WithLoadSimulations(
-    // it creates 100 copies and keeps them running 
+    // it creates 100 copies of virtual user(Scenario instance) and keeps them running 
     // until the iteration count reaches 1000    
     Simulation.IterationsForConstant(copies: 100, iterations: 1000)
 );
@@ -196,46 +196,17 @@ Scenario.Create("scenario", async context =>
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/HelloWorldExample.cs).*
 
-### Iterations For Inject
-Injects a given number of Scenario copies (virtual users) by rate until a specified iteration count. With this simulation, you control the Scenario injection rate and iteration count. Each Scenario copy (virtual user) behaves like a short-running thread that runs only once and then is destroyed.
-
-#### When to use
-Use it when you want to maintain a constant rate of requests and run a fixed number of iterations without being affected by the performance of the system you load test. This simulation type is used to test Open model where you control the arrival rate of users. An example use case is quick performance tests in the development build cycle. As developers make changes, they might run the test against the local code to test for performance regressions.
-
-:::warning
-This LoadSimulation type can't be mixed with any other simulations. You can use it only as a single simulation type.
-:::
-
-**Example**: This simulation will start injecting Scenario copies(virtual users) at a rate of 100 copies per 1 second until the iteration count reaches 1000. Each Scenario copy will be executed only once and then destroyed.
-
-```csharp
-Scenario.Create("scenario", async context =>
-{
-    await Task.Delay(1_000);
-    return Response.Ok();
-})
-.WithLoadSimulations(
-    // it creates 100 copies and keeps them running 
-    // until the iterations count reaches 1000    
-    Simulation.IterationsForInject(rate: 100,
-                                   interval: TimeSpan.FromSeconds(1),
-                                   iterations: 1000)
-);
-```
-
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/HelloWorldExample.cs).*
-
 ### Ramping Inject
-Injects a given number of Scenario copies (virtual users) by rate with a linear ramp over a given duration. With this simulation, you control the Scenario injection rate and injection interval. Each Scenario copy (virtual user) behaves like a short-running thread that runs only once and then is destroyed.
+Gradually increasing or decreasing the virtual user (Scenario instance) arrival rate over a specified duration. Each Scenario instance behaves like a short-running thread that runs only once and then is destroyed.
 
 #### When to use
-Choose this approach when you aim to sustain a smooth ramp-up and ramp-down of request rates. Usually, this simulation type is used to test Open model where you control the arrival rate of users.
+Choose this approach when you aim to sustain a smooth ramp-up and ramp-down of request rates. Usually, this simulation type is used to test Open model where you control the arrival rate of requests.
 
 :::info
 This LoadSimulation can be mixed with: [[RampingInject](#ramping-inject), [Inject](#inject), [InjectRandom](#inject-random), [Pause](#pause)]  
 :::
 
-**Example**: In this example, we combined two simulations: ramp up from 0 to 50 and then ramp down from 50 to 20. The NBomber scheduler will be activated every second(by injection interval) to inject a new Scenario copy, then run it once, destroy it afterward, and then repeat such flow for the next(after 1 second) injection phase. This simulation will continue ramping up the injection rate from 0 to 50 until the end duration. After this, the following simulation will start smoothly ramping down the injection rate from 50 to 20.
+**Example**: In this example, we combined two simulations: ramp up from 0 to 50 and then ramp down from 50 to 20. The NBomber scheduler will be activated every second (by injection interval) to inject a new Scenario instance, then run it once, destroy it afterward, and then repeat such flow for the next (after 1 second) injection phase. This simulation will continue ramping up the injection rate from 0 to 50 until the end duration. After this, the following simulation will start smoothly ramping down the injection rate from 50 to 20.
 
 ```csharp
 Scenario.Create("scenario", async context =>
@@ -264,16 +235,16 @@ Scenario.Create("scenario", async context =>
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/LoadSimulation/ScenarioInjectRate.cs).*
 
 ### Inject
-Injects a given number of Scenario copies (virtual users) by rate during a given duration. With this simulation, you control the Scenario injection rate and injection interval. Each Scenario copy (virtual user) behaves like a short-running thread that runs only once and then is destroyed.
+Maintains a constant arrival rate of virtual users (Scenario instances) during a given duration. Each Scenario instance behaves like a short-running thread that runs only once and then is destroyed.
 
 #### When to use
-Use it when you want to maintain a constant rate of requests without being affected by the performance of the system you load test. Usually, this simulation type is used to test Open model where you control the arrival rate of users.
+Use it when you want to maintain a constant rate of requests without being affected by the performance of the system you load test. Usually, this simulation type is used to test Open model where you control the arrival rate of requests.
 
 :::info
 This LoadSimulation can be mixed with: [[RampingInject](#ramping-inject), [Inject](#inject), [InjectRandom](#inject-random), [Pause](#pause)]  
 :::
 
-**Example 1**: This simulation will start injecting Scenario copies at a rate of 50 copies per 1 second for 30 seconds. Each Scenario copy will be executed only once and then destroyed.
+**Example 1**: This simulation will start injecting Scenario instances at a rate of 50 copies per 1 second for 30 seconds. Each Scenario instance will be executed only once and then destroyed.
 
 ```csharp
 Scenario.Create("scenario", async context =>
@@ -292,7 +263,7 @@ Scenario.Create("scenario", async context =>
 );
 ```
 
-**Example 2**: In this example, we combined three simulations: ramp up from 0 to 50, keep the injection rate at 50 for 30 seconds, and then ramp down from 50 to 0. On the first simulation(`RampingInject`), the NBomber scheduler will be activated every second(by injection interval) to inject a new Scenario copy. This simulation will continue ramping up the injection rate from 0 to 50 until the end duration. After this, the following simulation(`Inject`) will keep injecting with the injection rate of 50 copies per 1 sec for 30 seconds, and then the last simulation(`RampingInject`) starts smoothly ramping down the injection rate from 50 to 0 copies. 
+**Example 2**: In this example, we combined three simulations: ramp up from 0 to 50, keep the injection rate at 50 for 30 seconds, and then ramp down from 50 to 0. On the first simulation(`RampingInject`), the NBomber scheduler will be activated every second(by injection interval) to inject a new Scenario instance. This simulation will continue ramping up the injection rate from 0 to 50 until the end duration. After this, the following simulation(`Inject`) will keep injecting with the injection rate of 50 copies per 1 sec for 30 seconds, and then the last simulation(`RampingInject`) starts smoothly ramping down the injection rate from 50 to 0 copies. 
 
 ```csharp
 Scenario.Create("scenario", async context =>
@@ -328,16 +299,16 @@ Scenario.Create("scenario", async context =>
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/LoadSimulation/ScenarioInjectRate.cs).*
 
 ### Inject Random
-Injects a given random number of Scenario copies (virtual users) by rate during a given duration. With this simulation, you control the Scenario injection rate and injection interval. Each Scenario copy(virtual user) behaves like a short-running thread that runs only once and then is destroyed. 
+Injects virtual users (Scenario instances) at a random arrival rate within a defined min and max range during a given duration. Each Scenario instance behaves like a short-running thread that runs only once and then is destroyed. 
 
 #### When to use
-Use it when you want to maintain a random rate of requests without being affected by the performance of the system you load test. Usually, this simulation type is used to test Open model where you control the arrival rate of users.
+Use it when you want to maintain a random rate of requests without being affected by the performance of the system you load test. Usually, this simulation type is used to test Open model where you control the arrival rate of requests.
 
 :::info
 This LoadSimulation can be mixed with: [[RampingInject](#ramping-inject), [Inject](#inject), [InjectRandom](#inject-random), [Pause](#pause)]  
 :::
 
-**Example**: This simulation will start injecting Scenario copies with a random rate of 50 to 70 copies per 1 second for 30 seconds. Each Scenario copy will be executed only once and then destroyed.
+**Example**: This simulation will start injecting Scenario instances with a random rate of 50 to 70 copies per 1 second for 30 seconds. Each Scenario instance will be executed only once and then destroyed.
 
 ```csharp
 Scenario.Create("scenario", async context =>
@@ -359,9 +330,38 @@ Scenario.Create("scenario", async context =>
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/LoadSimulation/ScenarioInjectRate.cs).*
 
+### Iterations For Inject
+Injects virtual users (Scenario instances) at a specified arrival rate until the target iteration count is reached. Each Scenario instance behaves like a short-running thread that runs only once and then is destroyed.
+
+#### When to use
+Use it when you want to maintain a constant rate of requests and run a fixed number of iterations without being affected by the performance of the system you load test. This simulation type is used to test Open model where you control the arrival rate of requests. An example use case is quick performance tests in the development build cycle. As developers make changes, they might run the test against the local code to test for performance regressions.
+
+:::warning
+This LoadSimulation type can't be mixed with any other simulations. You can use it only as a single simulation type.
+:::
+
+**Example**: This simulation will start injecting virtual users (Scenario instances) at a rate of 100 copies per 1 second until the iteration count reaches 1000. Each Scenario instance will be executed only once and then destroyed.
+
+```csharp
+Scenario.Create("scenario", async context =>
+{
+    await Task.Delay(1_000);
+    return Response.Ok();
+})
+.WithLoadSimulations(
+    // it creates 100 copies and keeps them running 
+    // until the iterations count reaches 1000    
+    Simulation.IterationsForInject(rate: 100,
+                                   interval: TimeSpan.FromSeconds(1),
+                                   iterations: 1000)
+);
+```
+
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/HelloWorldExample.cs).*
+
 ### Pause
 
-Introduces Scenario pause for a given duration. It's useful for cases when some Scenario start should be delayed or paused in the middle of execution.
+Introduces Scenario start delay or pause for a given duration. It's useful for cases when some Scenario start should be delayed or paused in the middle of execution.
 
 **Example**: In this example, we will delay the startup of the Scenario by 10 sec.
 
