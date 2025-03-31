@@ -8,6 +8,8 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 import ScenarioParallelismImage from './img/scenario_parallelism.jpg'; 
+import ClosedModelImage from './img/closed_model.jpg'; 
+import OpenModelImage from './img/open_model.jpg'; 
 
 <center><img src={ScenarioParallelismImage} width="70%" height="70%" /></center>
 
@@ -75,10 +77,14 @@ Open model (Constant Arrival Rate):
 - [Inject Random](#inject-random) - Injects virtual users at a random arrival rate within a defined min and max range.
 - [Iterations For Inject](#iterations-for-inject) - Injects virtual users at a specified arrival rate until the target iteration count is reached.
 
+<center><img src={OpenModelImage} width="90%" height="90%" /></center>
+
 Closed model (User Concurrency):
 - [Ramping Constant](#ramping-constant) - Gradually increasing or decreasing virtual users based on a specified count.
 - [Keep Constant](#keep-constant) - Maintains a constant number of activated (constantly running) virtual users that execute as many iterations as possible within a specified duration.
 - [Iterations For Constant](#iterations-for-constant) - Maintains a constant number of activated (constantly running) virtual users, which continue executing until a specified iteration count is reached.
+
+<center><img src={ClosedModelImage} width="90%" height="90%" /></center>
 
 [Pause](#pause) - Introduces Scenario start delay or pause for a given duration.
 
