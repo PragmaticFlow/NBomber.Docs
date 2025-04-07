@@ -2,6 +2,7 @@
 id: amqp
 title: AMQP
 sidebar_position: 4
+draft: true
 ---
 
 AMQP (Advanced Message Queuing Protocol) is an open standard for messaging middleware that enables applications to communicate with each other by sending messages in a reliable and interoperable way. It is a protocol designed to provide a robust messaging infrastructure for distributed systems, enabling asynchronous communication between different components.
