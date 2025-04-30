@@ -8,7 +8,7 @@ import MqttImage from './img/mqtt.jpg';
 
 <center><img src={MqttImage} width="70%" height="70%" /></center>
 
-MQTT is a standard messaging protocol for the Internet of Things (IoT). It is designed as an extremely lightweight publish/subscribe messaging transport that is ideal for connecting remote devices with a small code footprint and minimal network bandwidth. MQTT today is used in a wide variety of industries, such as automotive, manufacturing, telecommunications, oil and gas, etc.
+MQTT (Message Queuing Telemetry Transport) is a standard messaging protocol for the Internet of Things (IoT). It is designed as an extremely lightweight publish/subscribe messaging transport that is ideal for connecting remote devices with a small code footprint and minimal network bandwidth. MQTT today is used in a wide variety of industries, such as automotive, manufacturing, telecommunications, oil and gas, etc.
 
 To work with MQTT protocol, NBomber provides [NBomber.MQTT](https://github.com/PragmaticFlow/NBomber.MQTT) plugin that includes functionality for sending and receiving messages, including tracking of data transfer and status codes.
 
