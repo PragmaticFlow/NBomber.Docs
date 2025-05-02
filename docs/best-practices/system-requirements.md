@@ -1,29 +1,17 @@
 ---
-id: running_tests
-title: Running tests
-sidebar_position: 1
+id: system-requirements
+title: NBomber system requirements
+sidebar_position: 0
 draft: true
 ---
 
 ## NBomber project settings
+
 ## Hardware considerations
+
 ## Scripting
 
-Scripting refers to writing small programs to automate tasks, prototype ideas, or execute code without compiling a full application. Unlike traditional application development, scripting:
-- Runs without a project or solution file
-- Is typically interpreted or run directly via a script runner
-- Is useful for automation, quick testing, and rapid prototyping
-
-Examples of scripting languages include PowerShell, Python, Bash, and in the .NET world — C# scripting with dotnet-script.
-
-### Why use dotnet-script
-```dotnet-script``` is a tool that enables you to write and run C# scripts (.csx files) using the .NET SDK.
-
-Benefits:
-- No need for full-blown .csproj files or solutions
-- Quick startup and faster iteration
-- Supports NuGet packages
-- Great for one-off utilities, automation tasks, or experiments
+NBomber tests can be run as dotnet scripts. Scripts could be used as for quick prototyping, for example covering specific HTTP endpoint, etc. For C# scripting we can use `dotnet-script` .NET tool.
 
 ### How to install dotnet-script
 You can install dotnet-script as a global .NET tool:

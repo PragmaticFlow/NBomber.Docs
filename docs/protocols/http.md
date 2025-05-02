@@ -386,6 +386,8 @@ After running this example, we will have a log file populated with HTTP tracing.
 }
 ```
 
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HTTP/HttpRequestTracing.cs).*
+
 ## HttpMetricsPlugin
 
 HttpMetricsPlugin - provides a monitoring layer for HTTP connections.
@@ -423,25 +425,31 @@ using var httpClient = new HttpClient(socketsHandler);
 
 ## Best practices
 
+Here we combine best practices for writing HTTP load tests, along with useful links and important considerations.
+
 ### Blog posts
 - [Load Testing HTTP API on C# with NBomber](../../blog/2023/08/16/load-testing-http-api)
 
-### Load simulation
-HTTP services should be considered as [Open system](../nbomber/load-simulation). Open systems - it's where you control the arrival rate of users. For Open systems NBomber provides the following load simulations: [Inject](../nbomber/load-simulation#inject), [RampingInject](../nbomber/load-simulation#ramping-inject) and [InjectRandom](../nbomber/load-simulation#inject-random).
+### Choose the right workload
+Please make sure to choose the right workload for your load tests. We recommend reviewing the following documentation:
+- [Load Testing Microservices](../best-practices/microservices)
+- [Load Simulation](../nbomber/load-simulation)
 
-### HttpClient
-HttpClient should be used carefully since the wrong use of it can cause `socket exhaustion problems`. You can read more about this problem in this article: [You are using HttpClient wrong](https://www.aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/). The basic recommendations are:
-- Use a singleton HttpClient (shared instance) per Scenario. 
-- Do not create many HttpClient instances. Instead just reuse a single instance per Scenario.
-- Disposing HttpClient is not a cheap operation. It can cause `socket exhaustion problems`.
+### HttpClient using wrong
+HttpClient should be used carefully since the wrong use of it can cause **socket exhaustion** problems. You can read more about this problem in this article: [You are using HttpClient wrong](https://www.aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/). The basic recommendations are:
+:::warning
+- You can use a singleton HttpClient (shared instance) per Scenario. 
+- If you need a separate HttpClient per virtual user (e.g., for cookie management), consider attaching it to the scenario instance via `context.ScenarioInstanceData`. (*We’ll show an example of this later*)
+- Avoid disposing of HttpClient frequently, as it's a **costly operation** and can lead to **socket exhaustion** issues.
+:::
 
+Example: **Wrong Usage (Dispose per Iteration)**. This code creates and disposes HttpClient in each iteration, which can exhaust available sockets under high load, leading to degraded performance or failures.
 ```csharp
-// this usage is WRONG
-// since HttpClient will be created and disposed for each Scenario iteration
-
 var scenario = Scenario.Create("my scenario", async context =>
 {   
+    // highlight-start
     using var httpClient = new HttpClient();
+    // highlight-end
     
     var request = Http.CreateRequest("GET", "https://nbomber.com")
     var response = await Http.Send(httpClient, request);
@@ -450,11 +458,11 @@ var scenario = Scenario.Create("my scenario", async context =>
 });
 ```
 
+Example: **Correct Usage (Reuse a Shared Instance Across Iterations)**. This code creates and reuses a single HttpClient instance across all concurrent requests and scenario iterations. It ensures the client is only disposed once when the test finishes — not after each iteration — preventing socket exhaustion problem.
 ```csharp
-// this usage is OK
-// since HttpClient will be created once and then reused for each Scenario iteration
-
+// highlight-start
 using var httpClient = new HttpClient(); 
+// highlight-end
 
 var scenario = Scenario.Create("my scenario", async context =>
 {
@@ -465,5 +473,52 @@ var scenario = Scenario.Create("my scenario", async context =>
 });
 ```
 
-<!-- ## test lifecicle
-## how to read reports -->
+### Dedicated HttpClient Per User Session
+There may be cases where you need to create a separate HttpClient instance for each user session — such as when managing cookies, authentication headers, or maintaining session-specific state.
+
+In such cases, we recommend attaching the created HttpClient instance to the scenario's `ScenarioInstanceData`, which represents the current user session.
+
+```csharp
+var scenario = Scenario.Create("cookies_management_scenario", async context =>
+{
+    HttpClient myClient = null;
+    // highlight-start
+    context.ScenarioInstanceData.TryGetValue("my_http_client", out var httpClient);
+    // highlight-end
+
+    if (httpClient is null)
+    {
+        myClient = new HttpClient();
+
+        var login = await Step.Run("login", context, async () =>
+        {
+            // WebAppSimulator address
+            var request = Http.CreateRequest("POST", "https://localhost:65385/api/CookiesAuthentication")
+                .WithJsonBody(new StringContent("""{"login": "morpheus","password": "leader"}"""));
+
+            var response = await Http.Send(myClient, request);
+
+            return response;
+        });
+
+        // highlight-start
+        context.ScenarioInstanceData["my_http_client"] = myClient;
+        // highlight-end
+    }
+    else
+        myClient = (HttpClient)httpClient;
+
+        var getData = await Step.Run("get_data", context, async () =>
+        {
+            var request = Http.CreateRequest("GET", "https://localhost:65385/api/CookiesAuthentication");
+
+            var response = await Http.Send(myClient, request);
+
+            return response;
+        });
+
+    return Response.Ok();
+})
+```
+
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HTTP/CookiesManagementExample.cs).*

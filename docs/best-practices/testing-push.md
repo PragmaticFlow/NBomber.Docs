@@ -1,7 +1,7 @@
 ---
 id: testing-push
-title: How to test PUSH Scenarios
-sidebar_position: 2
+title: Load test PUSH Scenarios
+sidebar_position: 3
 ---
 
 import PushImage from './img/how_to_test_push.jpeg';
