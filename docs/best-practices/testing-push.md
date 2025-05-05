@@ -1,6 +1,6 @@
 ---
 id: testing-push
-title: Load test PUSH Scenarios
+title: Load Testing PUSH Scenarios
 sidebar_position: 3
 ---
 

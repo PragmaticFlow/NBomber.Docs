@@ -1,7 +1,7 @@
 ---
 id: cli
 title: CLI Arguments
-sidebar_position: 3
+sidebar_position: 5
 ---
 
 The list of available command line (CLI) arguments of NBomber:

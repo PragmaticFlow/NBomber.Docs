@@ -1,13 +1,9 @@
 ---
-id: system-requirements
-title: NBomber system requirements
-sidebar_position: 0
+id: scripting
+title: Scripting
+sidebar_position: 4
 draft: true
 ---
-
-## NBomber project settings
-
-## Hardware considerations
 
 ## Scripting
 

@@ -1,7 +1,7 @@
 ---
 id: roadmap
 title: Roadmap
-sidebar_position: 4
+sidebar_position: 6
 ---
 
 This is a living document containing the NBomber team’s priorities as well as release notes for previous releases.

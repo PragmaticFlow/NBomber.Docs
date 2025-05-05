@@ -38,20 +38,23 @@ var scenario = Scenario.Create("amqp_scenario", async ctx =>
 {
     using var amqpClient = new AmqpClient(channel);
 
-    // Declares an exchange, then declares a queue, and finally binds the queue.
+    // Declares an AMQP exchange and queue, then binds the queue to the exchange using the specified routing key.
     await amqpClient.DeclareQueue(exchange: "myExchange", exchangeType: ExchangeType.Direct, queue: queueName, routingKey: queueName);
 
-    // Subscribe to a queue
+    // Subscribes to the specified AMQP queue by adding a consumer.
     await amqpClient.Subscribe(queue: "queueName"); 
 
-    // Publish a message to a queue
+    // Publishes a message to the specified AMQP exchange using the given routing key.
     await amqpClient.Publish(exchange: "myExchange", routingKey: "routingKey", body: payload);
 
-    // Await and receive a message from the subscribed queue.
+    // Awaits and receives a message from the subscribed queue.
     var response = await amqpClient.Receive();
 
     // Disconnect the current client from the broker
     await amqpClient.Disconnect();
+
+    // Gets the total number of messages received by the client.
+    var receivedCount = amqpClient.MsgReceivedCount
 
     return Response.Ok();
 });
