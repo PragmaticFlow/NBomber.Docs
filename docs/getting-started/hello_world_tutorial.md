@@ -74,13 +74,15 @@ namespace MyLoadTest
 }
 ```
 
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/HelloWorldExample.cs).*
+
 ### Run load test
 
 ```code
 dotnet run -c Release
 ```
 
-After running a test you will get a report. Don't get scared, we can skip it for now. Later we will understand how to analyse such reports.
+After running a test you will get a report. Don't get scared, we can skip it for now. Later we will understand [how to analyse such reports](https://nbomber.com/docs/reporting/reports#how-to-read-reports-data).
 
 ### Create simple HTTP load test (not production-ready)
 
@@ -177,8 +179,7 @@ namespace NBomberTest
                         .WithHeader("Accept", "text/html");
                         // .WithHeader("Accept", "application/json")
                         // .WithBody(new StringContent("{ id: 1 }", Encoding.UTF8, "application/json");
-                        // .WithBody(new ByteArrayContent(new [] {1,2,3}))
-                        
+                        // .WithBody(new ByteArrayContent(new [] {1,2,3}))                        
 
                 var response = await Http.Send(httpClient, request);
 
@@ -199,10 +200,19 @@ namespace NBomberTest
 }
 ```
 
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HTTP/SimpleHttpExample.cs).*
+
 ## Congratulations! You have done it!
 
 Finally, you reach this point! Here you can find additional information which helps you in building real world NBomber tests:
 
-<!-- - [Learn general concepts](general-concepts)
-- [Loadtesting basics](loadtesting-basics) -->
+- [System Requirements](system-requirements)
+- [Load Testing Microservices](../best-practices/microservices)
+- [Scenario](../nbomber/scenario)
+- [Step](../nbomber/step)
+- [Load Simulation](../nbomber/load-simulation)
+- [Reports](../reporting/reports)
+- [NBomber Studio](../nbomber-studio/overview)
+- [Cluster](../cluster/overview)
+- [Local Dev Cluster](../cluster/local-dev-cluster)
 - [Examples](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo)
