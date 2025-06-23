@@ -20,7 +20,7 @@ In case you need to add your custom Reporting Sink for your database storage tha
 public interface IReportingSink : IDisposable
 {
     Task Init(IBaseContext context, IConfiguration infraConfig);
-    Task Start();
+    Task Start(SessionStartInfo sessionInfo);
     Task SaveRealtimeStats(ScenarioStats[] stats);
     Task SaveFinalStats(NodeStats stats);
     Task Stop();
