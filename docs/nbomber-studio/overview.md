@@ -67,7 +67,7 @@ services:
             timescaledb:
                 condition: service_healthy
         environment:
-            DBSETTINGS:CONNECTIONSTRING: "Host=timescaledb;Port=5432;Username=timescaledb;Password=timescaledb;Database=nb_studio_db;Pooling=true;"
+            DBSETTINGS__CONNECTIONSTRING: "Host=timescaledb;Port=5432;Username=timescaledb;Password=timescaledb;Database=nb_studio_db;Pooling=true;"
 
 volumes:
     nb_studio_data:
