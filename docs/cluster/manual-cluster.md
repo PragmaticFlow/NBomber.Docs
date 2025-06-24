@@ -64,7 +64,7 @@ The main settings are:
 ```json
 "Agent": {    
     "AgentGroups": [
-        { "AgentGroup": "1", "TargetScenarios": ["scneario_1"] },
+        { "AgentGroup": "1", "TargetScenarios": ["scenario_1"] },
         { "AgentGroup": "2", "TargetScenarios": ["scenario_2"] },
         { "AgentGroup": "my_group", "TargetScenarios": ["scenario_3"] }
     ],    
@@ -80,14 +80,14 @@ To start NBomber process as Agent you should specify `--cluster-node-type=agent`
 MyLoadTest.dll --config="manual-cluster-config.json" --cluster-node-type=agent --cluster-agent-group=1 --license=YOUR_LICENSE_KEY
 ```
 
-By executing this command NBomber process will start as Agent under: `"AgentGroup": "1", "TargetScenarios": ["scneario_1"]`
+By executing this command NBomber process will start as Agent under: `"AgentGroup": "1", "TargetScenarios": ["scenario_1"]`
 
 *Here, you can find a list of all available [CLI arguments](../getting-started/cli).*
 
 Also, you can start Agent via code:
 
 ```csharp
-var scenario1 = Scenario.Create("scneario_1", async context => { ... });
+var scenario1 = Scenario.Create("scenario_1", async context => { ... });
 var scenario2 = Scenario.Create("scenario_2", async context => { ... });
 var scenario3 = Scenario.Create("scenario_3", async context => { ... });
 
@@ -120,7 +120,7 @@ MyLoadTest.dll --config="manual-cluster-config.json" --cluster-node-type=coordin
 Also, you can start Coordinator via code:
 
 ```csharp
-var scenario1 = Scenario.Create("scneario_1", async context => { ... });
+var scenario1 = Scenario.Create("scenario_1", async context => { ... });
 var scenario2 = Scenario.Create("scenario_2", async context => { ... });
 var scenario3 = Scenario.Create("scenario_3", async context => { ... });
 
