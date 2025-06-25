@@ -27,18 +27,34 @@ var scenario = Scenario.Create("scenario", async context =>
 });
 ```
 
-Reusing a client from ClientPool: In this example, we do not create an new instance of `WebsocketClient` every time but rather get it from the ClientPool. This implies that all `WebsocketClient` instances available from ClientPool are created before usage. Also, we don't disconnect/dispose a client after each scenario iteration, we keep them alive in ClientPool.
+In this example, we avoid creating a new instance of `WebsocketClient` on each use. Instead, we retrieve an existing instance from the ClientPool. This means that all `WebsocketClient` instances are pre-created before usage. Additionally, clients are not disconnected or disposed of after each scenario iteration—they remain alive and managed within the ClientPool
 
 ```csharp
+var clientPool = new ClientPool<WebsocketClient>();
+
 var scenario = Scenario.Create("scenario", async context =>
 {
-    var client = clientPool.GetClient(context.ScenarioInfo);
+    // highlight-start
+    var client = clientPool.GetClient(context.ScenarioInfo.InstanceNumber);
+    // highlight-end
 
     await client.Send("message");    
+})
+.WithInit(async context =>
+{
+    for (var i = 0; i < 10; i++)
+    {
+        var client = new WebsocketClient(url);    
+        await client.Connect();
+
+        // highlight-start
+        clientPool.AddClient(client);
+        // highlight-end
+    }    
 });
 ```
 
-## Initializing and populating Client Pool
+## Initializing and populating ClientPool
 
 This method should be used to add a client to ClientPool.
 
@@ -46,7 +62,7 @@ This method should be used to add a client to ClientPool.
 public void AddClient(T client)
 ```
 
-Client Pool initialization usually happens on the [Scenario Init](scenario#scenario-init) phase. 
+ClientPool initialization typically occurs during the [Scenario Init](scenario#scenario-init) phase. 
 
 ```csharp
 var clientPool = new ClientPool<WebsocketClient>();
@@ -71,34 +87,34 @@ var scenario = Scenario.Create("scenario", async context =>
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/WebSockets/ClientPool/ClientPoolWebSocketsExample.cs).*
 
-## Getting clients from Client Pool
+## Getting client from ClientPool
 
-This method should be used to get a client from ClientPool.
+Retrieves a client from the pool based on a scenario instance number. Ensures even distribution by using modulo operation.
 
 ```csharp
-public T GetClient(ScenarioInfo scenarioInfo)
+public T GetClient(scenarioInstanceNumber: int)
 ```
 
-Getting clients from Client Pool works with a simple distribution rule: `scenarioInfo.ThreadNumber % clientPool.Count`
+Getting client from ClientPool provides even distribution by using modulo operation: `ScenarioInfo.InstanceNumber % clientPool.Count`.
 
 ```csharp
 var clientPool = new ClientPool<WebsocketClient>();
 
 var scenario = Scenario.Create("scenario", async context => 
-{ 
-    var client = clientPool.GetClient(context.ScenarioInfo);
+{
+    var client = clientPool.GetClient(context.ScenarioInfo.InstanceNumber);
 
     // under the hood this method 'clientPool.GetClient' will execute:    
-    // var index = scenarioInfo.ThreadNumber % clientPool.Count;
+    // var index = ScenarioInfo.InstanceNumber % clientPool.Count;
     // return clientPool[index]; 
 });
 ```
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/WebSockets/ClientPool/ClientPoolWebSocketsExample.cs).*
 
-## Disposing clients from Client Pool
+## Disposing clients from ClientPool
 
-This method should be used to dispose a client from ClientPool. With this method, ClientPool will execute client.Dispose() for each client if the client implement IDisposable interface.
+This method should be used to dispose of clients from the ClientPool. It ensures that ClientPool calls `Dispose()` on each client, provided the client implements the `IDisposable` interface.
 
 ```csharp
 public void DisposeClients()
@@ -110,7 +126,7 @@ This method should be used to dispose a client from ClientPool using a custom di
 public void DisposeClients(Action<T> disposeClient)
 ```
 
-Disposing clients from Client Pool usually happens on the [Scenario Clean](scenario#scenario-clean) phase.
+Disposing clients from ClientPool typically occurs during the [Scenario Clean](scenario#scenario-clean) phase.
 
 ```csharp
 var clientPool = new ClientPool<WebsocketClient>();
