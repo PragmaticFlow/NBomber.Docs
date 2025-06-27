@@ -522,3 +522,45 @@ var scenario = Scenario.Create("cookies_management_scenario", async context =>
 ```
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HTTP/CookiesManagementExample.cs).*
+
+### RestSharp integration
+RestSharp is a lightweight and easy-to-use HTTP client for .NET, designed to simplify sending HTTP requests and consuming RESTful web services.
+
+:::info
+To install [NBomber.RestSharp](https://www.nuget.org/packages/nbomber.restsharp) package you should execute the following *dotnet* command:
+
+[![NuGet](https://img.shields.io/nuget/v/nbomber.restsharp.svg)](https://www.nuget.org/packages/nbomber.restsharp/)
+
+```code
+dotnet add package NBomber.RestSharp
+```
+:::
+
+Two extension methods are provided for the RestClient class to facilitate HTTP request execution and response handling with additional metadata:
+- Send(RestRequest). 
+Executes the specified RestRequest asynchronously and returns a Response&lt;RestResponse&gt; object. The result includes response status evaluation along with size and latency metrics.
+- Send&lt;TResponse&gt;(RestRequest).
+Executes the specified RestRequest asynchronously, deserializes the JSON response content into the specified type TResponse, and returns a Response&lt;TResponse&gt; object. The result includes deserialized content, response status, and associated metrics.
+
+```csharp
+var scenario = Scenario.Create("restsharp_scenario", async ctx =>
+{
+    var options = new RestClientOptions("http://localhost:5099");
+    var client = new RestClient(options);
+    var request = new RestRequest("/api/pingpong/");
+
+    return await client.Send(request);
+})
+.WithoutWarmUp()
+.WithLoadSimulations(
+    Simulation.KeepConstant(1, TimeSpan.FromSeconds(30))
+);
+
+NBomberRunner
+    .RegisterScenarios(scenario)
+    .Run();   
+```
+
+In addition to the general-purpose Send and Send&lt;TResponse&gt; methods, a set of specialized extension methods is provided for each standard HTTP verb (GET, POST, PUT, DELETE, etc.). These methods simplify request setup by explicitly setting the RestRequest.Method and delegating execution to the corresponding Send method.
+
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber.RestSharp/blob/dev/examples/Demo/PingPongExample.cs).*
