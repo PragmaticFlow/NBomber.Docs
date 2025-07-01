@@ -543,12 +543,12 @@ Executes the specified RestRequest asynchronously and returns a Response&lt;Rest
 Executes the specified RestRequest asynchronously, deserializes the JSON response content into the specified type TResponse, and returns a Response&lt;TResponse&gt; object. The result includes deserialized content, response status, and associated metrics.
 
 ```csharp
+var options = new RestClientOptions("http://localhost:5099");
+var client = new RestClient(options);
+
 var scenario = Scenario.Create("restsharp_scenario", async ctx =>
 {
-    var options = new RestClientOptions("http://localhost:5099");
-    var client = new RestClient(options);
     var request = new RestRequest("/api/pingpong/");
-
     return await client.Send(request);
 })
 .WithoutWarmUp()
@@ -561,6 +561,17 @@ NBomberRunner
     .Run();   
 ```
 
-In addition to the general-purpose Send and Send&lt;TResponse&gt; methods, a set of specialized extension methods is provided for each standard HTTP verb (GET, POST, PUT, DELETE, etc.). These methods simplify request setup by explicitly setting the RestRequest.Method and delegating execution to the corresponding Send method.
+In addition to the general-purpose Send and Send&lt;TResponse&gt; methods, this library provides a set of specialized extension methods for each standard HTTP verb: GET, POST, PUT, PATCH, and DELETE.
+
+These methods, such as SendGet(RestRequest) and SendGet&lt;TResponse&gt;(RestRequest), simplify the process of sending requests by automatically setting the RestRequest.Method to the appropriate HTTP verb and internally delegating execution to the corresponding Send method.
+
+Available methods include:
+- SendGet(RestRequest) / SendGet&lt;TResponse&gt;(RestRequest)
+- SendPost(RestRequest) / SendPost&lt;TResponse&gt;(RestRequest)
+- SendPut(RestRequest) / SendPut&lt;TResponse&gt;(RestRequest)
+- SendPatch(RestRequest) / SendPatch&lt;TResponse&gt;(RestRequest)
+- SendDelete(RestRequest) / SendDelete&lt;TResponse&gt;(RestRequest)
+
+These convenience methods improve code readability and reduce boilerplate when working with specific HTTP methods.
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber.RestSharp/blob/dev/examples/Demo/PingPongExample.cs).*
