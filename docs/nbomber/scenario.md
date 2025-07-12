@@ -88,7 +88,7 @@ var scenario = Scenario.Create("scenario_with_init", async context =>
 })
 .WithInit(async context =>
 {
-    using var client = new HttpClient();
+    var client = Http.CreateDefaultClient();
     myGlobalJWT = await client.GetStringAsync("https://myhost/jwt");    
 });
 ```

@@ -29,7 +29,7 @@ HTTP plugin provides helper methods that works with native [HttpClient](https://
 Basic Example:
 
 ```csharp
-using var httpClient = new HttpClient();
+var httpClient = Http.CreateDefaultClient();
 
 var scenario = Scenario.Create("http_scenario", async context =>
 {   
@@ -48,7 +48,7 @@ var scenario = Scenario.Create("http_scenario", async context =>
 Advanced Example:
 
 ```csharp
-using var httpClient = new HttpClient();
+var httpClient = Http.CreateDefaultClient();
 
 var scenario = Scenario.Create("http_scenario", async context =>
 {
@@ -157,7 +157,7 @@ public static Task<Response<HttpResponseMesage>> Send(HttpClient client, HttpCli
 Example 1:
 
 ```csharp
-using var httpClient = new HttpClient();
+var httpClient = Http.CreateDefaultClient();
 
 var scenario = Scenario.Create("http_scenario", async context =>
 {
@@ -176,7 +176,7 @@ var scenario = Scenario.Create("http_scenario", async context =>
 Example 2: in this example we use [HttpClientArgs](#httpclientargs).
 
 ```csharp
-using var httpClient = new HttpClient();
+var httpClient = Http.CreateDefaultClient();
 
 var scenario = Scenario.Create("http_scenario", async context =>
 {
@@ -207,7 +207,7 @@ HTTP plugin provides helper methods that simplify working with JSON format.
 - `Http.WithJsonBody<T>(data)` - Populates request body by serializing data record to JSON format. Also, it adds HTTP header: *"Content-Type": "application/json"*.
 
 ```csharp
-using var httpClient = new HttpClient();
+var httpClient = Http.CreateDefaultClient();
 
 Http.GlobalJsonSerializerOptions = new JsonSerializerOptions
 {
@@ -233,7 +233,7 @@ var scenario = Scenario.Create("http_scenario", async context =>
 - `Http.Send<TResponse>` - Send request and deserialize HTTP response body to JSON format.
 
 ```csharp
-using var httpClient = new HttpClient();
+var httpClient = Http.CreateDefaultClient();
 
 Http.GlobalJsonSerializerOptions = new JsonSerializerOptions
 {
@@ -339,7 +339,7 @@ var scenario = Scenario.Create("http_scenario", async context =>
 The HTTP plugin supports tracing requests and corresponding responses. To do this, you need to pass `Logger` into `HttpClientArgs`.
 
 ```csharp
-using var httpClient = new HttpClient();
+var httpClient = Http.CreateDefaultClient();
 
 var scenario = Scenario.Create("http_scenario", async context =>
 {
@@ -420,7 +420,7 @@ var socketsHandler = new SocketsHttpHandler
     MaxConnectionsPerServer = 3
 };
 
-using var httpClient = new HttpClient(socketsHandler);
+var httpClient = Http.CreateDefaultClient();
 ```
 
 ## Best practices
@@ -448,7 +448,7 @@ Example: **Wrong Usage (Dispose per Iteration)**. This code creates and disposes
 var scenario = Scenario.Create("my scenario", async context =>
 {   
     // highlight-start
-    using var httpClient = new HttpClient();
+    using var httpClient = Http.CreateDefaultClient();
     // highlight-end
     
     var request = Http.CreateRequest("GET", "https://nbomber.com")
@@ -461,7 +461,7 @@ var scenario = Scenario.Create("my scenario", async context =>
 Example: **Correct Usage (Reuse a Shared Instance Across Iterations)**. This code creates and reuses a single HttpClient instance across all concurrent requests and scenario iterations. It ensures the client is only disposed once when the test finishes — not after each iteration — preventing socket exhaustion problem.
 ```csharp
 // highlight-start
-using var httpClient = new HttpClient(); 
+var httpClient = Http.CreateDefaultClient();
 // highlight-end
 
 var scenario = Scenario.Create("my scenario", async context =>
@@ -488,7 +488,7 @@ var scenario = Scenario.Create("cookies_management_scenario", async context =>
 
     if (httpClient is null)
     {
-        myClient = new HttpClient();
+        myClient = Http.CreateDefaultClient();
 
         var login = await Step.Run("login", context, async () =>
         {

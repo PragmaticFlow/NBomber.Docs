@@ -100,7 +100,7 @@ namespace MyLoadTest
     {
         static void Main(string[] args)
         {   
-            using var httpClient = new HttpClient();
+            var httpClient = Http.CreateDefaultClient();
 
             var scenario = Scenario.Create("hello_world_scenario", async context =>
             {
@@ -170,7 +170,7 @@ namespace NBomberTest
     {
         static void Main(string[] args)
         {
-            using var httpClient = new HttpClient();
+            var httpClient = Http.CreateDefaultClient();
 
             var scenario = Scenario.Create("http_scenario", async context =>
             {
