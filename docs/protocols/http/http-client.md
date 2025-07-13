@@ -1,17 +1,14 @@
 ---
-id: http
-title: HTTP
-sidebar_position: 0
+id: http-client
+title: HttpClient
+sidebar_position: 1
 ---
 
-import ConsoleMetricsImage from './img/console_metrics.jpg';
-import HTMLHistoryMetricsImage from './img/html_history_metrics.jpg';
-
-To work with HTTP, NBomber provides [NBomber.Http](https://github.com/PragmaticFlow/NBomber.Http) plugin that includes:
-- API to create, send request, receive response with tracking of data transfer and status codes.
-- [HttpMetricsPlugin](#httpmetricsplugin) to get real-time metrics about the current Http connections.
+To work with HTTP, NBomber provides [NBomber.Http](https://github.com/PragmaticFlow/NBomber.Http) plugin for the native .NET [HttpClient](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient). This plugin offers useful extensions that simplify creating and sending requests, receiving responses, and tracking data transfer and status codes.
 
 :::info
+You can find the [source code here](https://github.com/PragmaticFlow/NBomber.Http).
+
 To install [NBomber.Http](https://www.nuget.org/packages/nbomber.http) package you should execute the following *dotnet* command:
 
 [![build](https://github.com/PragmaticFlow/NBomber.Http/actions/workflows/build.yml/badge.svg)](https://github.com/PragmaticFlow/NBomber.Http)
@@ -122,12 +119,36 @@ var scenario = Scenario.Create("http_scenario", async context =>
 });
 ```
 
+### CreateDefaultClient
+
+This method creates a default preconfigured instance of HttpClient. 
+
+```csharp
+HttpClient CreateDefaultClient(int maxConnectionsPerServer = 5000)
+```
+
+:::info
+We highly recommend using `CreateDefaultClient` instead of using the default constructor `new HttpClient()`. This is because `CreateDefaultClient` applies important preconfigured settings to the underlying [SocketsHttpHandler](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.socketshttphandler), including:
+
+- MaxConnectionsPerServer: 5000
+- Timeout: 1 minute
+- PooledConnectionLifetime: 10 minutes
+- PooledConnectionIdleTimeout: 5 minutes
+
+These settings enhance connection management and ensure more efficient use of network resources.
+:::
+
+Example:
+```csharp
+var httpClient = Http.CreateDefaultClient();
+```
+
 ### CreateRequest
 
 This method should be used to create HTTP request. 
 
 ```csharp
-public static HttpRequestMessage CreateRequest(string method, string url)
+static HttpRequestMessage CreateRequest(string method, string url)
 ```
 
 Example:
@@ -149,9 +170,9 @@ var scenario = Scenario.Create("http_scenario", async context =>
 This method should be used to send HTTP request.
 
 ```csharp
-public static Task<Response<HttpResponseMesage>> Send(HttpClient client, HttpRequestMessage request);
+static Task<Response<HttpResponseMesage>> Send(HttpClient client, HttpRequestMessage request);
 
-public static Task<Response<HttpResponseMesage>> Send(HttpClient client, HttpClientArgs clientArgs, HttpRequestMessage request);
+static Task<Response<HttpResponseMesage>> Send(HttpClient client, HttpClientArgs clientArgs, HttpRequestMessage request);
 ```
 
 Example 1:
@@ -209,11 +230,6 @@ HTTP plugin provides helper methods that simplify working with JSON format.
 ```csharp
 var httpClient = Http.CreateDefaultClient();
 
-Http.GlobalJsonSerializerOptions = new JsonSerializerOptions
-{
-    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-};
-
 var scenario = Scenario.Create("http_scenario", async context =>
 {    
     var user = new UserData { UserId = 1, Title = "anton" };
@@ -235,11 +251,6 @@ var scenario = Scenario.Create("http_scenario", async context =>
 ```csharp
 var httpClient = Http.CreateDefaultClient();
 
-Http.GlobalJsonSerializerOptions = new JsonSerializerOptions
-{
-    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-};
-
 var scenario = Scenario.Create("http_scenario", async context =>
 {
     var request =
@@ -259,29 +270,42 @@ var scenario = Scenario.Create("http_scenario", async context =>
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HTTP/HttpSendJsonExample.cs).*
 
 :::info
-For JSON serialization you can set global serializer options:
+**Configuring JSON serialization**. You can set global serializer options for JSON serialization as follow:
 
 ```csharp
+// By default GlobalJsonSerializer is configured with JsonSerializerOptions.Web
+Http.GlobalJsonSerializerOptions = JsonSerializerOptions.Web;
+
+// You may also customize the configuration to suit your specific needs
 Http.GlobalJsonSerializerOptions = new JsonSerializerOptions
 {
     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
 };
 ```
 
-If the global serializer options doesn't fit for your use case and you need more granular control, you can pass different serializer options for each request via **HttpClientArgs**.
+If the default `GlobalJsonSerializerOptions` doesn't fit for your use case and you need more granular control, you can pass different serializer options for each request via **HttpClientArgs**.
 
 ```csharp
 var clientArgs = HttpClientArgs.Create(
     CancellationToken.None,
     httpCompletion: HttpCompletionOption.ResponseContentRead,
-    jsonOptions: JsonSerializerOptions.Default // you set custom options
+    jsonOptions: JsonSerializerOptions.Web // you set custom options
 );
         
 var response = await Http.Send(httpClient, clientArgs, request);
 ```
 :::
 
-### Timeout operation
+### Timeout
+
+If you create an HttpClient using `Http.CreateDefaultClient()`, the default timeout is 1 minute. To change the default timeout, you can set it manually:
+
+```csharp
+var httpClient = Http.CreateDefaultClient();
+httpClient.Timeout = TimeSpan.FromMinutes(5);
+```
+
+Alternatively, if you want more granular control over timeouts, you can use `CancellationTokenSource`. Just make sure that your custom timeout is not longer than the default `HttpClient.Timeout`; you may need to adjust the default timeout accordingly.
 
 ```csharp
 var scenario = Scenario.Create("http_scenario", async context =>
@@ -388,190 +412,10 @@ After running this example, we will have a log file populated with HTTP tracing.
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HTTP/HttpRequestTracing.cs).*
 
-## HttpMetricsPlugin
+### Connections limit
 
-HttpMetricsPlugin - provides a monitoring layer for HTTP connections.
-
-Example:
+You may need to restrict the maximum number of socket connections.
 
 ```csharp
-NBomberRunner
-    .RegisterScenarios(scenario)
-    .WithWorkerPlugins(new HttpMetricsPlugin(new [] { HttpVersion.Version1 }))
-    // .WithWorkerPlugins(new HttpMetricsPlugin(new [] { HttpVersion.Version1, HttpVersion.Version2 }))
-    .Run();
+var httpClient = Http.CreateDefaultClient(maxConnectionsPerServer: 3);
 ```
-
-After running with HttpMetricsPlugin, you will get real-time HTTP connections metrics for the Console output:
-
-<center><img src={ConsoleMetricsImage} width="50%" height="50%" /></center>
-
-Also, after running with HttpMetricsPlugin, you will get HTTP connections history metrics for the HTML report:
-
-<center><img src={HTMLHistoryMetricsImage} width="100%" height="100%" /></center>
-
-## Connections limit
-
-You may need to limit the sockets connections count.
-
-```csharp
-var socketsHandler = new SocketsHttpHandler
-{
-    MaxConnectionsPerServer = 3
-};
-
-var httpClient = Http.CreateDefaultClient();
-```
-
-## Best practices
-
-Here we combine best practices for writing HTTP load tests, along with useful links and important considerations.
-
-### Blog posts
-- [Load Testing HTTP API on C# with NBomber](../../blog/2023/08/16/load-testing-http-api)
-
-### Choose the right workload
-Please make sure to choose the right workload for your load tests. We recommend reviewing the following documentation:
-- [Load Testing Microservices](../best-practices/microservices)
-- [Load Simulation](../nbomber/load-simulation)
-
-### HttpClient using wrong
-HttpClient should be used carefully since the wrong use of it can cause **socket exhaustion** problems. You can read more about this problem in this article: [You are using HttpClient wrong](https://www.aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/). The basic recommendations are:
-:::warning
-- You can use a singleton HttpClient (shared instance) per Scenario. 
-- If you need a separate HttpClient per virtual user (e.g., for cookie management), consider attaching it to the scenario instance via `context.ScenarioInstanceData`. (*We’ll show an example of this later*)
-- Avoid disposing of HttpClient frequently, as it's a **costly operation** and can lead to **socket exhaustion** issues.
-:::
-
-Example: **Wrong Usage (Dispose per Iteration)**. This code creates and disposes HttpClient in each iteration, which can exhaust available sockets under high load, leading to degraded performance or failures.
-```csharp
-var scenario = Scenario.Create("my scenario", async context =>
-{   
-    // highlight-start
-    using var httpClient = Http.CreateDefaultClient();
-    // highlight-end
-    
-    var request = Http.CreateRequest("GET", "https://nbomber.com")
-    var response = await Http.Send(httpClient, request);
-
-    ...
-});
-```
-
-Example: **Correct Usage (Reuse a Shared Instance Across Iterations)**. This code creates and reuses a single HttpClient instance across all concurrent requests and scenario iterations. It ensures the client is only disposed once when the test finishes — not after each iteration — preventing socket exhaustion problem.
-```csharp
-// highlight-start
-var httpClient = Http.CreateDefaultClient();
-// highlight-end
-
-var scenario = Scenario.Create("my scenario", async context =>
-{
-    var request = Http.CreateRequest("GET", "https://nbomber.com")
-    var response = await Http.Send(httpClient, request);
-    
-    ...
-});
-```
-
-### Dedicated HttpClient Per User Session
-There may be cases where you need to create a separate HttpClient instance for each user session — such as when managing cookies, authentication headers, or maintaining session-specific state.
-
-In such cases, we recommend attaching the created HttpClient instance to the scenario's `ScenarioInstanceData`, which represents the current user session.
-
-```csharp
-var scenario = Scenario.Create("cookies_management_scenario", async context =>
-{
-    HttpClient myClient = null;
-    // highlight-start
-    context.ScenarioInstanceData.TryGetValue("my_http_client", out var httpClient);
-    // highlight-end
-
-    if (httpClient is null)
-    {
-        myClient = Http.CreateDefaultClient();
-
-        var login = await Step.Run("login", context, async () =>
-        {
-            // WebAppSimulator address
-            var request = Http.CreateRequest("POST", "https://localhost:65385/api/CookiesAuthentication")
-                .WithJsonBody(new StringContent("""{"login": "morpheus","password": "leader"}"""));
-
-            var response = await Http.Send(myClient, request);
-
-            return response;
-        });
-
-        // highlight-start
-        context.ScenarioInstanceData["my_http_client"] = myClient;
-        // highlight-end
-    }
-    else
-        myClient = (HttpClient)httpClient;
-
-        var getData = await Step.Run("get_data", context, async () =>
-        {
-            var request = Http.CreateRequest("GET", "https://localhost:65385/api/CookiesAuthentication");
-
-            var response = await Http.Send(myClient, request);
-
-            return response;
-        });
-
-    return Response.Ok();
-})
-```
-
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HTTP/CookiesManagementExample.cs).*
-
-### RestSharp integration
-RestSharp is a lightweight and easy-to-use HTTP client for .NET, designed to simplify sending HTTP requests and consuming RESTful web services.
-
-:::info
-To install [NBomber.RestSharp](https://www.nuget.org/packages/nbomber.restsharp) package you should execute the following *dotnet* command:
-
-[![NuGet](https://img.shields.io/nuget/v/nbomber.restsharp.svg)](https://www.nuget.org/packages/nbomber.restsharp/)
-
-```code
-dotnet add package NBomber.RestSharp
-```
-:::
-
-Two extension methods are provided for the RestClient class to facilitate HTTP request execution and response handling with additional metadata:
-- Send(RestRequest). 
-Executes the specified RestRequest asynchronously and returns a Response&lt;RestResponse&gt; object. The result includes response status evaluation along with size and latency metrics.
-- Send&lt;TResponse&gt;(RestRequest).
-Executes the specified RestRequest asynchronously, deserializes the JSON response content into the specified type TResponse, and returns a Response&lt;TResponse&gt; object. The result includes deserialized content, response status, and associated metrics.
-
-```csharp
-var options = new RestClientOptions("http://localhost:5099");
-var client = new RestClient(options);
-
-var scenario = Scenario.Create("restsharp_scenario", async ctx =>
-{
-    var request = new RestRequest("/api/pingpong/");
-    return await client.Send(request);
-})
-.WithoutWarmUp()
-.WithLoadSimulations(
-    Simulation.KeepConstant(1, TimeSpan.FromSeconds(30))
-);
-
-NBomberRunner
-    .RegisterScenarios(scenario)
-    .Run();   
-```
-
-In addition to the general-purpose Send and Send&lt;TResponse&gt; methods, this library provides a set of specialized extension methods for each standard HTTP verb: GET, POST, PUT, PATCH, and DELETE.
-
-These methods, such as SendGet(RestRequest) and SendGet&lt;TResponse&gt;(RestRequest), simplify the process of sending requests by automatically setting the RestRequest.Method to the appropriate HTTP verb and internally delegating execution to the corresponding Send method.
-
-Available methods include:
-- SendGet(RestRequest) / SendGet&lt;TResponse&gt;(RestRequest)
-- SendPost(RestRequest) / SendPost&lt;TResponse&gt;(RestRequest)
-- SendPut(RestRequest) / SendPut&lt;TResponse&gt;(RestRequest)
-- SendPatch(RestRequest) / SendPatch&lt;TResponse&gt;(RestRequest)
-- SendDelete(RestRequest) / SendDelete&lt;TResponse&gt;(RestRequest)
-
-These convenience methods improve code readability and reduce boilerplate when working with specific HTTP methods.
-
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber.RestSharp/blob/dev/examples/Demo/PingPongExample.cs).*
