@@ -15,11 +15,9 @@ Please make sure to choose the right workload for your load tests. We recommend 
 - [Load Simulation](../../nbomber/load-simulation)
 
 ## Using HttpClient correctly
-
 Using HttpClient (or RestSharp client) properly is crucial for performance, reliability, and avoiding resource exhaustion. Here are best practices when working with HttpClient. *All the practices mentioned below are also applicable to RestSharp.*
 
 ### Reuse HttpClient instance
-
 Avoid creating a new instance per request. Creating and disposing HttpClient frequently can exhaust available sockets under heavy load. You can read more about this problem in this article: [You are using HttpClient wrong](https://www.aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/). The basic recommendations are:
 :::info
 - Avoid creating a new instance per request.

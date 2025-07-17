@@ -1,7 +1,7 @@
 ---
 id: timescale
 title: TimescaleDB
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 import TimescaleImage from './img/timescale.jpg';
