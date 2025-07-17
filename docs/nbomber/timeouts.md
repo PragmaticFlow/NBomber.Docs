@@ -6,32 +6,6 @@ sidebar_position: 10
 
 On this page, you will learn about possible timeouts in NBomber.
 
-## Scenario completion timeout
-When NBomber finishes load tests, it waits for all running scenarios to complete their tasks. By default, Scenario completion timeout is 1 minute. This setting is globally applied for all scenarios.
-
-```csharp
-NBomberRunner
-    .RegisterScenarios(scenario)
-    .WithScenarioCompletionTimeout(TimeSpan.FromMinutes(5))
-    .Run();
-```
-
-You can also use [JSON configuration](json-config) to override this setting.
-
-```json
-{
-    "GlobalSettings": {
-        ...
-    },
-
-    // highlight-start
-    "ScenarioCompletionTimeout": "00:05:00"
-    // highlight-end
-}
-```
-
-*You can find the complete example [by this link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/Features/Timeouts/ScenarioCompletionTimeout.cs).*
-
 ## Operation cancellation after timeout
 
 There might be situations where you need to cancel some operation after specified timeout. For this, you can use standard .NET [CancellationTokenSource](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtokensource?view=net-8.0). 
