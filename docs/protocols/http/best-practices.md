@@ -7,7 +7,7 @@ sidebar_position: 4
 Here we combine best practices for writing HTTP load tests, along with useful links and important considerations. *All the practices mentioned below are also applicable to RestSharp.*
 
 ## Blog posts
-- [Load Testing HTTP API on C# with NBomber](../../blog/2023/08/16/load-testing-http-api)
+- [Load Testing HTTP API on C# with NBomber](../../../blog/2023/08/16/load-testing-http-api)
 
 ## Choose the right workload
 Please make sure to choose the right workload for your load tests. We recommend reviewing the following documentation:
