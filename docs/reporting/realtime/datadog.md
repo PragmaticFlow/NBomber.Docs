@@ -2,8 +2,11 @@
 id: datadog
 title: Datadog
 sidebar_position: 3
-draft: true
 ---
+
+import DataDogImage from './img/datadog.jpg';
+
+<center><img src={DataDogImage} width="65%" height="65%" /></center>
 
 [Datadog](https://www.datadoghq.com/) is a cloud-based monitoring and analytics platform that provides comprehensive observability into applications, infrastructure, and security. Datadog focuses on providing real-time visibility into your entire technology stack, including infrastructure, applications, and security.
 
@@ -24,11 +27,13 @@ dotnet add package NBomber.Sinks.Datadog
 
 ## Integrating with Datadog
 
-Typically the integration with Datadog is handled via Datadog Agent. Datadog Agent is a daemon which supports the StatsD protocol over UDP.
+Typically, integration with Datadog is handled via the [Datadog Agent](https://docs.datadoghq.com/agent/). The Datadog Agent is a lightweight daemon that runs on your hosts. It collects events and metrics from the host and sends them to Datadog, where you can monitor performance, analyze data, and create visualizations and alerts. The Agent supports the StatsD protocol and listens on UDP port 8125 by default. When it receives metric data from applications, it forwards that data to Datadog for processing and display. 
+
+We recommend using Docker to install the Datadog Agent locally, as it's the simplest and most portable method. Please refer to the following [instructions for installation](https://docs.datadoghq.com/integrations/docker/).
 
 ### Configuring Datadog Sink via JSON Config
 
-To configure Datadog Sink we will use [JSON Infrastracture Config](/docs/nbomber/json-config.md#json-infrastracture-config) file
+To start sending metrics to the Datadog Agent, you need to initialize and configure `DatadogSink`. To configure `DatadogSink` we will use [JSON Infrastracture Config](/docs/nbomber/json-config.md#json-infrastracture-config) file.
 
 ```json title="infra-config.json"
 {
@@ -55,38 +60,14 @@ NBomberRunner
     // highlight-end
 ```
 
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/Features/RealtimeReporting/InfluxDB).*
-
-### Saving custom metrics to Datadog
-
-There could be cases where you want to write your custom raw metrics to InfluxDB. Here is an example of how you can use InfluxDB sink to write your custom data.
-
-```csharp
-var influxDbSink = new InfluxDBSink();
-
-var scenario = Scenario.Create("scenario", async context =>
-{    
-    var writeApi = influxDbSink.InfluxClient.GetWriteApiAsync();
-
-    var point = PointData
-        .Measurement("nbomber")
-        .Field("my_custom_counter", 1);
-
-    await writeApi.WritePointAsync(point);
-
-    return Response.Ok();
-});
-```
-
-*By following this link, you can get more info about [InfluxClient](https://github.com/influxdata/influxdb-client-csharp).*
+*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/Features/RealtimeReporting/Datadog).*
 
 ### Connecting to Datadog via code
 
-You might have a situation that requires you to connect to InfluxDB via code. For this, you can inject an instance of InfluxDBClient.
+You might have a situation that requires you to connect to Datadog via code.
 
-For InfluxDB v1:
 ```csharp
-var influxDbSink = new InfluxDBSink(
-    new InfluxDBClient("http://localhost:8086", "username", "password", "database", retentionPolicy: "autogen")
-);
+var datadog = new DatadogSink(new StatsdConfig {
+    new StatsdConfig { StatsdServerName = "localhost", StatsdPort = 8125 }
+});
 ```
