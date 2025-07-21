@@ -73,17 +73,15 @@ await originalClient.ExchangeDeclareAsync(exchange: "myExchange", type: Exchange
 ```
 
 ## Examples
-
 Here you will find some useful examples of working with the AMQP protocol and NBomber to cover different workloads.
 
 ### Ping Pong Example
-
 This is a basic example meant to demonstrate the API usage. In this example, we create an AMQP client that:
 
 1. Connects to the broker
-2. Subscribes to its own queue using the scenario instance ID (ctx.ScenarioInfo.InstanceId)
-3. Publishes a message to this queue
-4. Awaits and receives a message from the queue
+2. Subscribes to its own queue (self topic) using the scenario instance ID (ctx.ScenarioInfo.InstanceId)
+3. Publishes a message to self topic
+4. Awaits and receives a message from the self topic
 5. Disconnects
 
 ```csharp
@@ -142,7 +140,7 @@ var scenario = Scenario.Create("ping_pong_scenario", async ctx =>
 
 <center><img src={AmqpClientPoolImage} width="70%" height="70%" /></center>
 
-In this example, we create and initialize a list of AMQP clients, which remain active throughout the entire load test using a [ClientPool](../nbomber/client-pool) abstraction. Each client continuously and sequentially performs two steps: it 
+In this example, we create and initialize a list of AMQP clients, which remain active throughout the entire load test using a [ClientPool](../nbomber/client-pool) abstraction. Each client continuously and sequentially performs two steps:
 - **publishes a message** to self topic
 - **receives a message** from the self topic
 

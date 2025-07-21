@@ -10,6 +10,9 @@ import RestSharpImage from './img/restsharp.jpg';
 
 [RestSharp](https://restsharp.dev/) is a lightweight and easy-to-use HTTP client for .NET, designed to simplify sending HTTP requests and working with RESTful web services. If you prefer using RestSharp over the native .NET [HttpClient](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient), NBomber provides [NBomber.RestSharp](https://github.com/PragmaticFlow/NBomber.RestSharp) plugin to work with it.
 
+:::warning
+This package is experimental and might be subject to breaking API changes in the future. While we intend to keep experimental packages as stable as possible, we may need to introduce breaking changes.
+:::
 :::info
 You can find the [source code here](https://github.com/PragmaticFlow/NBomber.RestSharp).
 
@@ -93,5 +96,5 @@ request.Method = Method.Head;
 var response = await client.Send(request);
 
 // or Send<T>
-// var response = await client.Send<T>(request);
+var response = await client.Send<T>(request);
 ```
