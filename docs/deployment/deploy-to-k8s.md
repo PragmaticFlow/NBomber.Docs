@@ -4,20 +4,30 @@ title: Deploy to Kubernetes
 sidebar_position: 3
 ---
 
-import K8sDeploymentSingleImage from './img/k8s-deployment-single.jpg';
-import K8sCiCdImage from './img/k8s-deployment-ci-cd.jpg';
+import K8sImage from './img/k8s.jpg';
+import DockerImage from './img/docker.jpg';
+import k8sSingleNodeImage from './img/k8s-single-node.jpg';
+import k8sClusterImage from './img/k8s-cluster.jpg';
 
-<center><img src={K8sDeploymentSingleImage} width="60%" height="60%" /></center>
+<center><img src={K8sImage} width="80%" height="80%" /></center>
 
 ## Overview
-This document will help you understand how to deploy an NBomber load test to Kubernetes.
+This document will guide you through the process of deploying an NBomber load test on Kubernetes.
 
-First, let's clarify what it means to deploy NBomber in Kubernetes. Since NBomber is a library for your C# or F# application, **"deploying NBomber in Kubernetes"** actually means:
-1. Containerizing your C#/F# load test project by packaging it into a Docker image
-2. Running that image inside Kubernetes 🙂
+First, let's clarify what it means to deploy NBomber in Kubernetes. Since NBomber is a library for your C# or F# application, **"deploying NBomber in Kubernetes"** involves two main steps:
+1. Containerizing your NBomber test project via Docker — packaging it into an image.
+2. Running that image in Kubernetes, either as a single-node Pod or a distributed cluster.
+
+In this document, we will focus on the following steps:
+1. [Building a Docker image for the NBomber load test](#building-docker-image)
+2. [Single-Node Deployment](#single-node-deployment)
+3. [Cluster Deployment](#cluster-deployment)
 
 ## Building Docker image
-For this, we created a simple C# application called [K8sDemo](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/K8sDemo), which contains an NBomber HTTP scenario that performs basic endpoint testing.
+
+<center><img src={DockerImage} width="90%" height="90%" /></center>
+
+For this, we created a simple C# console application called [K8sDemo](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/K8sDemo), which contains an NBomber HTTP scenario that performs basic endpoint testing.
 
 ```csharp title="Program.cs"
 var httpClient = Http.CreateDefaultClient();
@@ -54,7 +64,10 @@ docker push {user_name}/k8sdemo:latest
 In all the following examples, we will use the Docker image `nbomberdocker/k8sdemo`, which we built specifically for this demo.
 :::
 
-## SingleNode NBomber in Kubernetes
+## Single-Node Deployment
+
+<center><img src={k8sSingleNodeImage} width="90%" height="90%" /></center>
+
 Let’s start with a simple example by running our `K8sDemo` image in Kubernetes. At this point, we already have our C# HTTP load test containerized as a Docker image.
 
 ### 1. NBomber K8sDemo Pod
@@ -192,14 +205,16 @@ kubectl delete -f k8sdemo-reports-pod.yaml
 kubectl delete -f k8sdemo-single-node.yaml
 ```
 
-## NBomber Cluster in Kubernetes
+## Cluster Deployment
+
+<center><img src={k8sClusterImage} width="90%" height="90%" /></center>
 
 Let's now try to run the same [K8sDemo](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/K8sDemo) project but in Cluster mode. Cluster Mode allows you to run multiple NBomber Pods in parallel, unify them into a single cluster, aggregate metrics from all nodes, perform threshold checks on the combined metrics, generate a merged HTML report, partition the data between Pods, and more.
 
 :::info
 As you may know, **NBomber Cluster** mode requires an **Enterprise license** to run your tests in a clustered setup. However, it is also possible to run a limited version of cluster mode without a license key. For this purpose, NBomber provides a special lightweight mode called - **Local Dev Cluster**.
 
-The [Local Dev Cluster](../cluster/local-dev-cluster.md) provides the full set of cluster features, with the limitation that the cluster cannot contain more than two Pods (1 Coordinator and 1 Agent). This mode is particularly useful for developers who want to test scenarios in a clustered environment (even locally) without having to manage license keys. With an Enterprise license, you can create a cluster with an unlimited number of Agents (1 Coordinator + N Agents).
+The [Local Dev Cluster](../cluster/local-dev-cluster.md) provides the full set of cluster features, with the limitation that the cluster cannot contain more than two Pods (1 Coordinator and 1 Agent). This mode is particularly useful for developers who want to test scenarios in a clustered environment (even locally) without having to manage license keys. *With an Enterprise license, you can create a cluster with an unlimited number of Agents (1 Coordinator + N Agents).*
 
 To form a minimal **NBomber Cluster**, you need to run at least 2 Pods: 1 Coordinator and 1 Agent.
 
@@ -397,7 +412,18 @@ kubectl wait --for=condition=complete job/k8sdemo-job -n nbomber-tests --timeout
 
 ### 6. Extract reports and logs
 
-Once the Job status changes to **Complete** (indicating that the test has finished), we can copy the reports from the `/app/my_reports` folder. Since the NBomber Pods have already terminated, we can’t connect to them via shell to copy the reports directly.
+Once the Job status changes to **Complete** (indicating that the test has finished), we can copy the reports from the `/app/my_reports` folder. 
+
+The report folder path shown above [was configured](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/K8sDemo/k8sdemo-cluster.yaml#L56-L57) in the JSON config, which we provided via the [ConfigMap](#1-configmap-and-nbomber-clustersettings).
+
+```json
+{
+    "ReportFileName": "my_report_name",
+    "ReportFolder": "my_reports"
+}
+```
+
+Since the NBomber Pods have already terminated, we can’t connect to them via shell to copy the reports directly.
 
 The standard approach in this case is to temporarily run an additional empty Pod and attach to it the same **PersistentVolume** that was previously mounted to the NBomber Pods. This allows us to copy the reports from the temporary Pod.
 
@@ -421,3 +447,9 @@ Finally, don’t forget to clean up the resources:
 kubectl delete -f k8sdemo-reports-pod.yaml
 kubectl delete -f k8sdemo-cluster.yaml
 ```
+
+## Useful links
+
+- [NBomber CLI Arguments](../getting-started/cli.md)
+- [System Requirements](../getting-started/system-requirements.md)
+- [Load Testing Microservices](../best-practices/microservices.md)
