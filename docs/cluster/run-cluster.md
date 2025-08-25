@@ -90,7 +90,7 @@ You can also pass other CLI args:
 MyLoadTest.dll --config="auto-cluster-config.json" --cluster-agents-count=5 --license=YOUR_LICENSE_KEY
 ```
 
-*Here, you can find a list of all available [CLI arguments](../getting-started/cli).*
+*Here, you can find a list of all available [CLI arguments](../nbomber/cli).*
 
 ### Run Local Dev Cluster
 

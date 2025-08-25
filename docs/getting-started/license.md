@@ -39,7 +39,7 @@ NBomberRunner
     .Run();
 ```
 
-Another option is [CLI arguments](cli): --license=Your_License_Key
+Another option is [CLI arguments](../nbomber/cli): --license=Your_License_Key
 
 **Example:**
 

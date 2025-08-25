@@ -1,7 +1,7 @@
 ---
 id: cli
 title: CLI Arguments
-sidebar_position: 5
+sidebar_position: 13
 ---
 
 The list of available command line (CLI) arguments of NBomber:
@@ -19,7 +19,25 @@ The list of available command line (CLI) arguments of NBomber:
 | --cluster-id            | Overrides ClusterId       | --cluster-id=test_cluster |
 | --cluster-node-type     | Specifies NodeType <br /> *(should be used only for ManualCluster)*  | --cluster-node-type=coordinator <br /> --cluster-node-type=agent |
 
-Example:
+
+:::info
+It’s important to note that, if you want your application to handle CLI arguments, you should pass the `console arguments` into the `NBomberRunner.Run(string[] args)` method.
+
+```csharp
+static void Main(string[] args)
+{
+    var scenario = Scenario.Create("scenario", ...);
+
+    NBomberRunner
+        .RegisterScenario(scenario)
+        // highlight-start
+        .Run(args);
+        // highlight-end
+}
+```
+:::
+
+Example of usage:
 
 ```bash
 dotnet MyLoadTest.dll --license=YOUR_LICENSE_KEY --config=config.json

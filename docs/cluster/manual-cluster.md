@@ -82,7 +82,7 @@ MyLoadTest.dll --config="manual-cluster-config.json" --cluster-node-type=agent -
 
 By executing this command NBomber process will start as Agent under: `"AgentGroup": "1", "TargetScenarios": ["scenario_1"]`
 
-*Here, you can find a list of all available [CLI arguments](../getting-started/cli).*
+*Here, you can find a list of all available [CLI arguments](../nbomber/cli).*
 
 Also, you can start Agent via code:
 
@@ -115,7 +115,7 @@ To start NBomber process as Coordinator you should specify `--cluster-node-type=
 MyLoadTest.dll --config="manual-cluster-config.json" --cluster-node-type=coordinator --license=YOUR_LICENSE_KEY
 ```
 
-*Here, you can find a list of all available [CLI arguments](../getting-started/cli).*
+*Here, you can find a list of all available [CLI arguments](../nbomber/cli).*
 
 Also, you can start Coordinator via code:
 

@@ -22,7 +22,7 @@ NBomberRunner
 
 ### Run Local Dev Cluster via CLI
 
-Another option to run Local Dev Cluster is via using [CLI arguments](../getting-started/cli): `--cluster-local-dev=true`
+Another option to run Local Dev Cluster is via using [CLI arguments](../nbomber/cli): `--cluster-local-dev=true`
 
 ```
 MyLoadTest.dll --config="autocluster-config.json" --cluster-local-dev=true
