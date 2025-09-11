@@ -6,6 +6,14 @@ sidebar_position: 2
 
 NBomber is built on the .NET runtime, which as you may know is fast and efficient: [part 1](https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-5/), [part 2](https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-6/), [part 3](https://devblogs.microsoft.com/dotnet/performance_improvements_in_net_7/), [part 4](https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-8/), [part 5](https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-9/). It uses the standard .NET threading model based on `System.Threading.Tasks`, enabling scalable parallelism to simulate thousands of concurrent users from a single node. Additionally, the NBomber engine is optimized to minimize pressure on the garbage collector through the use of memory pools and lightweight primitives that reduce memory allocations. We continuously focus on performance improvements to make NBomber one of the fastest load testing frameworks in its class.
 
+:::info
+On a single node with NBomber, you can expect to handle approximately:
+- 50–60K RPS for HTTP/1.1 (with a 300-byte payload)
+- 70–80K RPS for gRPC (with a 300-byte payload)
+
+Make sure your service is scaled sufficiently to handle this load.
+:::
+
 ## Hardware considerations
 
 - Minimum Requirements:
@@ -14,7 +22,7 @@ NBomber is built on the .NET runtime, which as you may know is fast and efficien
     - Disk: Minimal (binaries < 50MB)
     - OS: Windows, macOS, Linux, Docker
 
-- Recommended for High Load (> 5000 users):
+- Recommended for High Load:
     - CPU: 4–8 cores 
     - RAM: 8–16 GB+ (depends on script complexity)
     - Notes: Can be horizontally scaled using [Cluster](../cluster/overview)
