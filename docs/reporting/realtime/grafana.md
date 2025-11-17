@@ -1,7 +1,7 @@
 ---
 id: grafana
 title: Grafana
-sidebar_position: 6
+sidebar_position: 3
 ---
 
 Grafana is an open-source platform for monitoring and observability. It allows you to visualize your load testing results and be able to query historical data for further analyses in the future. Grafana is commonly used in conjunction with time-series databases: [InfluxDB](influx-db).

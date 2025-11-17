@@ -1,7 +1,7 @@
 ---
 id: datadog
 title: Datadog
-sidebar_position: 3
+sidebar_position: 1
 ---
 
 import DataDogImage from './img/datadog.jpg';
