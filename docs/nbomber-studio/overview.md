@@ -11,7 +11,9 @@ import EmptyActiveSessionsImage from './img/empty-active-sessions.png';
 import OneActiveSessionImage from './img/one-active-session.png'; 
 import OpenedSessionImage from './img/opened-session.png'; 
 
-<center><img src={NBomberStudioImage} width="90%" height="90%" /></center>
+<center><img src={NBomberStudioImage} width="100%" height="100%" /></center>
+
+> 
 
 <center><img src={HistoryImage} width="100%" height="100%" /></center>
 
@@ -67,7 +69,7 @@ services:
             timescaledb:
                 condition: service_healthy
         environment:
-            DBSETTINGS__CONNECTIONSTRING: "Host=timescaledb;Port=5432;Username=timescaledb;Password=timescaledb;Database=nb_studio_db;Pooling=true;"
+            POSTGRESQL__CONNECTIONSTRING: "Host=timescaledb;Port=5432;Username=timescaledb;Password=timescaledb;Database=nb_studio_db;Pooling=true;"
 
 volumes:
     nb_studio_data:
@@ -81,7 +83,7 @@ volumes:
 For production use, it’s important to specify the exact version of the NBomber Studio image rather than using `latest`.
 
 ```
-image: nbomberdocker/nbomber-studio:0.2.1
+image: nbomberdocker/nbomber-studio:0.5.1
 ```
 :::
 
