@@ -163,6 +163,24 @@ var scenario = Scenario.Create("home_page", async context =>
     Simulation.KeepConstant(copies: 9, during: TimeSpan.FromSeconds(30))
 );
 ```
+Step Invocation by Instance number creates a Scenario where each virtual user (or “instance”) can behave differently based on its instance number.
+NBomber assigns an instance number to each virtual user copy when running a scenario. For example, if you run 10 copies of a scenario, they will have instance numbers 0 through 9.
+The code uses this instance number to distribute work. For example, some instances might perform one type of operation, others another type, based on their number.
+
+This is useful for simulating heterogeneous workloads, where different users do different things instead of all doing the same step.
+
+Instance number is the index of the virtual user copy within a scenario.
+Each instance gets a unique number (0, 1, 2, … N-1).
+You can use this number to:
+ - Assign different data sets per instance.
+ - Route traffic differently.
+ - Simulate user segmentation (e.g., 50% read-only users, 50% write users).
+
+What does InstanceNumber % 9 < 6 mean?
+ - InstanceNumber is the index of the virtual user instance (0, 1, 2, …).
+ - % 9 is the modulus operator, which gives the remainder when dividing by 9.
+ - So InstanceNumber % 9 cycles through values 0 to 8 repeatedly as instance numbers increase.
+ - The condition < 6 means only instances where the remainder is 0–5 will match.
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/Features/DynamicWorkload/InstanceNumberDistributionExample.cs).*
 
