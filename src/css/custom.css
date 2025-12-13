@@ -31,3 +31,10 @@
 
 h2 { font-size: 1.5rem !important; }
 h3 { font-size: 1.2rem !important; }
+
+/* Bigger announcement bar */
+div[class^='announcementBar_'] {
+  padding: 35px 24px;
+  font-size: 20px;
+  line-height: 1.7;
+}
