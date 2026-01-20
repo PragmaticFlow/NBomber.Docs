@@ -66,8 +66,8 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       announcementBar: {
-        id: 'announcement-opentelemetry',
-        content: '🚀 NBomber now supports <a href="https://nbomber.com/docs/reporting/realtime/opentelemetry" target="_blank">OpenTelemetry</a> for real-time reporting!',
+        id: 'announcement-nbomber-v6.2.0',
+        content: '🚀 NBomber v6.2.0 <a href="https://nbomber.com/blog/2026/01/20/nbomber-v6.2.0" target="_blank">released</a>!',
         backgroundColor: '#2977d6ff',
         textColor: '#ffffffff',
         isCloseable: true,
