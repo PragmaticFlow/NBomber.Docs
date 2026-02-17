@@ -23,7 +23,7 @@ The property files used with the core workload generator can specify values for 
 - **fieldlength**: the size of each field (default: 100)
 <!-- - **minfieldlength**: the minimum size of each field (default: 1) -->
 - **readallfields**: should reads read all fields (true) or just one (false) (default: true)
-<!-- - **writeallfields**: should updates and read/modify/writes update all fields (true) or just one (false) (default: false) -->
+- **writeallfields**: should updates and read/modify/writes update all fields (true) or just one (false) (default: false)
 <!-- - **readproportion**: what proportion of operations should be reads (default: 0.95) -->
 <!-- - **updateproportion**: what proportion of operations should be updates (default: 0.05) -->
 <!-- - **insertproportion**: what proportion of operations should be inserts (default: 0) -->
