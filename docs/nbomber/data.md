@@ -184,6 +184,203 @@ var myDataFeed = DataFeed.Constant(users);
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/Features/DataDemo/CsvFeed.cs).*
 
+## LargeDataFeed
+
+LargeDataFeed is designed for working with large datasets that are too big to fit entirely in memory. Unlike the regular DataFeed which loads all data into memory, LargeDataFeed uses streaming and SQLite-based caching to keep memory usage low while still providing fast access to your test data.
+
+### When to use LargeDataFeed
+
+Use LargeDataFeed when:
+- Your test data file is larger than available RAM (e.g., multi-GB CSV or JSON files)
+- You want to test with millions of records without loading them all into memory
+- You need to maintain low memory footprint during load testing
+
+For smaller datasets that fit comfortably in memory, use the regular `DataFeed` instead.
+
+### IAsyncDataFeed Interface
+
+LargeDataFeed implements the `IAsyncDataFeed<T>` interface, which differs from regular DataFeed in two key ways:
+
+```csharp
+public interface IAsyncDataFeed<T> : IAsyncDisposable
+{
+    // Returns ValueTask instead of synchronous value
+    ValueTask<T> GetNextItem(ScenarioInfo scenarioInfo);
+
+    // Requires explicit data loading with a logger
+    void LoadData(Serilog.ILogger logger, IEnumerable<T> data);
+}
+```
+
+### Creating LargeDataFeed
+
+LargeDataFeed provides three types, similar to regular DataFeed, but with an important `elementsInMemoryCount` parameter that controls memory usage:
+
+```csharp
+// Creates LargeDataFeed that randomly picks an item per GetNextItem() invocation.
+// Default elementsInMemoryCount: 1000
+LargeDataFeed.Random<T>(elementsInMemoryCount: 1000);
+
+// Creates LargeDataFeed that picks constant value per Scenario copy.
+// Every Scenario copy will have unique constant value.
+LargeDataFeed.Constant<T>(elementsInMemoryCount: 1000);
+
+// Creates LargeDataFeed that goes back to the top of the sequence once the end is reached.
+LargeDataFeed.Circular<T>(elementsInMemoryCount: 1000);
+```
+
+The `elementsInMemoryCount` parameter determines how many items are kept in memory at once. Higher values improve performance but use more memory. The minimum value is 100.
+
+### Streaming large CSV files
+
+Use `LargeData.OpenCsvStream()` to stream CSV data without loading the entire file into memory:
+
+```csharp
+public class User
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+}
+
+await using var dataFeed = LargeDataFeed.Constant<User>();
+
+var scenario = Scenario.Create("scenario", async context =>
+{
+    var item = await dataFeed.GetNextItem(context.ScenarioInfo);
+
+    return Response.Ok();
+})
+.WithInit(context =>
+{
+    using var stream = LargeData.OpenCsvStream<User>("users-feed-data.csv");
+    dataFeed.LoadData(context.Logger, stream);
+    return Task.CompletedTask;
+})
+.WithoutWarmUp()
+.WithLoadSimulations(Simulation.KeepConstant(copies: 1, during: TimeSpan.FromSeconds(30)));
+```
+
+### Streaming large JSON files
+
+Use `LargeData.OpenJsonStream()` to stream JSON array data:
+
+```csharp
+public class User
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+}
+
+await using var dataFeed = LargeDataFeed.Constant<User>();
+
+var scenario = Scenario.Create("scenario", async context =>
+{
+    var item = await dataFeed.GetNextItem(context.ScenarioInfo);
+
+    return Response.Ok();
+})
+.WithInit(context =>
+{
+    using var stream = LargeData.OpenJsonStream<User>("users-feed-data.json");
+    dataFeed.LoadData(context.Logger, stream);
+    return Task.CompletedTask;
+})
+.WithoutWarmUp()
+.WithLoadSimulations(Simulation.KeepConstant(copies: 1, during: TimeSpan.FromSeconds(30)));
+```
+
+:::info
+The JSON file must contain an array of objects at the root level for `OpenJsonStream` to work properly.
+:::
+
+### Random LargeDataFeed
+
+LargeDataFeed with random values from a large dataset:
+
+```csharp
+await using var myDataFeed = LargeDataFeed.Random<User>(elementsInMemoryCount: 2000);
+
+var scenario = Scenario.Create("scenario", async ctx =>
+{
+    // Each call returns a random user from the dataset
+    var user = await myDataFeed.GetNextItem(ctx.ScenarioInfo);
+
+    return Response.Ok();
+})
+.WithInit(context =>
+{
+    using var csvStream = LargeData.OpenCsvStream<User>("10gb-users.csv");
+    myDataFeed.LoadData(context.Logger, csvStream);
+    return Task.CompletedTask;
+});
+```
+
+### Circular LargeDataFeed
+
+LargeDataFeed with circular/sequential values that loops through the entire dataset:
+
+```csharp
+await using var myDataFeed = LargeDataFeed.Circular<User>(elementsInMemoryCount: 2000);
+
+var scenario = Scenario.Create("scenario", async ctx =>
+{
+    // Each call returns the next user in sequence
+    // When reaching the end, it loops back to the beginning
+    var user = await myDataFeed.GetNextItem(ctx.ScenarioInfo);
+
+    return Response.Ok();
+})
+.WithInit(context =>
+{
+    using var csvStream = LargeData.OpenCsvStream<User>("10gb-users.csv");
+    myDataFeed.LoadData(context.Logger, csvStream);
+    return Task.CompletedTask;
+});
+```
+
+### Constant LargeDataFeed
+
+LargeDataFeed with constant values per ScenarioCopy instance from a large dataset:
+
+```csharp
+await using var myDataFeed = LargeDataFeed.Constant<User>(elementsInMemoryCount: 2000);
+
+var scenario = Scenario.Create("scenario", async ctx =>
+{
+    // Each ScenarioCopy instance gets its own unique user
+    // that remains constant for that instance
+    var user = await myDataFeed.GetNextItem(ctx.ScenarioInfo);
+
+    return Response.Ok();
+})
+.WithInit(context =>
+{
+    using var csvStream = LargeData.OpenCsvStream<User>("10gb-users.csv");
+    myDataFeed.LoadData(context.Logger, csvStream);
+    return Task.CompletedTask;
+})
+.WithLoadSimulations(
+    Simulation.KeepConstant(copies: 100, during: TimeSpan.FromSeconds(60))
+);
+```
+
+### Performance tuning
+
+The `elementsInMemoryCount` parameter is crucial for balancing memory usage and performance:
+
+- **Lower values (100-1000)**: Use less memory but may cause warnings if data is accessed faster than it can be loaded from disk
+- **Higher values (5000-10000)**: Use more memory but provide better performance under high concurrency
+
+If you see warnings like "You should use bigger elementsInMemoryCount", increase the value to improve performance.
+
+### Memory usage
+
+LargeDataFeed keeps memory usage low by:
+- Storing data in an embedded SQLite database
+- Loading only `elementsInMemoryCount` items into memory at a time
+- Using batch preloading in the background to maintain performance
+
+This allows you to work with datasets that are many gigabytes in size while using only tens of megabytes of RAM.
 
 ## Generate random bytes
 
