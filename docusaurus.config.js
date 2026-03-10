@@ -10,7 +10,11 @@ const config = {
   url: 'https://nbomber.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'throw',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'throw',
+    },
+  },
   favicon: 'img/nbomber-logo.ico',
 
   // GitHub pages deployment config.
