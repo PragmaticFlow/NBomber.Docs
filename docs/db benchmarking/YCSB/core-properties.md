@@ -1,7 +1,8 @@
 ---
 id: core-properties
 title: Core Properties
-sidebar_position: 1
+sidebar_position: 3
+draft: true
 ---
 
 ## Core YCSB properties

@@ -2,6 +2,7 @@
 id: mongodb
 title: Mongo DB
 sidebar_position: 1
+draft: true
 ---
 
 ## Quick Start

@@ -2,6 +2,7 @@
 id: postgres
 title: Postgres
 sidebar_position: 2
+draft: true
 ---
 
 ## Quick Start
