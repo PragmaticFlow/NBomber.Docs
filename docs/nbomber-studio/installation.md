@@ -10,7 +10,7 @@ import OneActiveSessionImage from './img/one-active-session.png';
 On this page, you will learn how to install NBomber Studio in [Docker](#docker) and [Kubernetes](#kubernetes).
 
 :::info
-NBomber Studio is provided as a [Docker image](https://hub.docker.com/r/nbomberdocker/nbomber-studio) and requires a Postgres database (with the TimescaleDB extension) for storing metrics. TimescaleDB is a Postgres extension for time series data. In our examples, we will use the [`timescaledb`](https://hub.docker.com/r/timescale/timescaledb) Docker image, which contains Postgres with TimescaleDB already installed. During the first run, TimescaleDB will run an auto-tune process to optimize Postgres for time-series workloads.
+NBomber Studio is provided as a [Docker image](https://hub.docker.com/r/nbomberdocker/nbomber-studio) and requires a Postgres database (with the TimescaleDB extension) for storing metrics. [TimescaleDB](https://www.tigerdata.com/) is a Postgres extension for time series data. In our examples, we will use the [`timescaledb`](https://hub.docker.com/r/timescale/timescaledb) Docker image, which contains Postgres with TimescaleDB already installed. During the first run, TimescaleDB will run an auto-tune process to optimize Postgres for time-series workloads.
 :::
 
 ## Docker

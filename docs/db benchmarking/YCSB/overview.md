@@ -8,7 +8,7 @@ draft: true
 
 import YcsbImage from './img/nbomber_ycsb.jpg';
 
-<center><img src={YcsbImage} width="80%" height="80%" /></center>
+<center><img src={YcsbImage} width="90%" height="90%" /></center>
 
 The **Yahoo! Cloud Serving Benchmark (YCSB)** is an open-source database benchmarking suite and a critical analytical component of cloud-based database management system (DBMS) evaluation. It allows users to comparatively measure how various modern SQL and NoSQL DBMS perform simple database operations on generated datasets.
 

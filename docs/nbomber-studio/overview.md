@@ -5,7 +5,7 @@ sidebar_position: 1
 hide_title: true
 ---
 
-import NBomberStudioImage from './img/nbomber-studio-logo.png'; 
+import NBomberStudioImage from './img/nbomber-studio.jpg'; 
 import HistoryImage from './img/history.png'; 
 import EmptyActiveSessionsImage from './img/empty-active-sessions.png'; 
 import OneActiveSessionImage from './img/one-active-session.png'; 
@@ -15,7 +15,7 @@ import OpenedSessionImage from './img/opened-session.png';
 
 > 
 
-<center><img src={HistoryImage} width="100%" height="100%" /></center>
+<!-- <center><img src={HistoryImage} width="100%" height="100%" /></center> -->
 
 ## Overview
 

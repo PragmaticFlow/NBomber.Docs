@@ -5,9 +5,9 @@ sidebar_position: 0
 hide_title: true
 ---
 
-import NBomberLogoImage from './img/nbomber_logo.png'; 
+import NBomberLogoImage from './img/nbomber_logo_2026.jpg'; 
 
-<center><img src={NBomberLogoImage} width="70%" height="70%" /></center>
+<center><img src={NBomberLogoImage} width="90%" height="90%" /></center>
 
 [![NuGet](https://img.shields.io/nuget/v/nbomber.svg)](https://www.nuget.org/packages/nbomber/)
 [![Nuget](https://img.shields.io/nuget/dt/nbomber.svg)](https://www.nuget.org/packages/nbomber/)
