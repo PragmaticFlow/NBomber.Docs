@@ -4,10 +4,11 @@ title: Installation
 sidebar_position: 2
 ---
 
+import StaticAuthImage from './config/img/static_auth.jpg'; 
 import EmptyActiveSessionsImage from './img/empty-active-sessions.png'; 
 import OneActiveSessionImage from './img/one-active-session.png'; 
 
-On this page, you will learn how to install NBomber Studio in [Docker](#docker) and [Kubernetes](#kubernetes).
+Users looking to use NBomber Studio for the first time have two options available to them. One way is to use a hosted Studio in [Docker](#docker), which is the simplest way to get started. Alternatively, users can install Studio in their own [Kubernetes](#kubernetes) cluster. It is worth mentioning that the Load Testing in Kubernetes feature, which allows you to manage and deploy NBomber tests in Kubernetes, is not available when running in Docker.
 
 :::info
 NBomber Studio is provided as a [Docker image](https://hub.docker.com/r/nbomberdocker/nbomber-studio) and requires a Postgres database (with the TimescaleDB extension) for storing metrics. [TimescaleDB](https://www.tigerdata.com/) is a Postgres extension for time series data. In our examples, we will use the [`timescaledb`](https://hub.docker.com/r/timescale/timescaledb) Docker image, which contains Postgres with TimescaleDB already installed. During the first run, TimescaleDB will run an auto-tune process to optimize Postgres for time-series workloads.
@@ -19,42 +20,38 @@ The simplest option for installing NBomber Studio is using Docker Compose. Below
 
 ```yaml title="docker-compose.yaml"
 services:
+  timescaledb:
+    image: timescale/timescaledb:2.25.0-pg18-oss
+    command: postgres -c 'max_connections=500'
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - nb_studio_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: nb_studio_db
+      POSTGRES_USER: timescaledb
+      POSTGRES_PASSWORD: timescaledb
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d 'user=timescaledb dbname=nb_studio_db'"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
 
-    timescaledb:
-        image: timescale/timescaledb:2.25.0-pg18-oss
-        command: postgres -c 'max_connections=500'
-        restart: always
-        ports:
-        - "5432:5432"
-        volumes:
-        - nb_studio_data:/var/lib/postgresql/data
-        environment:
-        POSTGRES_DB: nb_studio_db
-        POSTGRES_USER: timescaledb
-        POSTGRES_PASSWORD: timescaledb
-        healthcheck:
-        test: [ "CMD-SHELL", "pg_isready -d 'user=timescaledb dbname=nb_studio_db'" ]
-        interval: 5s
-        timeout: 10s
-        retries: 5
-        start_period: 5s
-
-    nbomber-studio:
-        // highlight-start
-        image: nbomberdocker/nbomber-studio:latest
-        // highlight-end
-        ports:
-        - "5333:8080"
-        depends_on:
-            timescaledb:
-                condition: service_healthy
-        environment:
-            POSTGRESQL__CONNECTIONSTRING: "Host=timescaledb;Port=5432;Username=timescaledb;Password=timescaledb;Database=nb_studio_db;Pooling=true;"
+  nbomber-studio:
+    image: nbomberdocker/nbomber-studio:latest
+    ports:
+      - "5333:8080"
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+    environment:
+      POSTGRESQL__CONNECTIONSTRING: "Host=timescaledb;Port=5432;Username=timescaledb;Password=timescaledb;Database=nb_studio_db;Pooling=true;"
 
 volumes:
-    nb_studio_data:
-        driver: local
-
+  nb_studio_data:
+    driver: local
 ```
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/NBomber_Studio).*
@@ -65,6 +62,29 @@ To proceed with the installation, start NBomber Studio and its dependencies by r
 ```bash
 docker compose up -d
 ```
+
+Once the dependencies are up and running, open a web browser and navigate to NBomber Studio. It is hosted locally in Docker and accessible at the following address:
+
+```
+http://localhost:5333
+```
+
+You should see the login form. 
+
+<center><img src={StaticAuthImage} width="60%" height="60%" /></center>
+
+:::info
+By default, NBomber Studio installs with [**StaticUserAuth**](./config/auth#static-user-auth) enabled, and therefore you need to enter the default admin credentials.
+
+```
+email: admin@admin
+password: admin
+```
+:::
+
+After entering the credentials, you should be redirected to the Sessions page. You will see a dashboard displaying active sessions, which will initially be empty.
+
+<center><img src={EmptyActiveSessionsImage} width="100%" height="100%" /></center>
 
 ## Kubernetes
 

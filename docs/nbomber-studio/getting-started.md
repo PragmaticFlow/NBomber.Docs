@@ -9,40 +9,15 @@ import EmptyActiveSessionsImage from './img/empty-active-sessions.png';
 import OneActiveSessionImage from './img/one-active-session.png'; 
 import OpenedSessionImage from './img/opened-session.png'; 
 
-On this page, we will learn how to start using NBomber Studio. We assume that Studio is already installed. If not, we recommend starting with the simplest installation using Docker.
-
-### Start NBomber Studio in Docker
-We need to start NBomber Studio and its dependencies by running the following command inside the folder with [docker-compose.yaml](./installation#docker) file:
-
-```bash
-docker compose up -d
-```
-
-After that, the dependencies should be up and running. Now, let's open a web browser and navigate to NBomber Studio, which is hosted locally (in Docker) and accessible at the following address:
-
-```
-http://localhost:5333
-```
-
-You should see this login form. 
-
-<center><img src={StaticAuthImage} width="60%" height="60%" /></center>
+This page covers how to get started with NBomber Studio.
 
 :::info
-By default, NBomber Studio installs with [**StaticUserAuth**](./config/auth#static-user-auth) enabled, and therefore you need to enter the default admin credentials.
-
-```
-email: admin@admin
-password: admin
-```
+We assume that NBomber Studio is already installed and working. 
+If not, we recommend starting with the [simplest installation using Docker](./installation#docker).
 :::
 
-After entering the credentials, you should be redirected to the Sessions page. You will see a dashboard displaying active sessions, which will initially be empty.
-
-<center><img src={EmptyActiveSessionsImage} width="100%" height="100%" /></center>
-
-### Run load test 
-The next step is to run an NBomber load test, which will send metrics to TimescaleDB, allowing us to monitor them in NBomber Studio. To do this, let’s set up a basic test that writes data into TimescaleDB.
+## Run load test 
+Let's try to run NBomber load test, which will send metrics to TimescaleDB, allowing us to see them in NBomber Studio. For this, let’s set up a basic test that writes data into TimescaleDB.
 
 :::info
 To write metrics into TimescaleDB, we’ll use the [NBomber Sink for Timescale](../reporting/realtime/timescale).
@@ -72,7 +47,7 @@ NBomberRunner
     .Run();
 ```
 
-*You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/NBomber_Studio).*
+*You can find the complete example at this [link](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/Demo/NBomber_Studio).*
 
 After starting the scenario, you should see one active session appear. NBomber Studio automatically detects real-time data updates and refreshes the screen accordingly.
 
