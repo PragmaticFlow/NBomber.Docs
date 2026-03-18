@@ -7,7 +7,7 @@ hide_title: true
 
 import NBomberLogoImage from './img/nbomber_logo_2026.jpg'; 
 
-<center><img src={NBomberLogoImage} width="90%" height="90%" /></center>
+<center><img src={NBomberLogoImage} width="80%" height="80%" /></center>
 
 [![NuGet](https://img.shields.io/nuget/v/nbomber.svg)](https://www.nuget.org/packages/nbomber/)
 [![Nuget](https://img.shields.io/nuget/dt/nbomber.svg)](https://www.nuget.org/packages/nbomber/)
