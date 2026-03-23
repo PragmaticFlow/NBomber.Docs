@@ -1,6 +1,6 @@
 ---
 title: NBomber Studio 0.6.2
-tags: [nbomber-release, load-testing]
+tags: [nbomber-studio-release, load-testing]
 ---
 
 import ReactPlayer from 'react-player'
