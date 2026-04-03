@@ -9,7 +9,7 @@ import StepsStatsImage from './img/steps_stats.jpg';
 
 <center><img src={StepAndScenarioImage} width="70%" height="70%" /></center>
 
-Step represents a single user action like login, logout, etc. Step helps you granulate your [Scenario](scenario) execution on parts and measure them separately. In case you don't need to split your Scenario on parts you can use just Scenario without any Step.
+Step represents a single user action like login, logout, etc. Step helps you granulate your [Scenario](./) execution on parts and measure them separately. In case you don't need to split your Scenario on parts you can use just Scenario without any Step.
 
 ## Step Run
 
@@ -61,7 +61,7 @@ At the end of execution, NBomber will printout the scenario's statistics result:
 
 ## Using ScenarioContext inside Step
 
-[ScenarioContext](scenario#scenario-context) is very useful abstraction that can be used inside `Step`.
+[ScenarioContext](scenario-context) is very useful abstraction that can be used inside `Step`.
 
 ```csharp
 var scenario = Scenario.Create("scenario", async context =>

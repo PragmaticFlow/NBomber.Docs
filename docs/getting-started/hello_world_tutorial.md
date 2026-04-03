@@ -209,7 +209,7 @@ Finally, you reach this point! Here you can find additional information which he
 - [System Requirements](system-requirements)
 - [Load Testing Microservices](../best-practices/microservices)
 - [Scenario](../nbomber/scenario)
-- [Step](../nbomber/step)
+- [Step](../nbomber/scenario/step)
 - [Load Simulation](../nbomber/load-simulation)
 - [Reports](../reporting/reports)
 - [NBomber Studio](../nbomber-studio/overview)

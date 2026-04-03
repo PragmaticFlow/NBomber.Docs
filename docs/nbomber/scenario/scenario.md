@@ -270,7 +270,7 @@ var scenario = Scenario.Create("scenario", async context =>
 .WithMaxFailCount(10);
 ```
 
-You can also use [JSON configuration](json-config) to override this setting.
+You can also use [JSON configuration](../json-config) to override this setting.
 
 ```json
 {
