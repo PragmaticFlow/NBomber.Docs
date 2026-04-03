@@ -26,11 +26,6 @@ To write metrics into TimescaleDB, we’ll use the [NBomber Sink for Timescale](
 The following is an example of a load test that writes data into TimescaleDB.
 
 ```csharp
-var config = new TimescaleDbSinkConfig(connectionString: "YOUR CONNECTION STRING");
-// highlight-start
-var timescaleDb = new TimescaleDbSink(config);
-// highlight-end
-
 var scenario = Scenario.Create("user_flow_scenario", async context =>
 {    
     ...    
@@ -42,7 +37,9 @@ var scenario = Scenario.Create("user_flow_scenario", async context =>
 NBomberRunner
     .RegisterScenarios(scenario)    
     // highlight-start
-    .WithReportingSinks(timescaleDb)    
+    .WithReportingSinks(
+        new TimescaleDbSink(new TimescaleDbSinkConfig(connectionString: "YOUR CONNECTION STRING"))
+    )    
     // highlight-end
     .Run();
 ```

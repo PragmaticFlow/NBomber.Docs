@@ -10,7 +10,12 @@ import ReportingSinksImage from './img/reporting-sinks.jpeg';
 
 ReportingSink is a pluggable functionality that NBomber uses to save real-time metrics and final statistics. With this functionality, you can add any storage support that you would like to use with NBomber. The available sinks:
 
-- [NBomber.Sinks.InfluxDB](../reporting/realtime/influx-db) - reporting sink that writes real-time metrics and final statistics to InfluxDB.
+- [Datadog](../reporting/realtime/datadog) - reporting sink for Datadog.
+- [Dynatrace](../reporting/realtime/dynatrace) - reporting sink for Dynatrace.
+- [New Relic](../reporting/realtime/newrelic) - reporting sink for New Relic.
+- [OpenTelemetry](../reporting/realtime/opentelemetry) - reporting sink for OpenTelemetry.
+- [TimescaleDB](../reporting/realtime/timescale) - reporting sink for TimescaleDB. You can use it with [NBomber Studio](../nbomber-studio/overview).
+- [InfluxDB](../reporting/realtime/influx-db) - reporting sink that writes real-time metrics and final statistics to InfluxDB. You can use it with [Grafana](../reporting/realtime/grafana).
 
 ## Implementing custom Reporting Sink
 

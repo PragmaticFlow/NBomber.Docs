@@ -1,7 +1,7 @@
 ---
 id: scenario
 title: Scenario
-sidebar_position: 0
+sidebar_position: 1
 ---
 
 import ScenarioImage from './img/scenario.jpg'; 
@@ -142,79 +142,6 @@ var scenario = Scenario.Create("scenario_with_clean", async context =>
 ```
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/ScenarioWithInit.cs).*
 
-## Scenario Context
-
-ScenarioContext represents the execution context of the currently running Scenario. It provides functionality to log particular events, get information about the test, thread id, scenario copy/instance number, etc. Also, it provides the option to stop all or particular scenarios manually. 
-
-```csharp
-public interface IScenarioContext
-{
-    TestInfo TestInfo { get; }
-    ScenarioInfo ScenarioInfo { get; }
-    
-    // Returns information about the current node, node role, etc.
-    // For example, you can use it to get node roles: Coordinator, Agent, or SingleNode.
-    NodeInfo NodeInfo { get; }
-
-    ILogger Logger { get; }
-    
-    // Represent the current Scenario instance invocation number. It starts from 1.
-    Int64 InvocationNumber { get; }
-    
-    // A dictionary that stores Scenario instance data and cleans it after Scenario iteration.
-    // It can be used to share some data between steps.
-    Dictionary<string,obj> Data { get; }
-
-    // A dictionary that stores Scenario instance data and keep it for the whole scenario duration.
-    // It can be used to model Virtual User data that bound to Scenario instance. 
-    Dictionary<string,obj> ScenarioInstanceData { get; }
-
-    // Indicates that scenario execution is finished or canceled.
-    // You can listen to changes via ScenarioCancellationToken.IsCancellationRequested.
-    CancellationToken ScenarioCancellationToken { get; }
-    
-    // Represent the basic .NET Random that should be used to introduce dynamic behavior.
-    Random Random { get; }
-
-    // Stops the specified scenario. In the cluster mode, NBomber will stop the specified scenario on all nodes.
-    void StopScenario(string scenarioName, string reason);
-    
-    // Stops all scenarios. In the cluster mode, NBomber will stop all scenarios on all nodes.
-    void StopCurrentTest(string reason);
-
-    // Returns the current execution time of the Scenario timer.
-    TimeSpan GetScenarioTimerTime();
-}
-```
-
-Example:
-
-```csharp
-var scenario = Scenario.Create("hello_world_scenario", async context =>
-{
-    // we can log data
-    context.Logger.Information("the current session id {0}", context.TestInfo.SessionId);
-
-    if (context.InvocationNumber > 10)
-    {
-        context.Logger.Debug("the current Scenario copy was invoked more than 10 times");        
-    }
-
-    if (context.NodeInfo.CurrentOperation == OperationType.Bombing)
-    {
-        context.Logger.Debug("Bombing!!!");
-    }
-    else if (context.NodeInfo.CurrentOperation == OperationType.WarmUp)
-    {
-        context.Logger.Debug("Warm Up!!!");              
-    }
-
-    return Response.Ok();
-});
-```
-
-*Another popular usage of ScenarioContext is related to share data between steps that you can find by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HelloWorld/StepsShareData.cs).*
-
 ## Scenario WarmUp
 
 This method sets duration of warm-up phase. By default warm-up duration is 30 seconds.
@@ -253,7 +180,7 @@ var scenario = Scenario.Create("scenario", async context =>
 
 ## Scenario LoadSimulations
 
-This method allows configuring the load simulations for the current Scenario. Load simulation allows configuring parallelism and workload profiles. *To get more info please follow this [link](load-simulation).* 
+This method allows configuring the load simulations for the current Scenario. Load simulation allows configuring parallelism and workload profiles. *To get more info please follow this [link](../load-simulation).* 
 
 Default value is: `Simulation.KeepConstant(copies: 1, during: TimeSpan.FromMinutes(1))`
 
@@ -394,8 +321,8 @@ var initDbScn =
 
 ## Scenario Timeouts
 
-[Scenario Timeouts](timeouts)
+[Scenario Timeouts](../timeouts)
 
 ## Scenario Thresholds
 
-[Scenario Thresholds](./asserts_and_thresholds.md#runtime-thresholds)
+[Scenario Thresholds](../asserts_and_thresholds.md#runtime-thresholds)

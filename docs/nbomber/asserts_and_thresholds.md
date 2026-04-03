@@ -1,7 +1,7 @@
 ---
 id: asserts_and_thresholds
 title: Asserts and Thresholds
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 import ThresholdsImage from './img/thresholds.jpg';

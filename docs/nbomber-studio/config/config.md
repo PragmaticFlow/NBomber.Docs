@@ -17,11 +17,29 @@ NBomber provides a way to configure NBomber Studio through a JSON configuration 
 
 ```json
 {
-  "PostgreSql": { ... },
+  "PostgreSql": {
+    "ConnectionString": "Host=localhost;Port=5432;Username=timescaledb;Password=timescaledb;Database=nb_studio_db;Pooling=true;Maximum Pool Size=300;"
+  },
 
-  "Logger": { ... },
+  "Logger": {
+    "MinimumLogLevel": "Information"
+  },
 
-  "Auth": { ... }
+  "Auth": {
+    "Enabled": true,
+
+    "JwtSecret": "{YOUR_SECRET}",    
+
+    "StaticUserAuth": {
+      "Users": [
+        {
+          "Email": "admin@admin",
+          "Hash": "$2y$10$heuMG7aElXF5IiS4rCN49.T.smRQfhlCmVuoAh/SPpjQ6YA6qzZO6", // password is 'admin'
+          "UserName": "admin"
+        }
+      ]
+    }
+  }  
 }
 ```
 

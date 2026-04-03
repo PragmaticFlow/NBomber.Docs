@@ -30,11 +30,12 @@ NBomber as a modern framework provides:
 - Zero dependencies on protocol (HTTP/WebSockets/AMQP/SQL)
 - Zero dependencies on semantic model (Pull/Push)
 - Very flexible configuration and dead simple API
+- [NBomber Studio](../nbomber-studio/overview)
 - [Distributed cluster support](../cluster/overview)
 - [Real-time reporting](../reporting/realtime/grafana)
-- CI/CD integration (xUnit and NUnit runners are supported)
-- Plugins/extensions support - add your own plugins or data sinks
+- [Protocols support](../protocols/http/http-client) - add your own plugins or data sinks
 - [Data feed support](../nbomber/data) - inject real or fake data into your tests
+- CI/CD integration (xUnit and NUnit runners are supported)
 - **Debuggability of your load test** - debug your tests using your favorite IDE
 
 ### What makes it very simple?
