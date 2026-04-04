@@ -4,6 +4,10 @@ title: NBomber Runner
 sidebar_position: 2
 ---
 
+import NbRunnerImage from './img/nbomber-runner.jpg';
+
+<center><img src={NbRunnerImage} width="90%" height="90%" /></center>
+
 NBomberRunner is the main entry point for configuring and executing NBomber load tests. It provides a fluent API to register scenarios, configure test settings, and run the load test.
 
 ## Register Scenarios

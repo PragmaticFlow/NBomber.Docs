@@ -4,7 +4,7 @@ title: Scenario Context
 sidebar_position: 3
 ---
 
-ScenarioContext Represents the execution context of the currently running scenario in NBomber. It provides utilities to access test metadata, scenario-specific data, logging and controlling test execution: for example, stopping scenarios dynamically. 
+ScenarioContext represents the execution context of the currently running scenario in NBomber. It provides utilities to access test metadata, scenario-specific data, logging and controlling test execution: for example, stopping scenarios dynamically. 
 
 ```csharp
 public interface IScenarioContext
