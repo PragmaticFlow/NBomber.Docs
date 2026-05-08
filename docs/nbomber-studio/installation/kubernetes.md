@@ -2,7 +2,6 @@
 id: kubernetes
 title: Kubernetes
 sidebar_position: 2
-draft: true
 ---
 
 import StaticAuthImage from './../config/img/static_auth.jpg'; 

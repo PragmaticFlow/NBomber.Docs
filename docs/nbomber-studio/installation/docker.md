@@ -2,7 +2,6 @@
 id: docker
 title: Docker
 sidebar_position: 1
-draft: true
 ---
 
 import StaticAuthImage from './../config/img/static_auth.jpg'; 
