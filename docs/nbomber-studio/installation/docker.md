@@ -98,7 +98,7 @@ You should see the login form.
 <center><img src={StaticAuthImage} width="60%" height="60%" /></center>
 
 :::info
-By default, NBomber Studio installs with [**Static User Auth**](./config/auth#static-user-auth) enabled, so you need to enter the default admin credentials.
+By default, NBomber Studio installs with [**Static User Auth**](../config/auth#static-user-auth) enabled, so you need to enter the default admin credentials.
 
 ```
 email: admin@admin
@@ -133,7 +133,7 @@ After entering the credentials, you should be redirected to the Sessions page. Y
 Let's run an NBomber load test that sends metrics to TimescaleDB so we can see them in NBomber Studio. We'll set up a basic "hello world" test that writes metrics into TimescaleDB.
 
 :::info
-To write metrics into TimescaleDB, we’ll use the [NBomber Sink for Timescale](../reporting/realtime/timescale).
+To write metrics into TimescaleDB, we’ll use the [NBomber Sink for Timescale](../../reporting/realtime/timescale).
 :::
 
 The following is an example of a load test that writes data into TimescaleDB.

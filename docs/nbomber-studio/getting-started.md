@@ -13,7 +13,7 @@ This page covers how to get started with NBomber Studio.
 
 :::info
 We assume that NBomber Studio is already installed and working. 
-If not, we recommend starting with the [simplest installation using Docker](./installation#docker).
+If not, we recommend starting with the [simplest installation using Docker](./installation/docker).
 :::
 
 ## Run load test 

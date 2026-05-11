@@ -150,7 +150,7 @@ Then open [http://localhost:8080](http://localhost:8080) in your browser. You sh
 <center><img src={StaticAuthImage} width="60%" height="60%" /></center>
 
 :::info
-By default, NBomber Studio installs with [**Static User Auth**](./config/auth#static-user-auth) enabled, so you need to enter the default admin credentials:
+By default, NBomber Studio installs with [**Static User Auth**](../config/auth#static-user-auth) enabled, so you need to enter the default admin credentials:
 
 ```
 email: admin@admin
