@@ -18,7 +18,7 @@ NBomber Studio is a management tool for monitoring and controlling NBomber load 
 
 - **Real-time data visibility** — monitor ongoing load tests and analyze historical test runs. Think of it as a native alternative to Grafana, purpose-built for NBomber load tests.
 
-- **Managing, deploying, and running load tests in Kubernetes** — schedule and execute load tests in K8s directly from Studio.
+- [**Managing, deploying, and running load tests in Kubernetes**](./loadtests-in-k8s/overview) — schedule and execute load tests in K8s directly from Studio.
 
 :::info
 You can use NBomber Studio together with your favorite observability platform (such as Datadog, Dynatrace, Grafana, etc.). NBomber supports streaming real-time metrics to multiple destinations in parallel.
