@@ -6,13 +6,12 @@ sidebar_position: 3
 
 import ReactPlayer from 'react-player'
 import LoadTestStartedImage from './../img/load-test-started.jpg'
+import DockerBuildImage from './../../deployment/img/docker.jpg'
 
 The Docker project type is best suited for production use cases. Studio deploys a Docker image that contains your NBomber load test, and you can pass CLI arguments or a JSON configuration to dynamically change the load test settings at runtime.
 
-:::info
-Prerequisites:
-- You must have a Docker image with your NBomber load test published to a container registry that is accessible from your Kubernetes cluster.
-- Your NBomber test must accept CLI arguments and must register the `TimescaleDbSink`.
+:::info Prerequisites
+Your NBomber test must accept CLI arguments and must register the `TimescaleDbSink`.
 
 ```csharp
 NBomberRunner
@@ -28,6 +27,8 @@ NBomberRunner
 :::info
 *You can skip this part if you already have a published Docker image with your NBomber test that can be deployed into your Kubernetes cluster.*
 :::
+
+<center><img src={DockerBuildImage} width="100%" /></center>
 
 Let's start with a minimal load test that we want to build and run in Kubernetes via NBomber Studio. For this, we created a simple C# console application called NBomberStudioK8sDemo, which contains an NBomber HTTP scenario that performs basic endpoint testing.
 
@@ -71,7 +72,7 @@ docker push {user_name}/nb-studio-k8sdemo:latest
 :::info
 *We assume that you have already created your NBomber load test, built the Docker image, and published it to your company's container registry.*
 
-In the following example, we will use the Docker image nbomberdocker/nb-studio-k8sdemo, which we built specifically for this demo.
+In the following example, we will use the Docker image [**nbomberdocker/nb-studio-k8sdemo**](https://hub.docker.com/r/nbomberdocker/nb-studio-k8sdemo), which we built specifically for this demo. The source code is located [here](https://github.com/PragmaticFlow/NBomber/tree/dev/examples/NBomberStudioK8sDemo).
 :::
 
 Open the **Load Tests** menu and choose the **Docker** project type. Next, fill in the required fields for your load test: **Test Name** and **Test Suite**. You can also choose how many Agents (**Agents Count**) should run your load test.
