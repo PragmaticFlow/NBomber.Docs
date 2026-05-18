@@ -1,19 +1,18 @@
 ---
 title: NBomber Studio 0.7.1
 tags: [nbomber-studio-release, load-testing]
-draft: true
 ---
 
 import ReactPlayer from 'react-player'
-import NBStudioImage from './img/nb-studio-v0.6.2/nbomber-studio.jpg'
+import NbK8sImage from './img/nb-studio-0.7.1/nb-studio-load-test-in-k8s.jpg'
 
-The new **0.7.1 release** introduces one small but powerful feature: **Load Tests in Kubernetes**.
+The new **0.7.1 release** introduces a powerful feature: **Load Tests in Kubernetes**.
 
-Load Tests in Kubernetes give you a control plane for managing, deploying, and running load tests. With this feature, you can schedule and execute load tests in Kubernetes directly from NBomber Studio. It's a game changer that brings a SaaS-like experience while letting you run your tests inside your own private K8s cluster.
-
-<center><img src={NBStudioImage} width="75%" /></center>
+[Load Tests in Kubernetes](https://nbomber.com/docs/nbomber-studio/loadtests-in-k8s/overview) give you a control plane for managing, deploying, and running load tests. With this feature, you can schedule and execute load tests in Kubernetes directly from NBomber Studio. It's a game changer that brings a SaaS-like experience while letting you run your tests inside your own private K8s cluster.
 
 <!--truncate-->
+
+<center><img src={NbK8sImage} width="80%" /></center>
 
 ## Load Tests in Kubernetes
 Starting with this release, NBomber Studio lets you deploy and run tests in K8s. When you start a test, Studio spins up everything it needs — the Pods that run your load test, along with a NATS message broker for cluster mode. It also propagates your license key, the connection string for TimescaleDB, your JSON configuration, the container spec, and any CLI arguments you want to pass into your test. Once the test finishes, Studio cleans up the environment by destroying every resource it created during the session.
@@ -27,7 +26,7 @@ Let's take a look at the new capabilities. To create and run your test, we've ad
 
 <div className="video-container">
   <ReactPlayer
-    src='https://youtu.be/tsFZSrL8GI8'
+    src='https://youtu.be/ZAHIvXZoqQM'
     controls
     loop
     style={{ width: '100%', height: 'auto', aspectRatio: '16/9' }}
@@ -38,7 +37,7 @@ Let's take a look at the new capabilities. To create and run your test, we've ad
 
 <div className="video-container">
   <ReactPlayer
-    src='https://youtu.be/tsFZSrL8GI8'
+    src='https://youtu.be/y7j1eHoAlIk'
     controls
     loop
     style={{ width: '100%', height: 'auto', aspectRatio: '16/9' }}
@@ -49,7 +48,6 @@ For more details, please check our [documentation](https://nbomber.com/docs/nbom
 
 ## What's next
 
-### Load Testing in Kubernetes
-- F# Script support is coming a bit later.
+- F# Script support.
 - We're going to release a calendar scheduler that lets you run load tests at a specific time or on a recurring schedule (daily, weekly, etc.).
-- More charts and design improvements are on the way.
+- Please follow our [Roadmap page](https://github.com/PragmaticFlow/NBomber.Studio/milestone/1) for the upcoming release.

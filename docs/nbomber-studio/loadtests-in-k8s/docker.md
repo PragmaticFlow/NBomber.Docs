@@ -23,6 +23,15 @@ NBomberRunner
 ```
 :::
 
+<div className="video-container">
+  <ReactPlayer
+    src='https://youtu.be/y7j1eHoAlIk'
+    controls
+    loop
+    style={{ width: '100%', height: 'auto', aspectRatio: '16/9' }}
+  />
+</div>
+
 ## Build Docker image
 :::info
 *You can skip this part if you already have a published Docker image with your NBomber test that can be deployed into your Kubernetes cluster.*
@@ -134,16 +143,3 @@ In our example, we don't have any specific CLI args to pass — but if you do, y
 Once everything is ready, click **Save** and then run your test. Studio creates a Job that deploys all required environment dependencies (such as the NATS message broker) and passes through configuration like the license key (if provided in Studio), the JSON config, the CLI arguments, and the infra config with the TimescaleDB connection string. Once the test finishes, the Job cleans up all resources automatically.
 
 <center><img src={LoadTestStartedImage} width="100%" /></center>
-
-### Jobs view
-
-NBomber Studio lets you open the associated Job to check its status. You can also open the load test session started by that Job.
-
-<div className="video-container">
-  <ReactPlayer
-    src='https://youtu.be/-de08SlmSyE'
-    controls
-    loop
-    style={{ width: '100%', height: 'auto', aspectRatio: '16/9' }}
-  />
-</div>

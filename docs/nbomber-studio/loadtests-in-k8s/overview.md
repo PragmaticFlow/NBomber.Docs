@@ -1,8 +1,13 @@
 ---
 id: overview
 title: Overview
+hide_title: true
 sidebar_position: 1
 ---
+
+import NbK8sImage from './../img/nb-studio-load-test-in-k8s.jpg'
+
+<center><img src={NbK8sImage} width="1000%" /></center>
 
 **Load Tests in Kubernetes** provides a control plane for managing, deploying, and running load tests. With this feature, you can schedule and execute load tests in Kubernetes directly from NBomber Studio. When you start a test, Studio spins up all the necessary dependencies — such as the NATS message broker and the Pods that run your load test. Once the test finishes, Studio cleans up the environment by destroying every resource it created during the session.
 
