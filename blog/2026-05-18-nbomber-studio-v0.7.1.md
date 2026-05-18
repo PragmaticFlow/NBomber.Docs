@@ -10,9 +10,9 @@ The new **0.7.1 release** introduces a powerful feature: **Load Tests in Kuberne
 
 [Load Tests in Kubernetes](https://nbomber.com/docs/nbomber-studio/loadtests-in-k8s/overview) give you a control plane for managing, deploying, and running load tests. With this feature, you can schedule and execute load tests in Kubernetes directly from NBomber Studio. It's a game changer that brings a SaaS-like experience while letting you run your tests inside your own private K8s cluster.
 
-<!--truncate-->
-
 <center><img src={NbK8sImage} width="80%" /></center>
+
+<!--truncate-->
 
 ## Load Tests in Kubernetes
 Starting with this release, NBomber Studio lets you deploy and run tests in K8s. When you start a test, Studio spins up everything it needs — the Pods that run your load test, along with a NATS message broker for cluster mode. It also propagates your license key, the connection string for TimescaleDB, your JSON configuration, the container spec, and any CLI arguments you want to pass into your test. Once the test finishes, Studio cleans up the environment by destroying every resource it created during the session.
