@@ -13,8 +13,8 @@ import NbK8sImage from './../img/nb-studio-load-test-in-k8s.jpg'
 
 NBomber Studio currently supports the following project types:
 
-- [**C# Script**](csharp-script) — best suited for simple load tests, demos, and dry runs where you want to test a few endpoints or a single microservice and get quick results. Its main benefit is that you can change the code on the fly without recompiling your scenario, which makes it ideal for trying out NBomber and iterating quickly.
+- **C# Script** — best suited for simple load tests, demos, and dry runs where you want to test a few endpoints or a single microservice and get quick results. Its main benefit is that you can change the code on the fly without recompiling your scenario, which makes it ideal for trying out NBomber and iterating quickly.
 
 - **F# Script** — *in development.*
 
-- [**Docker**](docker) — designed for production use cases. You provide a Docker image with your NBomber test, and Studio deploys it across as many Pods as you configure. You can also pass and dynamically edit the JSON configuration of your test scenarios.
+- **Docker** — designed for production use cases. You provide a Docker image with your NBomber test, and Studio deploys it across as many Pods as you configure. You can also pass and dynamically edit the JSON configuration of your test scenarios.
