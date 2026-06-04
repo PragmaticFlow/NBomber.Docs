@@ -36,4 +36,5 @@ If your system already has wrappers or SDKs, you don’t need to rewrite them in
 3. Run Load Tests as Unit Tests (CI/CD Friendly)
 
 4. Performance
-NBomber is lightweight.
+NBomber is lightweight. Benchmarks
+5. Simple and intuitive API for defining user workflows. NBomber provides a clean and minimal API for modeling load scenarios as user workflows. Instead of dealing with complex DSLs or UI-based test builders, you define behavior directly in code using straightforward constructs.
