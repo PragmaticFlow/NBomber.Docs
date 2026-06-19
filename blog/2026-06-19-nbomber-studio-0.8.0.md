@@ -1,5 +1,5 @@
 ---
-title: NBomber Studio 0.8
+title: NBomber Studio 0.8.0
 tags: [nbomber-studio-release, load-testing]
 ---
 
@@ -9,7 +9,7 @@ import NbAutoRefreshImage from './img/nb-studio-0.8/nb-studio-auto-refresh.jpg'
 import NbLoadTestTabsImage from './img/nb-studio-0.8/nb-studio-load-test-tabs.jpg'
 import NbLicenseInfoImage from './img/nb-studio-0.8/nb-studio-license-info.jpg'
 
-**NBomber Studio 0.8** is out! This release brings **Load Test Schedules** — a long-requested feature that lets you run a load test automatically at specific times, so you no longer need to kick it off manually. We've also extended the `Container Spec` file, which now supports more standard Kubernetes settings and gives you the flexibility to pass secrets and other arguments via environment variables.
+**NBomber Studio 0.8.0** is out! This release brings **Load Test Schedules** — a long-requested feature that lets you run a load test automatically at specific times, so you no longer need to kick it off manually. We've also extended the `Container Spec` file, which now supports more standard Kubernetes settings and gives you the flexibility to pass secrets and other arguments via environment variables.
 
 <center><img src={NbSchedulesImage} width="80%" /></center>
 
@@ -72,7 +72,7 @@ volumes:
 ```
 
 ## Auth Improvements
-We provided a bit of flexability for auth configuration. From this version you can enable or disable specific auth provider via `Enable: bool` property in `config.json`.
+We added more flexibility to auth configuration. Starting from this version, you can enable or disable a specific auth provider via the `Enabled: bool` property in `config.json`.
 
 ```json title="config.json"
 "Auth": {
@@ -109,12 +109,12 @@ We provided a bit of flexability for auth configuration. From this version you c
 ## UI/UX Improvements
 
 ### Auto refresh toggle
-This toggle is now available on all views, giving you full control over real-time updates.
+Auto refresh toogle is now available on all views, giving you full control over real-time updates.
 
 <center><img src={NbAutoRefreshImage} width="100%" /></center>
 
-### New Load Test tabs
-We added a few new tabs to the load test view: History, Trends, and Schedule. They provide focused navigation and features specific to the selected load test.
+### New LoadTest tabs
+We added a few new tabs to the LoadTest view: History, Trends, and Schedule. They provide focused navigation and features specific to the selected load test.
 
 <center><img src={NbLoadTestTabsImage} width="100%" /></center>
 
