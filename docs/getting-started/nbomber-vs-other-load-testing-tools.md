@@ -22,6 +22,7 @@ You can:
 In practice, this means no context switching, no custom debugging setups, and no guesswork — just a familiar and efficient development workflow.
 
 2. AI friendly and type safe
+3. Separated fails stats allows you to measure how errors flows works
 
 2. Reuse Your Domain Code and Clients
 One of the biggest advantages of NBomber is the ability to directly reference your domain and infrastructure libraries.
