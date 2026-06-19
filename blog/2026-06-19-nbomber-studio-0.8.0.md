@@ -126,4 +126,4 @@ We added a handy license info tooltip that shows your license details, such as c
 ## What's next
 
 - F# Script support
-- Follow our [Roadmap](https://github.com/PragmaticFlow/NBomber.Studio/milestone/1) to see what's coming in the next release.
+- Follow our [Roadmap](https://github.com/PragmaticFlow/NBomber.Studio/milestone/2) to see what's coming in the next release.
