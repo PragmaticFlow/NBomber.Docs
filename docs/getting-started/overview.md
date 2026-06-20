@@ -1,7 +1,7 @@
 ---
 id: overview
 title: Overview
-sidebar_position: 0
+sidebar_position: 1
 hide_title: true
 ---
 

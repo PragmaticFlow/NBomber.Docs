@@ -1,7 +1,7 @@
 ---
 id: nbomber-vs-other-load-testing-tools
 title: NBomber vs other load testing tools
-sidebar_position: 0
+sidebar_position: 2
 draft: true
 ---
 
