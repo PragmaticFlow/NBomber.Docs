@@ -18,7 +18,7 @@ Forming and running a cluster via JSON Config provides an additional level of fl
 
 For a simple setup, the JSON config contains an `AutoCluster` section. **With this config, the Coordinator is chosen automatically via leader election** — you don't assign roles manually. It's the recommended starting point since it fits the majority of load tests.
 
-This is a basic example for a cluster with two nodes (Coordinator + 1 Agent):
+This is a basic example for a cluster with two nodes (Coordinator + 1 Agent). In the follwoing example the Coordinator runs no scenarios and acts purely as an orchestrator (collecting metrics from all Agents and evaluating thresholds), while the Agents run the load. This is the recommended default, since an idle Coordinator won't distort your results. If you do want the Coordinator to run scenarios, see [Running scenarios on the Coordinator](#running-scenarios-on-the-coordinator) below.
 
 ```json title="autocluster-config.json"
 {
@@ -32,10 +32,6 @@ This is a basic example for a cluster with two nodes (Coordinator + 1 Agent):
         // highlight-end
             "ClusterId": "test_cluster",
             "NATSServerURL": "nats://localhost",
-
-            "Coordinator": {
-                "TargetScenarios": ["test_scenario"]
-            },
 
             "Agent": {
                 "TargetScenarios": ["test_scenario"],
@@ -51,7 +47,7 @@ The main settings are:
 
 - **ClusterId** - think of this as a virtual cluster id for cluster members. Cluster members use this `ClusterId` to discover each other. The main reason for the existence of `ClusterId` is to allow you to run multiple cluster runs in parallel and to prevent any members collision.
 - **NATSServerURL** - the URL of the NATS message broker. In our example, we use `localhost` since we host NATS on the local machine using `docker-compose`. You can find more info about NATS connection strings [here](https://docs.nats.io/using-nats/developer/connecting).
-- **TargetScenarios** - specifies target scenarios that will be executed in the cluster. You can specify different TargetScenarios for Coordinator and Agents.
+- **TargetScenarios** - specifies target scenarios that will be executed in the cluster. Here we set it only for the Agents; configuring target scenarios for the Coordinator is covered in [Running scenarios on the Coordinator](#running-scenarios-on-the-coordinator).
 - **AgentsCount** - the number of Agents that will join the cluster with the specified `ClusterId`. In this case, the cluster will consist of 1 Agent. We don't specify the number of Coordinators since there is always exactly 1. So the total cluster size is 2 members: 1 Coordinator + 1 Agent.
 
 You can also combine the cluster settings with `GlobalSettings` (for example, to define `ScenariosSettings` or a `ReportingInterval`):
@@ -66,10 +62,6 @@ You can also combine the cluster settings with `GlobalSettings` (for example, to
         "AutoCluster": {
             "ClusterId": "test_cluster",
             "NATSServerURL": "nats://localhost",
-
-            "Coordinator": {
-                "TargetScenarios": ["test_scenario"]
-            },
 
             "Agent": {
                 "TargetScenarios": ["test_scenario"],
@@ -153,10 +145,6 @@ The config looks similar to the basic config above, except it contains `"ManualC
         // highlight-end
             "ClusterId": "test_cluster",
             "NATSServerURL": "nats://localhost",
-
-            "Coordinator": {
-                "TargetScenarios": ["test_scenario"]
-            },
 
             "Agent": {
                 // highlight-start
@@ -246,6 +234,128 @@ NBomberRunner
     .WithAgentsCount(50)
     .Run(args);
 ```
+
+## Running scenarios on the Coordinator
+
+So far, none of the configs above included a `Coordinator` section — by default the Coordinator runs no scenarios and acts purely as an orchestrator (collecting metrics from all Agents and evaluating thresholds), while the Agents run the load. If you want the Coordinator to **also** run scenarios, add a `Coordinator` section with its `TargetScenarios`.
+
+For an `AutoCluster` config:
+
+```json title="autocluster-config.json"
+{
+    "TestSuite": "my test suite",
+    "TestName": "my test",
+
+    "ClusterSettings": {
+
+        "AutoCluster": {
+            "ClusterId": "test_cluster",
+            "NATSServerURL": "nats://localhost",
+
+            // highlight-start
+            "Coordinator": {
+                "TargetScenarios": ["test_scenario"]
+            },
+            // highlight-end
+
+            "Agent": {
+                "TargetScenarios": ["test_scenario"],
+                "AgentsCount": 1
+            }
+        }
+
+    }
+}
+```
+
+The same works for a `ManualCluster` config — add the `Coordinator` section alongside the `AgentGroups`:
+
+```json title="manualcluster-config.json"
+{
+    "TestSuite": "my test suite",
+    "TestName": "my test",
+
+    "ClusterSettings": {
+
+        "ManualCluster": {
+            "ClusterId": "test_cluster",
+            "NATSServerURL": "nats://localhost",
+
+            // highlight-start
+            "Coordinator": {
+                "TargetScenarios": ["test_scenario"]
+            },
+            // highlight-end
+
+            "Agent": {
+                "AgentGroups": [{ "AgentGroup": "1", "TargetScenarios": ["test_scenario"] }],
+                "AgentsCount": 1
+            }
+        }
+
+    }
+}
+```
+
+:::caution
+Be very cautious about scheduling scenarios on the Coordinator. The Coordinator orchestrates the entire test — it aggregates metrics from all Agents and evaluates thresholds — so running heavy load on it can distort your load test results. Prefer keeping it idle (omit the `Coordinator` section) and run scenarios only on the Agents. Running scenarios on the Coordinator makes sense only for lightweight, singleton work that must run exactly once in the cluster (for example, periodically writing a message to Kafka).
+:::
+
+:::info
+If you add a `Coordinator` section but omit its `TargetScenarios`, the Coordinator falls back to running **all** registered scenarios:
+
+```json title="autocluster-config.json"
+{
+    "ClusterSettings": {
+
+        "AutoCluster": {
+            "ClusterId": "test_cluster",
+            "NATSServerURL": "nats://localhost",
+
+            // highlight-start
+            "Coordinator": {
+                // TargetScenarios omitted -> Coordinator runs all registered scenarios
+            },
+            // highlight-end
+
+            "Agent": {
+                "TargetScenarios": ["test_scenario"],
+                "AgentsCount": 1
+            }
+        }
+
+    }
+}
+```
+
+To keep the Coordinator idle, either omit the whole `Coordinator` section or set `"TargetScenarios": []`:
+
+```json title="autocluster-config.json"
+{
+    "ClusterSettings": {
+
+        "AutoCluster": {
+            "ClusterId": "test_cluster",
+            "NATSServerURL": "nats://localhost",
+
+            // highlight-start
+            "Coordinator": {
+                "TargetScenarios": []
+            },
+            // highlight-end
+
+            "Agent": {
+                "TargetScenarios": ["test_scenario"],
+                "AgentsCount": 1
+            }
+        }
+
+    }
+}
+```
+
+This is the JSON Config equivalent of the CLI pattern [`--cluster-coordinator-target=[]`](run-cluster-cli#running-scenarios-only-on-agents).
+:::
 
 ## Run Local Dev Cluster
 

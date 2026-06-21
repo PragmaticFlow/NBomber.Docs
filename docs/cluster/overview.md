@@ -50,7 +50,7 @@ Each NBomber instance (process) runs as either a **Coordinator** or an **Agent**
 :::
 
 ### Coordinator
-The Coordinator orchestrates the entire test. It can also execute scenarios, just like an Agent — you control which scenarios run where. This is useful for running a scenario as a singleton in the cluster (for example, periodically writing a message to Kafka). Alternatively, configure all scenarios to run only on Agents, leaving the Coordinator free to act purely as an orchestrator: fetching metrics from Agents and evaluating thresholds.
+The Coordinator orchestrates the entire test. It can also execute scenarios, just like an Agent — you control which scenarios run where. This is useful for running a scenario as a singleton in the cluster (for example, periodically writing a message to Kafka). Alternatively, configure all scenarios to run only on Agents, leaving the Coordinator free to act purely as an orchestrator: fetching metrics from Agents and evaluating thresholds. In a JSON config, the `Coordinator` section is optional — by default the Coordinator runs no scenarios and acts purely as an orchestrator (the role still exists; only the config section is optional). See [Running scenarios on the Coordinator](run-cluster-json#running-scenarios-on-the-coordinator) if you want it to run scenarios too.
 :::tip
 Keeping the Coordinator free of heavy scenarios is recommended — an idle Coordinator won't distort your load test results.
 :::
