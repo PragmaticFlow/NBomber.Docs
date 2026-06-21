@@ -214,7 +214,7 @@ Let's now try to run the same [K8sDemo](https://github.com/PragmaticFlow/NBomber
 :::info
 As you may know, **NBomber Cluster** mode requires an **Enterprise license** to run your tests in a clustered setup. However, it is also possible to run a limited version of cluster mode without a license key. For this purpose, NBomber provides a special lightweight mode called - **Local Dev Cluster**.
 
-The [Local Dev Cluster](../cluster/local-dev-cluster.md) provides the full set of cluster features, with the limitation that the cluster cannot contain more than two Pods (1 Coordinator and 1 Agent). This mode is particularly useful for developers who want to test scenarios in a clustered environment (even locally) without having to manage license keys. *With an Enterprise license, you can create a cluster with an unlimited number of Agents (1 Coordinator + N Agents).*
+The [Local Dev Cluster](../cluster/local-dev-cluster.md) provides the full set of cluster features, with the limitation that the cluster cannot contain more than three Pods (1 Coordinator and 2 Agents) and that each test run auto-stops after 1 minute. This mode is particularly useful for developers who want to test scenarios in a clustered environment (even locally) without having to manage license keys. *With an Enterprise license, you can create a cluster with an unlimited number of Agents (1 Coordinator + N Agents) and no time limit.*
 
 To form a minimal **NBomber Cluster**, you need to run at least 2 Pods: 1 Coordinator and 1 Agent.
 

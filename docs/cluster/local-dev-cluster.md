@@ -4,7 +4,16 @@ title: Local Dev Cluster
 sidebar_position: 4
 ---
 
-If you don't have an enterprise license key, but you want to try NBomber Cluster you can run it in the development mode. Local Dev Cluster provides a fully flagged cluster mode with a limitation that it allows to run only two nodes per cluster (Coordinator + 1 Agent). This mode is also convenient for developers to test scenarios in cluster without dealing with license keys.
+If you don't have an enterprise license key, but you want to try NBomber Cluster you can run it in the development mode. Local Dev Cluster provides a fully flagged cluster mode with a limitation that it allows to run up to **three nodes per cluster: 1 Coordinator + 2 Agents**. This mode is also convenient for developers to test scenarios in cluster without dealing with license keys.
+
+:::info
+Local Dev Cluster has two limitations compared to the licensed cluster mode:
+
+- The cluster size is limited to **1 Coordinator + 2 Agents**.
+- Each test run **auto-stops after 1 minute**.
+
+This is enough for development or a POC. An Enterprise license removes both limitations, letting you run an unlimited number of Agents with no time limit.
+:::
 
 Example: 
 
