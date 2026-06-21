@@ -4,29 +4,29 @@ title: Data Partition
 sidebar_position: 5
 ---
 
-Usually, working in the cluster mode requires handling data by partitions (key ranges). NBomber provides built-in functionality for this called **Scenario Auto Partitioning**. During the scenario initialization phase, each agent can receive a partition number (e.g., 1, 2, 3, …). Based on this number, you can determine the data range assigned to that agent. For example, if PartitionNumber = 1, it means that this particular agent will handle user IDs ranging from 0 to 100.
-
 import AutoPartitionImage from './img/auto-partition.jpeg'; 
+
+In more advanced cluster scenarios, you may need to split your data across Agents so that each one works on a different slice (key range) — and no two Agents touch the same records. NBomber handles this automatically with **Scenario Auto Partitioning**. During scenario initialization, each Agent receives a unique partition number (1, 2, 3, …), which you use to calculate the data range it should handle. For example, with 3 Agents you might assign user IDs `0–100` to partition 1, `100–200` to partition 2, and `200–300` to partition 3.
 
 <center><img src={AutoPartitionImage} width="60%" height="60%" /></center>
 
 ## Scenario Auto Partitioning
 
 When you run a Scenario in the cluster, NBomber will:
-1. Get all agents that run particular scenarios.
-2. Automatically assign a scenario partition number to each Agent.
+1. Find all Agents running that Scenario.
+2. Assign a unique partition number to each of them automatically.
 
-You can read **ScenarioPartition** on the [Scenario Init](../nbomber/scenario#scenario-init) phase, and then, based on the number you get, you can derive what key ranges should be loaded.
+You can read the **ScenarioPartition** during the [Scenario Init](../nbomber/scenario#scenario-init) phase and use it to derive which key ranges to load.
 
 ```csharp
 Scenario
-    .Create("my-scenario", async context => { ... }
+    .Create("my-scenario", async context => { ... })
     .WithInit(context =>
     {
-        // based on the number you get, you can derive what key ranges should be loaded.
+        // Number: this Agent's partition (e.g. 1, 2, 3, …)
         var partitionNumber = context.ScenarioPartition.Number;
 
-        // Count: returns overall scenario partition count across the cluster.
+        // Count: total number of partitions across the cluster.
         var partitionCount = context.ScenarioPartition.Count;
     })
 ```

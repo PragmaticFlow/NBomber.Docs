@@ -8,17 +8,13 @@ import ClusterImage from './img/cluster.jpg';
 
 <center><img src={ClusterImage} width="60%" height="60%" /></center>
 
-NBomber Cluster allows you to run load tests distributed across multiple nodes with flexible orchestration.
+NBomber Cluster allows you to run load tests distributed across multiple nodes, with control over where each scenario runs.
 
 :::tip
-You can run NBomber Cluster without a license key. For details, see [Local Dev Cluster](local-dev-cluster).
+You can try and run NBomber Cluster without a license key. For details, see [Local Dev Cluster](local-dev-cluster).
 :::
 
-:::info
-NBomber Cluster depends on the [NATS](https://nats.io/) message broker. Please refer to this [installation guide](install-nats).
-:::
-
-## Why do you need the cluster?
+## When do you need a cluster?
 
 - **A single NBomber node can no longer generate the required load,** and you need to distribute scenarios across multiple nodes.
 
@@ -26,10 +22,19 @@ NBomber Cluster depends on the [NATS](https://nats.io/) message broker. Please r
 
 - **You need to run tests from different geographical regions** to measure latency from multiple locations.
 
+:::info
+NBomber Cluster uses the [NATS](https://nats.io/) message broker for communication between nodes. Please refer to this [installation guide](install-nats) to install NATS since NBomber Cluster depends on it.
+:::
+
+:::tip[Run a cluster the easy way with NBomber Studio]
+Setting up a cluster manually means installing a [NATS](install-nats) broker and starting multiple NBomber processes yourself. [NBomber Studio](../nbomber-studio/loadtests-in-k8s/overview) automates all of this in Kubernetes — it provisions NATS, deploys your test across as many Agent Pods as you configure, and tears down every resource it created once the test finishes. It's a full load testing platform built for NBomber, not just a UI.
+:::
+
 ### What does NBomber Cluster provide?
 
+- **Scalability of load** — distributes scenarios across multiple nodes to generate more load than a single node can produce.
 - Runs multiple scenarios on multiple nodes with flexible topology (**scenario placement strategy**).
-- **Continuously collects metrics from all Agents and calculates overall statistics at runtime. Additionally, runs threshold checks on the Coordinator node**.
+- **Continuously collects metrics from all Agents and calculates overall statistics at runtime.** Threshold checks run on the Coordinator node.
 - Collects hardware metrics (CPU, RAM, IO, etc.) from all Agents. These metrics can be used in threshold checks.
 - Provides [auto partition assignment](data-partition) for the same scenario across the cluster. This is useful when you need to split data responsibility between Agent instances. Each Agent running the same scenario automatically receives a partition number (key range) that can be used to load, prepare, and work with its assigned data.
 - Produces all report types (TXT, CSV, MD, HTML) with **summary across all nodes in the cluster**.
@@ -41,12 +46,17 @@ NBomber Cluster depends on the [NATS](https://nats.io/) message broker. Please r
 
 :::info
 Cluster mode introduces two distinct roles: **Coordinator** (aka Leader) and **Agent** (aka Worker). To form a cluster, you need 1 Coordinator + N Agent(s).
-Each NBomber instance (process) runs as either a **Coordinator** or an **Agent**. **There can be only one Coordinator per cluster, and the cluster cannot start without it.** You can run an unlimited number of independent clusters in parallel, each containing 1 Coordinator + N Agent(s). Cluster members discover each other by `ClusterId` (think of it as a namespace).
+Each NBomber instance (process) runs as either a **Coordinator** or an **Agent**. **There can be only one Coordinator per cluster, and the cluster cannot start without it.** You can run an unlimited number of independent clusters in parallel, each containing 1 Coordinator + N Agent(s). Cluster members discover each other by `ClusterId` (think of it as a virtual cluster id).
 :::
 
-- **Coordinator** — orchestrates the entire test. There can be only one Coordinator per cluster, and the cluster cannot start without it. The Coordinator can also execute load test scenarios, just like an Agent. You can control which scenarios run on the Agents and which run on the Coordinator. This is useful when you want to run a specific scenario as a singleton within the cluster. Alternatively, you can configure scenarios to run only on Agents, keeping the Coordinator free to act solely as a test orchestrator — fetching metrics from Agents and evaluating thresholds.
+### Coordinator
+The Coordinator orchestrates the entire test. It can also execute scenarios, just like an Agent — you control which scenarios run where. This is useful for running a scenario as a singleton in the cluster (for example, periodically writing a message to Kafka). Alternatively, configure all scenarios to run only on Agents, leaving the Coordinator free to act purely as an orchestrator: fetching metrics from Agents and evaluating thresholds.
 :::tip
-It can be beneficial to run load test scenarios only on Agents and keep the Coordinator free to act solely as a test orchestrator. The main idea is to keep the Coordinator idle so it doesn't distort load test results. In practice, the Coordinator typically runs only lightweight scenarios that need to execute as a singleton (for example, periodically writing a message to Kafka).
+Keeping the Coordinator free of heavy scenarios is recommended — an idle Coordinator won't distort your load test results.
 :::
-- **Agent** — executes load test scenarios and responds to commands from the Coordinator.
-- **Message Broker** — the communication hub of the cluster. All communication between the Coordinator and Agents flows through the message broker: the Coordinator sends commands to Agents, and Agents send metrics back to the Coordinator for aggregation.
+
+### Agent
+The Agent executes load test scenarios and responds to commands from the Coordinator.
+
+### Message Broker
+The Message Broker is the communication hub of the cluster. All traffic between the Coordinator and Agents flows through it: the Coordinator sends commands to Agents, and Agents send metrics back for aggregation.
