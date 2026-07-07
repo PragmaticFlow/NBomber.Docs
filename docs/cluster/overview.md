@@ -27,7 +27,7 @@ NBomber Cluster uses the [NATS](https://nats.io/) message broker for communicati
 :::
 
 :::tip[Run a cluster the easy way with NBomber Studio]
-Setting up a cluster manually means installing a [NATS](install-nats) broker and starting multiple NBomber processes yourself. [NBomber Studio](../nbomber-studio/loadtests-in-k8s/overview) automates all of this in Kubernetes — it provisions NATS, deploys your test across as many Agent Pods as you configure, and tears down every resource it created once the test finishes. It's a full load testing platform built for NBomber, not just a UI.
+Setting up a cluster manually means installing a [NATS](install-nats) broker and starting multiple NBomber processes yourself. [NBomber Studio](../nbomber-studio/loadtests-in-k8s/overview) automates all of this in Kubernetes — it provisions NATS, deploys your test across as many Agent Pods as you configure, and tears down every resource it created once the test finishes. It's a full load testing platform built for NBomber.
 :::
 
 ### What does NBomber Cluster provide?
@@ -59,4 +59,10 @@ Keeping the Coordinator free of heavy scenarios is recommended — an idle Coord
 The Agent executes load test scenarios and responds to commands from the Coordinator.
 
 ### Message Broker
-The Message Broker is the communication hub of the cluster. All traffic between the Coordinator and Agents flows through it: the Coordinator sends commands to Agents, and Agents send metrics back for aggregation.
+The Message Broker is the communication layer of the cluster. NBomber uses [NATS](https://nats.io/) for this role. All traffic between the Coordinator and Agents flows through it: the Coordinator sends commands to Agents, and Agents send metrics back for aggregation.
+
+:::tip
+For isolation, we recommend running a dedicated single-node NATS per cluster session. In this case, you can just hardcode `ClusterId=default` since your cluster is the only one using that NATS instance.
+
+A single NATS instance can also serve multiple NBomber clusters running in parallel. In this case, each concurrent cluster session must use its own unique [`ClusterId`](run-cluster-json#basic-config) so members don't collide. For example, if two teams each run a clustered load test against the same shared NATS instance at the same time, one team could use `ClusterId=team_1` and the other `ClusterId=team_2`.
+:::

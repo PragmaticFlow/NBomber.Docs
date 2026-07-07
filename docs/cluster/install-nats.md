@@ -1,6 +1,6 @@
 ---
 id: install-nats
-title: Install NATS Message Broker
+title: Install NATS
 sidebar_position: 1
 ---
 

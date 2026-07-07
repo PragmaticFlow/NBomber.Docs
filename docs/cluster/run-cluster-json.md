@@ -45,7 +45,7 @@ This is a basic example for a cluster with two nodes (Coordinator + 1 Agent). In
 
 The main settings are:
 
-- **ClusterId** - think of this as a virtual cluster id for cluster members. Cluster members use this `ClusterId` to discover each other. The main reason for the existence of `ClusterId` is to allow you to run multiple cluster runs in parallel and to prevent any members collision.
+- **ClusterId** - think of this as a virtual cluster id for cluster members. Cluster members use this `ClusterId` to discover each other. Usually you can just keep the value as `ClusterId=default` — it only needs to be unique if you're running multiple concurrent cluster sessions against the same shared NATS instance. See [Message Broker](overview#message-broker) for details and an example.
 - **NATSServerURL** - the URL of the NATS message broker. In our example, we use `localhost` since we host NATS on the local machine using `docker-compose`. You can find more info about NATS connection strings [here](https://docs.nats.io/using-nats/developer/connecting).
 - **TargetScenarios** - specifies target scenarios that will be executed in the cluster. Here we set it only for the Agents; configuring target scenarios for the Coordinator is covered in [Running scenarios on the Coordinator](#running-scenarios-on-the-coordinator).
 - **AgentsCount** - the number of Agents that will join the cluster with the specified `ClusterId`. In this case, the cluster will consist of 1 Agent. We don't specify the number of Coordinators since there is always exactly 1. So the total cluster size is 2 members: 1 Coordinator + 1 Agent.

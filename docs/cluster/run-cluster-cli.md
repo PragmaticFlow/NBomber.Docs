@@ -53,7 +53,7 @@ dotnet my-nbomber-test.dll --cluster-id=default --cluster-agents-count=2 --clust
 ```
 
 Here we spin up three NBomber processes and pass the required cluster arguments:
-- **--cluster-id** - a virtual cluster id that cluster members use to discover each other. It lets you run multiple clusters in parallel on the same broker without members colliding.
+- **--cluster-id** - a virtual cluster id that cluster members use to discover each other. Usually `default` is fine — it only needs to be unique per concurrent cluster session if multiple sessions share the same NATS instance. See [Message Broker](overview#message-broker) for details.
 - **--cluster-agents-count** - the number of Agents that must join the cluster (with the specified `cluster-id`) before the test starts. In this case, the cluster will consist of 2 Agents. We don't specify the number of Coordinators since there is always exactly 1. So the total cluster size is 3 members: 1 Coordinator + 2 Agents.
 - **--cluster-nats-url** - the URL of the NATS message broker. In our example, we use `localhost` since we host NATS on the local machine using `docker-compose`. You can find more info about NATS connection strings [here](https://docs.nats.io/using-nats/developer/connecting).
 
@@ -63,7 +63,7 @@ These are the CLI args you will typically use to run a cluster. For the complete
 
 | Arg | Type | Required | Default | Description |
 | --- | --- | --- | --- | --- |
-| `--cluster-id` | `string` | **yes** | — | Virtual cluster id used by cluster members to discover each other. |
+| `--cluster-id` | `string` | **yes** | — | Virtual cluster id used by cluster members to discover each other. Only needs to be unique per concurrent session if sharing a NATS instance. |
 | `--cluster-nats-url` | `string` | **yes** | — | URL of the NATS message broker. |
 | `--cluster-agents-count` | `int` | no | `0` | Number of Agents that must join before the test starts. |
 | `--target` | `string[]` | no | all scenarios | Target scenarios to run (applies to both Coordinator and Agents). |

@@ -13,6 +13,8 @@ Local Dev Cluster has two limitations compared to the licensed cluster mode:
 - Each test run **auto-stops after 1 minute**.
 
 This is enough for development or a POC. An Enterprise license removes both limitations, letting you run an unlimited number of Agents with no time limit.
+
+Prior to NBomber 6.5.0, the cluster size limit was **2 nodes: 1 Coordinator + 1 Agent**.
 :::
 
 Example: 
