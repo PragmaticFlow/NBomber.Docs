@@ -9,7 +9,7 @@ import ReactPlayer from 'react-player'
 Sharing load test results previously required storing generated HTML reports separately. Now you can directly download an HTML report from NBomber Studio using the **Download HTML Report** option for any completed session.
 
 :::info
-This feature requires NBomber 6.3 and TimescaleSink 0.12 or later.
+This feature requires NBomber 6.4.1 and TimescaleSink 0.13.0 or later.
 :::
 
 <div className="video-container">

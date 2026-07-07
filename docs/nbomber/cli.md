@@ -1,7 +1,7 @@
 ---
 id: cli
 title: CLI Arguments
-sidebar_position: 13
+sidebar_position: 5
 ---
 
 The list of available command line (CLI) arguments of NBomber:
@@ -19,7 +19,7 @@ The list of available command line (CLI) arguments of NBomber:
 | --cluster-local-dev     | `bool` | `false` | Enables local dev cluster  | --cluster-local-dev=true |
 | --cluster-agents-count  | `int` | `0` | Sets the number of agents in the cluster | --cluster-agents-count=2 |
 | --cluster-agent-group   | `string` | — | Sets AgentGroup <br /> *(should be used only with a ManualCluster config)* | --cluster-agent-group=my_group |
-| --cluster-id            | `string` | — | Sets ClusterId <br /> *(required to run a cluster via CLI args)*       | --cluster-id=test_cluster |
+| --cluster-id            | `string` | — | Sets ClusterId <br /> *(required to run a cluster via CLI args)*       | --cluster-id=default |
 | --cluster-node-type     | `string` | — | Sets NodeType <br /> *(should be used only with a ManualCluster config)*  | --cluster-node-type=coordinator <br /> --cluster-node-type=agent |
 | --cluster-nats-url | `string` | — | Sets cluster NATSServerURL <br /> *(required to run a cluster via CLI args)* | --cluster-nats-url=nats://localhost |
 | --cluster-coordinator-target | `string[]` | falls back to `--target` | Sets target scenarios for Coordinator | --cluster-coordinator-target=my_test |

@@ -57,7 +57,7 @@ To get accurate latency measurements and the best resource usage, we recommend t
 :::info
 **Why these settings?**
 
-- **`.NET 10` (or the latest available version)** — each release brings meaningful performance and compatibility improvements.
-- **`ServerGarbageCollection`** — enables Server GC, which uses multiple threads and is tuned for high-throughput, multi-core workloads like load testing.
-- **`ConcurrentGarbageCollection`** — lets garbage collection run concurrently with your test, reducing pauses that would otherwise distort latency measurements.
+- **.NET 10 (or the latest available version)** — each release brings meaningful performance and compatibility improvements.
+- **ServerGarbageCollection** — enables Server GC, which uses multiple threads and is tuned for high-throughput, multi-core workloads like load testing.
+- **ConcurrentGarbageCollection** — lets garbage collection run concurrently with your test, reducing pauses that would otherwise distort latency measurements.
 :::

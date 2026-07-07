@@ -5,13 +5,16 @@ sidebar_position: 7
 ---
 
 :::info
-NBomber is FREE only for personal use. You can't use FREE version for an organization.
+NBomber and NBomber Studio are FREE only for personal use. You can't use the FREE versions for an organization.
 :::
 
 NBomber supports two types of license:
 
-- Business license - Allows the use of NBomber within your organization.
-- Enterprise license - Allows the use of NBomber within your organization, and additionally, provides access to the cluster mode of execution.
+- **Business license** — Allows the use of NBomber and [NBomber Studio](../nbomber-studio/overview) within your organization.
+- **Enterprise license** — Allows the use of NBomber and [NBomber Studio](../nbomber-studio/overview) within your organization, and additionally provides access to:
+  - [NBomber Cluster](../cluster/overview)
+  - [NBomber Studio's Kubernetes integration](../nbomber-studio/loadtests-in-k8s/overview)
+  - [NBomber Studio's Load Test Schedules](../nbomber-studio/features/schedules)
 
 :::tip
 If you're interested in experimenting with NBomber Cluster but do not have an enterprise license, you can use of the [Local Dev Cluster](../cluster/local-dev-cluster).

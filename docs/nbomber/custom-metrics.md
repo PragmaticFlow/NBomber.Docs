@@ -1,7 +1,7 @@
 ---
 id: custom-metrics
 title: Custom Metrics
-sidebar_position: 12
+sidebar_position: 8
 ---
 
 import CustomMetricsImage from './img/custom_metrics.jpg'; 

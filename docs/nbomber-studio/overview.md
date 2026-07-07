@@ -40,5 +40,8 @@ var stats = NBomberRunner
 :::info
 NBomber Studio is FREE for personal use only. The FREE version cannot be used within an organization.
 
-Organization use requires at minimum an NBomber Business license.
+**Organization use requires an NBomber license** (Business or Enterprise). See [Licensing](../getting-started/license) for details.
+
+- **Business license** — Allows installation and use of NBomber Studio within your organization.
+- **Enterprise license** — Allows installation and use of NBomber Studio within your organization, plus unlocks the [Kubernetes integration](./loadtests-in-k8s/overview) for managing and running load tests in Kubernetes.
 :::

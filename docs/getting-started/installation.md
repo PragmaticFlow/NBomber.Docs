@@ -9,8 +9,6 @@ Installation prerequisites
 
 - [.NET SDK](https://dotnet.microsoft.com/download)
 - [Visual Studio Code](https://code.visualstudio.com/) with [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp) extension.
-- [Docker](https://docs.docker.com/engine/install/) - If you decide to run NBomber Cluster, installing Docker and Docker Compose is required.
-
 :::
 
 ## Install NBomber
