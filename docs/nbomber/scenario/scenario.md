@@ -291,6 +291,56 @@ You can also use [JSON configuration](../json-config) to override this setting.
 }
 ```
 
+## Scenario StatsBasedOnIterations
+
+This option controls how NBomber measures the `Scenario` stats. By default, if a `Scenario` contains `Steps`, NBomber builds the `Scenario` stats from all `Step` measurements. In this case, `ScenarioStats` represents the aggregated measurements of each `Step` in the `Scenario`. If you enable this option, NBomber builds the `Scenario` stats from the `Scenario` iteration measurements. In this case, `ScenarioStats` represents the measurements of the whole `Scenario` iteration.
+
+```csharp
+public ScenarioProps WithStatsBasedOnIterations(bool enabled)
+```
+
+:::info
+This option does not change `StepStats`. NBomber always reports each `Step` separately.
+:::
+
+A `Scenario` without `Steps` has nothing to aggregate. For such a `Scenario`, NBomber always measures the stats per iteration, and this option changes nothing.
+
+Example:
+
+```csharp
+var scenario = Scenario.Create("scenario", async context =>
+{
+    await Step.Run("step_1", context, async () =>
+    {
+        await Task.Delay(1_000);
+        return Response.Ok();
+    });
+
+    return Response.Ok();
+})
+.WithStatsBasedOnIterations(true);
+```
+
+You can also use [JSON configuration](../json-config) to override this setting.
+
+```json
+{
+    "GlobalSettings": {
+        
+        "ScenariosSettings": [
+            {
+                "ScenarioName": "scenario",
+
+                // highlight-start
+                "StatsBasedOnIterations": true
+                // highlight-end
+            }
+        ]
+
+    }
+}
+```
+
 ## Empty scenario
 
 This method creates empty `Scenario`.
