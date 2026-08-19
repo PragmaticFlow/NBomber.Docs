@@ -3,6 +3,7 @@ title: NBomber Studio 0.9.0
 tags: [nbomber-studio-release, load-testing]
 ---
 
+import ReactPlayer from 'react-player'
 import LogsImage from './img/nb-studio-v0.9.0/logs.jpg'
 import ScnNavigationImage from './img/nb-studio-v0.9.0/scenarios_navigation.jpg'
 import DataTransferImage from './img/nb-studio-v0.9.0/data_transfer.jpg'
@@ -11,6 +12,15 @@ import TooltipImage from './img/nb-studio-v0.9.0/tooltip.jpg'
 
 **NBomber Studio 0.9.0** is out! This release adds a **Logs tab** that shows the logs of every node of your test. It also adds a **Data Transfer chart**, a **metric table under every chart**, and a new navigation for scenarios and steps.
 
+<div className="video-container">
+  <ReactPlayer
+    src='https://www.youtube.com/watch?v=_R6PPY77t78'
+    controls
+    loop
+    style={{ width: '100%', height: 'auto', aspectRatio: '16/9' }}
+  />
+</div>
+
 <!--truncate-->
 
 ## New Logs tab
@@ -18,6 +28,11 @@ import TooltipImage from './img/nb-studio-v0.9.0/tooltip.jpg'
 <center><img src={LogsImage} width="100%" /></center>
 
 The Session Details view has a new **Logs** tab. Studio reads the logs of the session and shows them in the browser. You no longer download the artifacts archive and unpack it on your machine.
+
+:::info
+This functionality requires [NBomber v6.6.0](https://www.nuget.org/packages/NBomber/6.6.0) and [NBomber.Sinks.Timescale 0.14.0](https://www.nuget.org/packages/NBomber.Sinks.Timescale/0.14.0)
+:::
+
 
 **A console-style viewer.** The selected file opens in a log console with line numbers, timestamps, and a color-coded level badge (`Verbose`, `Debug`, `Information`, `Warning`, `Error`, `Fatal`). A stack trace stays attached to the log entry that produced it. It does not break into separate unparsed lines.
 
