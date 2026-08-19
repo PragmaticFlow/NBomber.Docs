@@ -59,7 +59,7 @@ Every metric has two values:
 
 ## Tooltips everywhere
 
-<center><img src={TooltipImage} width="100%" /></center>
+<center><img src={TooltipImage} width="40%" /></center>
 
 An **info icon near each chart title** explains what the chart shows. Each **column header of a metric table** explains its metric. The .NET process metrics have the same tooltips: CPU usage, memory working set, GC heap size, GC LOH size, time in GC, thread pool queue length, thread count, and DNS lookups.
 
