@@ -14,7 +14,7 @@ import TooltipImage from './img/nb-studio-v0.9.0/tooltip.jpg'
 
 <div className="video-container">
   <ReactPlayer
-    src='https://www.youtube.com/watch?v=mtMo6R8zL_A'
+    src='https://www.youtube.com/watch?v=eusmzP4QOZ8'
     controls
     loop
     style={{ width: '100%', height: 'auto', aspectRatio: '16/9' }}
