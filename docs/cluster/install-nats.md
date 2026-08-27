@@ -23,7 +23,7 @@ services:
     nats:
         image: "nats:2.9.9"
         // highlight-start
-        command: --js --max_payload=64MB        
+        command: --js        
         // highlight-end
         ports:
             - "8222:8222"
