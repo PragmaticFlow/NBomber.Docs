@@ -452,4 +452,4 @@ kubectl delete -f k8sdemo-cluster.yaml
 
 - [NBomber CLI Arguments](../nbomber/cli)
 - [System Requirements](../getting-started/system-requirements)
-- [Load Testing Microservices](../best-practices/microservices)
+- [Load Testing Microservices](../load-testing-101/best-practices/microservices)

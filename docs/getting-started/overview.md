@@ -5,7 +5,7 @@ sidebar_position: 1
 hide_title: true
 ---
 
-import NBomberLogoImage from './img/nbomber_logo_2026.jpg'; 
+import NBomberLogoImage from './img/nbomber-logo-2027.png'; 
 
 <center><img src={NBomberLogoImage} width="80%" height="80%" /></center>
 

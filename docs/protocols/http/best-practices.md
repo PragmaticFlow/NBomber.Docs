@@ -11,7 +11,7 @@ Here we combine best practices for writing HTTP load tests, along with useful li
 
 ## Choose the right workload
 Please make sure to choose the right workload for your load tests. We recommend reviewing the following documentation:
-- [Load Testing Microservices](../../best-practices/microservices)
+- [Load Testing Microservices](../../load-testing-101/best-practices/microservices)
 - [Load Simulation](../../nbomber/load-simulation)
 
 ## Using HttpClient correctly

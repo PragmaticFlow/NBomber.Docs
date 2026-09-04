@@ -207,7 +207,7 @@ namespace NBomberTest
 Finally, you reach this point! Here you can find additional information which helps you in building real world NBomber tests:
 
 - [System Requirements](system-requirements)
-- [Load Testing Microservices](../best-practices/microservices)
+- [Load Testing Microservices](../load-testing-101/best-practices/microservices)
 - [Scenario](../nbomber/scenario)
 - [Step](../nbomber/scenario/step)
 - [Load Simulation](../nbomber/load-simulation)
