@@ -186,7 +186,11 @@ var myDataFeed = DataFeed.Constant(users);
 
 ## LargeDataFeed
 
-LargeDataFeed is for data sets that are too large to keep in memory (RAM), or too expensive to keep there. It writes all items to a temporary SQLite database. After that, it keeps only a small part of the items in memory. The feed reads the next items from the database in the background, while your scenario uses the items that are already in memory.
+LargeDataFeed is designed for data sets that are too large or too expensive to keep entirely in memory (RAM). It writes all items to a temporary SQLite database and keeps only a small portion of them in memory using a buffer.
+
+While your scenario processes the items currently in memory, the feed reads the next items from the database in the background. This approach effectively creates a sliding window over the data, allowing LargeDataFeed to process data sets much larger than the available memory.
+
+LargeDataFeed also relies heavily on [ValueTask](https://devblogs.microsoft.com/dotnet/understanding-the-whys-whats-and-whens-of-valuetask/) which helps minimize memory allocations when returning items from the feed.
 
 ### When to use it
 
@@ -270,7 +274,7 @@ LargeDataFeed.Circular<T>(int elementsInMemoryCount = 1000);
 
 ### elementsInMemoryCount
 
-The `elementsInMemoryCount` parameter sets how many items the feed keeps in memory. It works like a sliding window. The default value is 1000. The minimum value is 100.
+The `elementsInMemoryCount` parameter determines how many items the feed keeps in memory. It works like a sliding window. The default value is 1000. The minimum value is 100.
 
 :::tip
 Your goal is to find a good balance. The value must be big enough for the scenario to always take items from memory. Then the feed does not make the more expensive call to SQLite, which reads from disk.
