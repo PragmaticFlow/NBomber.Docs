@@ -184,6 +184,135 @@ var myDataFeed = DataFeed.Constant(users);
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/Features/DataDemo/CsvFeed.cs).*
 
+## LargeDataFeed
+
+LargeDataFeed is for data sets that are too large to keep in memory (RAM), or too expensive to keep there. It writes all items to a temporary SQLite database. After that, it keeps only a small part of the items in memory. The feed reads the next items from the database in the background, while your scenario uses the items that are already in memory.
+
+### When to use it
+
+LargeDataFeed is a good choice when your data set is bigger than 100-200 MB.
+
+### Example
+
+This example reads a large CSV file and gives the items to a scenario.
+
+```csharp
+public class User
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+}
+
+public class LargeDataFeedExample
+{
+    public async Task Run()
+    {
+        // here we create the feed one time
+        await using var dataFeed = LargeDataFeed.Circular<User>(elementsInMemoryCount: 5000);
+
+        var scenario = Scenario.Create("scenario", async ctx =>
+        {
+            // get next item from the feed.
+            // the item will come from memory buffer
+            var user = await dataFeed.GetNextItem(ctx.ScenarioInfo);
+
+            ctx.Logger.Information($"UserId: {user.Id}");
+
+            return Response.Ok();
+        })
+        .WithInit(ctx =>
+        {
+            // the stream reads the file on demand, it does not load the file into memory
+            using var stream = Data.CreateCsvStream<User>("users.csv");
+
+            // LoadData writes all items to the temporary SQLite database
+            dataFeed.LoadData(stream, ctx.Logger);
+
+            return Task.CompletedTask;
+        })
+        .WithLoadSimulations(Simulation.KeepConstant(copies: 50, during: TimeSpan.FromMinutes(5)));
+
+        NBomberRunner
+            .RegisterScenarios(scenario)
+            .Run();
+    }
+}
+```
+
+### API
+
+LargeDataFeed implements the following interface:
+
+```csharp
+public interface IAsyncDataFeed<T> : IAsyncDisposable
+{
+    // Loads data into the feed. You must call it in scenario initialization.
+    void LoadData(IEnumerable<T> data, Serilog.ILogger? logger = null);
+
+    // Returns the next data item.
+    ValueTask<T> GetNextItem(ScenarioInfo scenarioInfo);
+}
+```
+
+NBomber.Data provides three LargeDataFeed types. They match the three `DataFeed` types.
+
+```csharp
+// Creates LargeDataFeed that randomly picks an item per GetNextItem() invocation.
+LargeDataFeed.Random<T>(int elementsInMemoryCount = 1000);
+
+// Creates LargeDataFeed that picks constant value per Scenario copy.
+// Every Scenario copy will have unique constant value.
+LargeDataFeed.Constant<T>(int elementsInMemoryCount = 1000);
+
+// Creates LargeDataFeed that goes back to the top of the sequence once the end is reached.
+LargeDataFeed.Circular<T>(int elementsInMemoryCount = 1000);
+```
+
+### elementsInMemoryCount
+
+The `elementsInMemoryCount` parameter sets how many items the feed keeps in memory. It works like a sliding window. The default value is 1000. The minimum value is 100.
+
+:::tip
+Your goal is to find a good balance. The value must be big enough for the scenario to always take items from memory. Then the feed does not make the more expensive call to SQLite, which reads from disk.
+:::
+
+Your scenario reads one batch from memory, while the feed loads the next batch in the background. If the scenario reads the items faster than the feed loads them, the feed writes this warning:
+
+```
+You should use bigger elementsInMemoryCount, because in memory items were exhausted too fast
+```
+
+To see this warning, you must pass a logger to `LoadData`. If you see this warning, increase `elementsInMemoryCount`.
+
+```csharp
+dataFeed.LoadData(stream, ctx.Logger);
+```
+
+### Read large data from JSON and CSV
+
+`Data.LoadJson` and `Data.LoadCsv` read the full file into memory. For a large file, use `Data.CreateJsonStream` or `Data.CreateCsvStream` instead. These methods read one item at a time, on demand.
+
+```csharp
+public class User
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+}
+
+// stream from a local JSON file
+using var stream = Data.CreateJsonStream<User>("users.json");
+
+// stream from a remote JSON file
+using var stream = Data.CreateJsonStream<User>("https://YOUR_HOST/users.json");
+
+// stream from a local CSV file
+using var stream = Data.CreateCsvStream<User>("users.csv");
+
+// stream from a remote CSV file
+using var stream = Data.CreateCsvStream<User>("https://YOUR_HOST/users.csv");
+```
+
+Both methods return an object that implements `IEnumerable<T>` and `IDisposable`. You can pass this object directly to `LoadData`.
 
 ## Generate random bytes
 
