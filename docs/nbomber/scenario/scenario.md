@@ -17,7 +17,11 @@ This method should be used to create Scenario.
 
 ```csharp
 public static ScenarioProps Create(string name, Func<IScenarioContext, Task<IResponse>> run)
+
+public static ScenarioProps Create(string name, Func<IScenarioContext, Task> run)
 ```
+
+The first overload returns a `Response` for each scenario iteration. The second overload does not return a `Response`. *For more information, see [Scenario without Response](#scenario-without-response).*
 
 Imagine that you need to model a simple workflow where the user will do the following:
 
@@ -37,6 +41,19 @@ var scenario = Scenario.Create("my e-commerce scenario", async context =>
     return Response.Ok();        
 });
 ```
+
+:::tip
+Starting from NBomber v6.7.0, you can skip explicitly returning `Response.Ok()`.
+
+```csharp
+var scenario = Scenario.Create("my e-commerce scenario", async context =>
+{
+    await Login();        
+    await OpenHomePage();     
+    await Logout();
+});
+```
+:::
 
 When you run this scenario, NBomber will measure the whole scenario execution.
 At the end of execution, NBomber will printout the scenario's statistics result:
