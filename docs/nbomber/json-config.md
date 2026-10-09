@@ -229,6 +229,24 @@ On [this page](load-simulation#loadsimulation-in-json-config), you will find ins
 ]
 ```
 
+### Overriding Tags in JSON Config
+
+```json
+"Tags": {
+    "env": "prod"
+},
+"GlobalSettings": {
+    "ScenariosSettings": [
+        {
+            "ScenarioName": "test_youtube",
+            "Tags": { "team": "payments" }
+        }
+    ]
+}
+```
+
+On [this page](tags#tags-in-json-config), you will find instructions on how to set session and scenario tags via the JSON configuration.
+
 ### Overriding Thresholds in JSON Config
 
 ```json

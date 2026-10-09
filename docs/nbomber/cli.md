@@ -14,6 +14,7 @@ The list of available command line (CLI) arguments of NBomber:
 | --session-id | `string` | auto-generated | Sets custom SessionId  | --session-id=my-session-123 |
 | --test-name  | `string` | `nbomber_default_test_name` | Sets the test name | --test-name=my_test |
 | --test-suite | `string` | `nbomber_default_test_suite_name` | Sets the test suite | --test-suite=my_suite |
+| --tags       | `string[]` | — | Sets session (global) [tags](tags) in `key=value` format | --tags env=prod team=payments |
 | --display-console-metrics | `bool` | `true` | Enables console metrics output | --display-console-metrics=true |
 | --target | `string[]` | all scenarios | Sets target scenarios (in case of Cluster mode, it sets for both Coordinator and Agent) | --target=my_test |
 | --cluster-local-dev     | `bool` | `false` | Enables local dev cluster  | --cluster-local-dev=true |
