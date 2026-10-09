@@ -13,7 +13,7 @@ import JsonConfigImage from './img/json-config.jpg';
 
 NBomber configuration system provides a way to configure NBomber load tests via JSON files. It's quite helpful when you want to run NBomber tests under different environments or workload profiles. NBomber supports two types of JSON config:
 
-- [JSON Config](json-config#json-config) - This configuration file is used to override some of the Scenario settings related to execution. For example: LoadSimulations, WarmUpDuration, TargetScenarios, etc.
+- [JSON Config](json-config#json-config) - This configuration file is used to override some of the Scenario settings related to execution. For example: LoadSimulations, WarmUpDuration, WarmUpSimulations, TargetScenarios, etc.
 - [JSON Infrastracture Config](json-config#json-infrastracture-config) - This configuration file allows the overriding settings related only to infrastructure: Logger(s), ReportingSink(s) and WorkerPlugin(s).
 
 ## JSON Config
@@ -217,6 +217,24 @@ public class JSONConfigExample
 ```
 
 On [this page](load-simulation#loadsimulation-in-json-config), you will find instructions on how to override LoadSimulation settings via the JSON configuration.
+
+### Overriding WarmUp Simulations in JSON Config
+
+`WarmUpSimulationsSettings` sets a separate load profile for the warm-up phase. It uses the same format as `LoadSimulationsSettings`. If you set `WarmUpSimulationsSettings`, NBomber ignores `WarmUpDuration` and runs the warm-up simulations for their full planned duration. For more information, see [Scenario WarmUp](scenario#scenario-warmup).
+
+```json
+"ScenariosSettings": [
+    {
+        "ScenarioName": "test_youtube",
+        "WarmUpSimulationsSettings": [
+            { "RampingInject": [50, "00:00:01", "00:00:30"] }
+        ],
+        "LoadSimulationsSettings": [
+            { "Inject": [50, "00:00:01", "00:01:00"] }
+        ]
+    }
+]
+```
 
 ### Overriding Scenario Weight in JSON Config
 

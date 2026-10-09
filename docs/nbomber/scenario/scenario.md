@@ -167,11 +167,24 @@ This method sets duration of warm-up phase. By default warm-up duration is 30 se
 public ScenarioProps WithWarmUpDuration(TimeSpan duration)
 ```
 
+This method sets load simulations for the warm-up phase. By default, the warm-up phase uses the Scenario's [LoadSimulations](#scenario-loadsimulations) and stops after the warm-up duration. With this method, the warm-up phase uses its own load profile, separate from the main one.
+
+```csharp
+public ScenarioProps WithWarmUpSimulations(params LoadSimulation[] warmUpSimulations)
+```
+
 This method disables warm-up.
 
 ```csharp
 public ScenarioProps WithoutWarmUp()
 ```
+
+:::info
+- If you set warm-up simulations, the warm-up phase runs them for their full planned duration.
+- If you set warm-up simulations, NBomber ignores the warm-up duration. If you set both, NBomber logs a warning.
+- `WithoutWarmUp()` disables the warm-up phase and removes the warm-up simulations.
+- NBomber does not include warm-up results in the final report.
+:::
 
 Example 1 (enable warm-up):
 
@@ -194,6 +207,28 @@ var scenario = Scenario.Create("scenario", async context =>
 })
 .WithoutWarmUp();
 ```
+
+Example 3 (custom warm-up simulations):
+
+In this example, the main test runs at 500 requests per second. The warm-up phase increases the load slowly from 0 to 500 requests per second during 30 seconds. This keeps a cold system from getting the full load at once.
+
+```csharp
+var scenario = Scenario.Create("scenario", async context =>
+{
+    await Task.Delay(1_000);
+    return Response.Ok();
+})
+// highlight-start
+.WithWarmUpSimulations(
+    Simulation.RampingInject(rate: 500, interval: TimeSpan.FromSeconds(1), during: TimeSpan.FromSeconds(30))
+)
+// highlight-end
+.WithLoadSimulations(
+    Simulation.Inject(rate: 500, interval: TimeSpan.FromSeconds(1), during: TimeSpan.FromMinutes(5))
+);
+```
+
+You can also set warm-up simulations in the [JSON Config](../json-config) with the `WarmUpSimulationsSettings` field.
 
 ## Scenario LoadSimulations
 
