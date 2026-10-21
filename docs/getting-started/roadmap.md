@@ -17,11 +17,11 @@ This is a living document containing the NBomber team’s priorities as well as 
 
 #### v6.7.0
 - [x] [Release Notes](https://github.com/PragmaticFlow/NBomber/releases/tag/v6.7.0)
-- [Blog Post](https://nbomber.com/blog/2026/10/11/nbomber-6.7.0)
+- [x] [Blog Post](https://nbomber.com/blog/2026/10/11/nbomber-6.7.0)
 
 #### v6.6.0
 - [x] [Release Notes](https://github.com/PragmaticFlow/NBomber/releases/tag/v6.6.0)
-- [Blog Post](https://nbomber.com/blog/2026/08/17/nbomber-6.6.0)
+- [x] [Blog Post](https://nbomber.com/blog/2026/08/17/nbomber-6.6.0)
 
 #### v6.5.0
 - [x] [Release Notes](https://github.com/PragmaticFlow/NBomber/releases/tag/v6.5.0)
