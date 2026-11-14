@@ -63,49 +63,63 @@ var scenario = Scenario.Create("my scenario", async context =>
 ### Dedicated HttpClient Per User Session
 There may be cases where you need to create a separate HttpClient instance for each user session — such as when managing cookies, authentication headers, or maintaining session-specific state.
 
-In such cases, we recommend attaching the created HttpClient instance to the scenario's `ScenarioInstanceData`, which represents the current user session.
+In such cases, we recommend attaching the created HttpClient instance to the scenario's `ScenarioInstanceData`, which represents the current user session. This dictionary belongs to one scenario copy and keeps its values between iterations, so each copy creates its HttpClient once and reuses it.
 
 ```csharp
 var scenario = Scenario.Create("cookies_management_scenario", async context =>
 {
-    HttpClient myClient = null;
     // highlight-start
-    context.ScenarioInstanceData.TryGetValue("my_http_client", out var httpClient);
-    // highlight-end
-
-    if (httpClient is null)
+    if (!context.ScenarioInstanceData.TryGetValue("my_http_client", out var client))
     {
-        myClient = Http.CreateDefaultClient();
+        client = Http.CreateDefaultClient();
+        context.ScenarioInstanceData["my_http_client"] = client; // store it before the login step
+    }
+    // highlight-end
+    var httpClient = (HttpClient)client;
 
-        var login = await Step.Run("login", context, async () =>
+    // highlight-start
+    if (!context.ScenarioInstanceData.ContainsKey("logged_in"))
+    // highlight-end
+    {
+        await Step.Run("login", context, async () =>
         {
             // WebAppSimulator address
             var request = Http.CreateRequest("POST", "https://localhost:65385/api/CookiesAuthentication")
-                .WithJsonBody(new StringContent("""{"login": "morpheus","password": "leader"}"""));
+                .WithJsonBody(new { login = "morpheus", password = "leader" });
 
-            var response = await Http.Send(myClient, request);
-
-            return response;
+            // the session cookies are stored in this HttpClient
+            return await Http.Send(httpClient, request);
         });
 
         // highlight-start
-        context.ScenarioInstanceData["my_http_client"] = myClient;
+        context.ScenarioInstanceData["logged_in"] = true;
         // highlight-end
     }
-    else
-        myClient = (HttpClient)httpClient;
 
-        var getData = await Step.Run("get_data", context, async () =>
-        {
-            var request = Http.CreateRequest("GET", "https://localhost:65385/api/CookiesAuthentication");
+    await Step.Run("get_data", context, async () =>
+    {
+        var request = Http.CreateRequest("GET", "https://localhost:65385/api/CookiesAuthentication");
 
-            var response = await Http.Send(myClient, request);
-
-            return response;
-        });
+        // sends the cookies of this user session only
+        return await Http.Send(httpClient, request);
+    });
 
     return Response.Ok();
-})
+});
 ```
+
+:::info
+The example keeps two separate keys in `ScenarioInstanceData`: one for the HttpClient and one for the login state.
+- **Store the HttpClient right after you create it, before the login step.** If the login step fails, NBomber ends the current iteration, and the code after the step doesn't run. If the HttpClient isn't stored yet, it's lost, and the next iteration creates a new one. While the login keeps failing, each user session then creates a new HttpClient on every iteration, which leads to the **socket exhaustion** problem described in [Reuse HttpClient instance](#reuse-httpclient-instance).
+- **Keep the login state in a separate key.** If you decide to log in based on whether the HttpClient exists, a failed login is never repeated: on the next iteration the HttpClient exists, the login is skipped, and the user session continues without cookies. With a separate `logged_in` key, a failed login is repeated on the next iteration with the same HttpClient.
+:::
+
+:::warning
+Don't change `httpClient.DefaultRequestHeaders` (for example, to set the `Authorization` header after the login) on an HttpClient that all scenario copies share. Changing it while requests are in progress isn't thread-safe, and all user sessions send the last value that was set. For token-based authentication you don't need a dedicated HttpClient: store the token in `ScenarioInstanceData` and send it with each request.
+```csharp
+var request = Http.CreateRequest("GET", "https://nbomber.com/api/data")
+    .WithHeader("Authorization", $"Bearer {token}");
+```
+:::
 
 *You can find the complete example by this [link](https://github.com/PragmaticFlow/NBomber/blob/dev/examples/Demo/HTTP/CookiesManagementExample.cs).*
