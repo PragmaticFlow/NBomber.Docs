@@ -76,3 +76,10 @@ div[class^='announcementBar_'] {
 .video-link:hover::after {
   opacity: 1;
 }
+/* <Since version="x.y.z" /> badge: marks API available starting from a version */
+.since-badge {
+  font-size: 0.75rem;
+  vertical-align: middle;
+  margin-right: 0.25rem;
+  cursor: help;
+}

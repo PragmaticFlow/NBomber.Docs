@@ -36,7 +36,7 @@ var scenario = Scenario.Create("my scenario", async context =>
     // highlight-end
     
     var request = Http.CreateRequest("GET", "https://nbomber.com")
-    var response = await Http.Send(httpClient, request);
+    var response = await httpClient.SendRequest(request);
 
     ...
 });
@@ -53,7 +53,7 @@ var httpClient = Http.CreateDefaultClient();
 var scenario = Scenario.Create("my scenario", async context =>
 {
     var request = Http.CreateRequest("GET", "https://nbomber.com")
-    var response = await Http.Send(httpClient, request);
+    var response = await httpClient.SendRequest(request);
     
     ...
 });
@@ -88,7 +88,7 @@ var scenario = Scenario.Create("cookies_management_scenario", async context =>
                 .WithJsonBody(new { login = "morpheus", password = "leader" });
 
             // the session cookies are stored in this HttpClient
-            return await Http.Send(httpClient, request);
+            return await httpClient.SendRequest(request);
         });
 
         // highlight-start
@@ -101,7 +101,7 @@ var scenario = Scenario.Create("cookies_management_scenario", async context =>
         var request = Http.CreateRequest("GET", "https://localhost:65385/api/CookiesAuthentication");
 
         // sends the cookies of this user session only
-        return await Http.Send(httpClient, request);
+        return await httpClient.SendRequest(request);
     });
 
     return Response.Ok();
