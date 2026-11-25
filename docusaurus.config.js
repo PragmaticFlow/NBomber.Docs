@@ -70,8 +70,8 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       announcementBar: {
-        id: 'announcement-nbomber-studio-0.10.0',
-        content: '🚀 NBomber Studio 0.10.0 <a href="https://nbomber.com/blog/2026/10/29/nbomber-studio-0.10.0" target="_blank">released</a>!',
+        id: 'announcement-nbomber-http-7.0.0',
+        content: '🚀 NBomber Http 7.0.0 <a href="https://nbomber.com/blog/2026/11/25/nbomber-http-7.0.0" target="_blank">released</a>!',
         backgroundColor: '#2977d6ff',
         textColor: '#ffffffff',
         isCloseable: true,
