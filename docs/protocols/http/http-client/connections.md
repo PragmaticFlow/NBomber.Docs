@@ -89,13 +89,15 @@ This is important for load tests: without this setting, all requests go through 
 
 <Since version="NBomber.Http 7.0.0" />
 
-A host name can resolve to several IP addresses, for example when a load balancer uses DNS round-robin. The `dnsSelection` parameter defines which address a new connection uses:
+A host name can resolve to several IP addresses, for example when a load balancer uses DNS round-robin. .NET `HttpClient` does not guarantee that it spreads connections evenly over these addresses. By default, it connects to the first address that the DNS resolver returns. Then connection pooling reuses this connection for many requests. As a result, most or all requests of your load test can go to the same IP address, and one backend server gets all the load.
+
+The `dnsSelection` parameter defines which address a new connection uses:
 
 | Value | Behavior |
 |---|---|
-| `Random` (default) | Starts with a random address for each new connection. |
+| `Default` | Uses the built-in .NET behavior. .NET starts with the first address and goes to the next address only if the connection fails. When the first address works, all new connections go to it, so DNS round-robin doesn't balance the load. |
+| `Random` (**default**) | Starts with a random address for each new connection. |
 | `RoundRobin` | Starts with the next address (in sequence) for each new connection. |
-| `First` | Always starts with the first address. This is the default .NET behavior: all connections usually go to the same IP address. |
 
 `Random` and `RoundRobin` spread the connections over all addresses, as many independent clients do. If the connection to the selected address fails, the next addresses are tried.
 

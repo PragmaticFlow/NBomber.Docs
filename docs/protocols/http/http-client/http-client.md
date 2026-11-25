@@ -351,9 +351,6 @@ The framing isn't counted: HTTP/1.1 chunk markers, HTTP/2 and HTTP/3 frames and 
 What to expect when you upgrade from NBomber.Http 6.x:
 
 - **C# code compiles without changes.** Calls to `Http.Send` show an obsolete warning. Replace them with `SendRequest` (see [API changes](#api-changes)).
-- **Rebuild assemblies that were compiled against 6.x.** The signatures of `CreateDefaultClient` and `WithJsonBody` changed (new optional parameters). A shared library that was compiled against NBomber.Http 6.x and isn't rebuilt fails at runtime with `MissingMethodException`.
-- **F#: `Http.createDefaultClient2` was removed.** Use `Http.createDefaultClient(maxConnectionsPerServer = ...)`.
-- **Some defaults changed**, so the same test can send different requests and produce different results. Read the [behavior changes](#behavior-changes) to keep the old behavior where you need it.
 
 ### API changes
 
@@ -386,7 +383,7 @@ var response = await httpClient.SendRequest<UserData>(request, logger: context.L
 | HTTP version of `CreateDefaultClient` | HTTP/1.1 | HTTP/2 if the server supports it (`https` URLs), otherwise HTTP/1.1 | `CreateDefaultClient(httpVersion: "1.1")` |
 | Connection lifetime (`PooledConnectionLifetime`) | 10 minutes | 3 minutes | `CreateDefaultClient(pooledConnectionLifetime: TimeSpan.FromMinutes(10))` |
 | Idle connection timeout (`PooledConnectionIdleTimeout`) | 5 minutes | 1.5 minutes | Not configurable. Create your own `HttpClient`. |
-| IP address of a new connection | The first resolved address | A random resolved address | `CreateDefaultClient(dnsSelection: DnsSelection.First)` |
+| IP address of a new connection | The first resolved address | A random resolved address | `CreateDefaultClient(dnsSelection: DnsSelection.Default)` |
 | `WithJsonBody` serializer options | .NET default options (`PascalCase` property names) | `Http.GlobalJsonSerializerOptions` (`JsonSerializerOptions.Web`, `camelCase` property names) | `WithJsonBody(data, new JsonSerializerOptions())` |
 | `Send<T>` with a 2xx body that isn't valid JSON | OK, `Data` is `default(T)` | Failed, with the deserialization error in `Message` | - |
 | `Send<T>` with a non-2xx response | The body is deserialized | The body isn't deserialized, `Data` is `default(T)` | Read `Response.Content` |
