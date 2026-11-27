@@ -9,7 +9,7 @@ Many developers now write code together with an AI coding agent. An agent can wr
 
 <center><img src={TitleImage} width="100%" /></center>
 
-To fix this, we created [NBomber AI Skills](https://github.com/PragmaticFlow/NBomber.AI.Skills): a set of [Agent Skills](https://agentskills.io) that give your AI agent the NBomber knowledge it needs to write correct load tests and to review the tests that you already have. The skills use the open `SKILL.md` format, so they work with any AI coding agent that supports Agent Skills, for example Claude Code, Codex, Cursor or GitHub Copilot.
+To fix this, we created [NBomber AI Skills](https://github.com/PragmaticFlow/NBomber.AI.Skills): a set of [Agent Skills](https://agentskills.io) that give your AI agent the NBomber knowledge it needs to write correct load tests and to review the tests that you already have. The skills use the open `SKILL.md` format, so they work with any AI coding agent that supports Agent Skills, such as Claude Code, Codex, Cursor, or GitHub Copilot.
 
 In this post, we show how to install the skills and how to use them.
 
@@ -17,29 +17,29 @@ In this post, we show how to install the skills and how to use them.
 
 ## What is an Agent Skill?
 
-An Agent Skill is a reusable, structured package of instructions, workflows, and optional scripts that teaches an AI agent how to reliably perform a specific task. The agent reads the short description of each installed skill. When your request matches a skill, the agent loads the full instructions and follows them.
+An Agent Skill is a reusable, structured package of instructions, workflows, and optional scripts that teaches an AI agent how to perform a specific task reliably. The agent reads the short description of each installed skill. When your request matches a skill, the agent loads the full instructions and follows them to write, fix, or improve your load test. Skills can also help you migrate to a newer API version or adopt recently released features.
 
 You don't need to learn new commands. You ask in your own words, for example "review my NBomber test", and the agent uses the right skill.
 
-## The skills
+## Available skills
 
 | Skill | What it does |
 |---|---|
-| <span style={{whiteSpace: 'nowrap'}}>**nb-core**</span> | Writes and reviews any NBomber test, and checks the basic setup: garbage collection, warm-up, etc. It works for every protocol, with a `.csproj` project and with a C# file-based app (`dotnet run app.cs`). |
-| <span style={{whiteSpace: 'nowrap'}}>**nb-http**</span> | Writes and reviews NBomber HTTP scenarios, and checks them for common HTTP mistakes. Use it together with nb-core. |
+| <span style={{whiteSpace: 'nowrap'}}>[**nb-core**](https://github.com/PragmaticFlow/NBomber.AI.Skills/blob/dev/skills/nb-core/SKILL.md)</span> | Writes and reviews any NBomber test, for any protocol. It checks the basic setup: GC settings, warm-up, etc. |
+| <span style={{whiteSpace: 'nowrap'}}>[**nb-http**](https://github.com/PragmaticFlow/NBomber.AI.Skills/blob/dev/skills/nb-http/SKILL.md)</span> | Writes and reviews NBomber HTTP scenarios and checks them against common HTTP patterns. |
 
 ## Getting started
 
 :::info
 Prerequisites
 
-- An AI coding agent that supports Agent Skills, for example Claude Code, Codex, Cursor or GitHub Copilot.
+- An AI coding agent that supports Agent Skills, such as Claude Code, Codex, Cursor, or GitHub Copilot.
 - [Node.js](https://nodejs.org) 22.20 or later, for the `skills` CLI.
 :::
 
 ### Step 1: Install the skills
 
-Each agent reads skills from its own `skills` folder. The easiest way to put them there is the [skills.sh](https://skills.sh) CLI. Run this command **from the root folder of your project** (the folder you open your agent in):
+Each agent reads skills from its own `skills` folder. The easiest way to put them there is to use the [skills.sh](https://skills.sh) CLI. Run this command **from the root folder of your project** (the folder you open your agent in):
 
 ```bash
 npx skills add PragmaticFlow/NBomber.AI.Skills
@@ -62,7 +62,6 @@ Start a new agent session (or restart the agent) so that it finds the new skills
 The agent loads the right skill automatically. Some examples:
 
 - "check the setup of my NBomber project"
-- "is the warm-up of my NBomber scenario long enough?"
 - "review my NBomber test in LoadTests/Program.cs"
 - "write an NBomber scenario that logs in and then gets the user profile"
 
@@ -92,22 +91,29 @@ var httpClient = Http.CreateDefaultClient();   // one client for all virtual use
 
 var scenario = Scenario.Create("user_profile", async context =>
 {
-    string? token = null;
-
-    await Step.Run("login", context, async () =>
+    // log in once per virtual user, then reuse the token in every iteration
+    if (!context.ScenarioInstanceData.ContainsKey("jwt_token"))
     {
-        var request = Http.CreateRequest("POST", "https://nbomber.com/api/login")
-                          .WithJsonBody(new { login = "user", password = "pass" });
+        await Step.Run("login", context, async () =>
+        {
+            var request = Http.CreateRequest("POST", "https://nbomber.com/api/login")
+                              .WithJsonBody(new { login = "user", password = "pass" });
 
-        var response = await httpClient.SendRequest<LoginResult>(request);
-        if (response.IsError) 
+            var response = await httpClient.SendRequest<LoginResult>(request);
+            if (response.IsError)
+                return response;
+
+            var token = response.Payload.Value.Data?.Token;            
+
+            context.ScenarioInstanceData["jwt_token"] = token;   // keep the token for the next iterations
             return response;
-        
-        return response;
-    });
+        });
+    }
 
     await Step.Run("get_profile", context, async () =>
     {
+        var token = (string)context.ScenarioInstanceData["jwt_token"];
+
         var request = Http.CreateRequest("GET", "https://nbomber.com/api/profile")
                           .WithHeader("Authorization", $"Bearer {token}");   // this token goes only with this request
 
@@ -124,7 +130,7 @@ The skills are also useful for the tests that you already have. Ask:
 
 > review my NBomber test in LoadTests/Program.cs
 
-The agent goes through every check of nb-core and nb-http and reports each one as passed or failed. For each failed check, it shows the file and the line, explains the problem, and proposes the exact change. **It doesn't change your code until you agree.**
+The agent runs every nb-core and nb-http check and reports each one as passed or failed. For each failed check, it shows the file and the line, explains the problem, and proposes the exact change. **It doesn't change your code until you agree.**
 
 Here is an example of a report for a test that has some typical problems:
 
@@ -153,11 +159,11 @@ Then you decide which fixes to apply.
 
 ## Keep the skills up to date
 
-We will improve the skills together with NBomber. To get the latest versions, use these commands:
+We will keep improving the skills as NBomber evolves. To get the latest versions, use these commands:
 
 | Command | What it does |
 |---|---|
-| `npx skills check` | Shows if updates are available. |
+| `npx skills check` | Checks whether updates are available. |
 | `npx skills update` | Updates the installed skills. |
 | `npx skills remove nb-core nb-http` | Removes the skills. |
 
